@@ -44,7 +44,117 @@ Ten dokument zawiera szczegółową konfigurację środowiska deweloperskiego dl
 
 ## 2. 📐 Lintery i formatowanie kodu
 
-### Frontend (Next.js 15 + TypeScript)
+### Frontend (Next.js 15 + TypeScript + Tailwind CSS + shadcn/ui)
+
+#### Next.js 15
+
+**Konfiguracja (`frontend/next.config.js`):**
+
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  turbopack: {
+    rules: {
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
+      },
+    },
+  },
+};
+
+module.exports = nextConfig;
+```
+
+#### Tailwind CSS
+
+**Konfiguracja (`frontend/tailwind.config.js`):**
+
+```javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        // ... więcej kolorów dla shadcn/ui
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+    },
+  },
+  plugins: [],
+};
+```
+
+**Zainstalowane pakiety:**
+
+- `tailwindcss@^3.4.0` - Tailwind CSS
+- `postcss@^8.4.0` - PostCSS
+- `autoprefixer@^10.4.0` - Autoprefixer
+
+#### shadcn/ui
+
+**Konfiguracja (`frontend/components.json`):**
+
+```json
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.js",
+    "css": "app/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  }
+}
+```
+
+**Zainstalowane komponenty:**
+
+- `Button` - komponent przycisku
+- `Card` - komponent karty
+- `Input` - komponent input
+- `utils.ts` - funkcje utility
+
+**Zainstalowane pakiety:**
+
+- `class-variance-authority@^0.7.0` - Zarządzanie wariantami klas
+- `clsx@^2.0.0` - Warunkowe klasy CSS
+- `tailwind-merge@^2.0.0` - Łączenie klas Tailwind
+- `lucide-react@^0.263.1` - Ikony
 
 #### ESLint
 
@@ -272,10 +382,26 @@ RepoScope/
 ├── .editorconfig           # ✅ Spójne ustawienia edytora
 ├── .gitignore              # ✅ Ignorowanie plików tymczasowych
 ├── .pre-commit-config.yaml # ✅ Pre-commit hooks
+├── .vscode/                # ✅ Konfiguracja VS Code
+│   ├── settings.json       # ✅ Ustawienia automatycznego formatowania
+│   ├── extensions.json     # ✅ Rekomendowane rozszerzenia
+│   └── launch.json         # ✅ Konfiguracja debugowania
 ├── frontend/               # ✅ Konfiguracja frontend
 │   ├── .prettierrc         # ✅ Ustawienia Prettier
 │   ├── eslint.config.mjs   # ✅ Konfiguracja ESLint (flat config)
+│   ├── tailwind.config.js  # ✅ Konfiguracja Tailwind CSS
+│   ├── postcss.config.js   # ✅ Konfiguracja PostCSS
+│   ├── components.json     # ✅ Konfiguracja shadcn/ui
+│   ├── next.config.js      # ✅ Konfiguracja Next.js (turbopack)
 │   ├── tsconfig.json       # ✅ Konfiguracja TypeScript
+│   ├── src/
+│   │   ├── lib/
+│   │   │   └── utils.ts    # ✅ Funkcje utility (shadcn/ui)
+│   │   └── components/
+│   │       └── ui/         # ✅ Komponenty shadcn/ui
+│   │           ├── button.tsx
+│   │           ├── card.tsx
+│   │           └── input.tsx
 │   └── package.json        # ✅ Zależności i skrypty
 ├── backend/                # ✅ Konfiguracja backend
 │   ├── .flake8             # ✅ Konfiguracja flake8
@@ -630,6 +756,14 @@ npm run type-check    # TypeScript check (tsc --noEmit)
 npm run dev           # Development server (next dev --turbopack)
 npm run build         # Production build (next build --turbopack)
 npm run start         # Production server (next start)
+
+# Tailwind CSS
+npx tailwindcss -i ./app/globals.css -o ./dist/output.css --watch  # Watch mode
+npx tailwindcss -i ./app/globals.css -o ./dist/output.css --minify  # Minify
+
+# shadcn/ui
+npx shadcn-ui@latest add [component]  # Dodaj komponent
+npx shadcn-ui@latest diff            # Sprawdź różnice
 
 # Backend (z katalogu backend/)
 flake8 .              # Python linting

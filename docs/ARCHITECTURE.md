@@ -6,9 +6,46 @@
 
 ## 🔧 Komponenty systemu
 
-### Frontend (Next.js 15 + shadcn/ui)
+### Frontend (Next.js 15 + Tailwind CSS + shadcn/ui)
 
-<!-- TODO: Opisać strukturę frontendu -->
+**Architektura:**
+
+- **Framework**: Next.js 15 z App Router i Turbopack
+- **Styling**: Tailwind CSS 3.4 z CSS variables dla motywów
+- **Components**: shadcn/ui (nowoczesne komponenty UI)
+- **Language**: TypeScript z strict mode
+- **Linting**: ESLint (flat config) + Prettier
+- **Build**: Turbopack (szybszy bundler)
+
+**Struktura katalogów:**
+
+```
+frontend/
+├── app/                    # App Router (Next.js 15)
+│   ├── globals.css        # Globalne style + CSS variables
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Strona główna
+├── src/
+│   ├── components/
+│   │   └── ui/            # Komponenty shadcn/ui
+│   │       ├── button.tsx
+│   │       ├── card.tsx
+│   │       └── input.tsx
+│   └── lib/
+│       └── utils.ts       # Funkcje utility
+├── components.json        # Konfiguracja shadcn/ui
+├── tailwind.config.js     # Konfiguracja Tailwind CSS
+├── next.config.js         # Konfiguracja Next.js (turbopack)
+└── package.json           # Zależności i skrypty
+```
+
+**Kluczowe funkcjonalności:**
+
+- ✅ **Dark/Light mode** - CSS variables + shadcn/ui theming
+- ✅ **Responsive design** - Tailwind CSS breakpoints
+- ✅ **TypeScript** - pełne wsparcie typów
+- ✅ **Component library** - shadcn/ui komponenty
+- ✅ **Performance** - Turbopack + Next.js 15 optimizations
 
 ### Backend (FastAPI + LangChain)
 

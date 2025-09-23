@@ -1,0 +1,38 @@
+{
+  "recommendations": [
+    // Podstawowe rozszerzenia dla rozwoju
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "ms-vscode.vscode-typescript-next",
+
+    // Rozszerzenia dla React/Next.js
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-json",
+
+    // Rozszerzenia dla Git
+    "eamodio.gitlens",
+    "mhutchie.git-graph",
+
+    // Rozszerzenia dla Python (backend)
+    "ms-python.python",
+    "ms-python.flake8",
+    "ms-python.black-formatter",
+    "ms-python.isort",
+    "ms-python.mypy-type-checker",
+
+    // Rozszerzenia dla produktywności
+    "ms-vscode.powershell",
+    "humao.rest-client",
+    "ms-vscode.vscode-yaml",
+    "redhat.vscode-yaml",
+
+    // Rozszerzenia dla dokumentacji
+    "yzhang.markdown-all-in-one",
+    "davidanson.vscode-markdownlint",
+
+    // Rozszerzenia dla bezpieczeństwa
+    "ms-vscode.vscode-json",
+    "ms-vscode.vscode-typescript-next"
+  ],
+  "unwantedRecommendations": ["ms-vscode.vscode-typescript"]
+}

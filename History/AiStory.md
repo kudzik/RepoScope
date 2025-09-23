@@ -6,26 +6,29 @@ Ten plik zawiera kompletną historię komunikacji między zespołem a asystentem
 
 ## 📅 Format wpisów
 
-```
 ## [YYYY-MM-DD HH:MM] - Tytuł sesji
 
 ### 🎯 Cel sesji
+
 Opis głównego celu sesji komunikacji.
 
 ### 💬 Komunikacja
+
 [Pełna treść komunikacji między użytkownikiem a AI]
 
 ### ✅ Wykonane zadania
+
 - Lista zadań wykonanych podczas sesji
 
 ### 📝 Uwagi i decyzje
+
 Ważne decyzje podjęte podczas sesji.
 
 ### 🔗 Powiązane pliki
+
 Linki do plików utworzonych lub zmodyfikowanych.
 
 ---
-```
 
 ---
 
@@ -397,13 +400,17 @@ Aktualizacja wszystkich pakietów frontend do najnowszych wersji zgodnie z suges
 ## [2024-01-23 22:35] - Konfiguracja integracji Prettier + ESLint (punkt 1.6)
 
 ### 🎯 Cel sesji
+
 Skonfigurowanie integracji Prettier z ESLint (`eslint-plugin-prettier`) tak, by oba narzędzia współpracowały bez konfliktów.
 
 ### 💬 Komunikacja
+
 **Użytkownik:**
+
 > Sprawdźmy kolejny krok na liście TODO
 
 ### ✅ Wykonane zadania
+
 - **Analiza aktualnej konfiguracji** - sprawdzenie eslint.config.mjs i .prettierrc
 - **Konfiguracja integracji** - dodanie eslint-config-prettier i eslint-plugin-prettier do ESLint
 - **Przeprowadzenie testów** zgodnie z docs/TESTING_STRATEGY.md:
@@ -416,23 +423,134 @@ Skonfigurowanie integracji Prettier z ESLint (`eslint-plugin-prettier`) tak, by 
 - **Aktualizacja dokumentacji** - TODO.md i History/AiStory.md
 
 ### 📝 Uwagi i decyzje
+
 - **Integracja skonfigurowana w eslint.config.mjs** - dodano 'prettier' do extends i eslint-plugin-prettier
 - **Reguła 'prettier/prettier': 'error'** - ESLint traktuje błędy formatowania jako błędy
 - **Wszystkie testy przeszły pomyślnie** - brak konfliktów między ESLint a Prettier
 - **Automatyczne naprawianie** - lint:fix naprawia błędy formatowania
 
 ### 🔗 Powiązane pliki
+
 - `frontend/eslint.config.mjs` - dodana integracja z Prettier
 - `frontend/.prettierrc` - konfiguracja Prettier (już istniała)
 - `TODO.md` - punkt 1.6 oznaczony jako zakończony
 - `History/AiStory.md` - dokumentacja testów
 
 ### 🧪 **Wyniki testów punktu 1.6:**
+
 - ✅ **Wykrywanie błędów** - ESLint wykrywa błędy formatowania Prettier
 - ✅ **Automatyczne naprawianie** - lint:fix naprawia błędy formatowania
 - ✅ **Brak konfliktów** - ESLint i Prettier współpracują bez konfliktów
 - ✅ **Niezależne działanie** - Prettier działa samodzielnie
 - ✅ **Finalna konfiguracja** - wszystkie testy przeszły pomyślnie
+- ✅ Wszystkie testy przeszły pomyślnie
+
+---
+
+## [2024-01-23 22:45] - Konfiguracja VS Code (punkt 1.7)
+
+### 🎯 Cel sesji
+
+Utworzenie konfiguracji VS Code z automatycznym formatowaniem i lintowaniem przy zapisie.
+
+### 💬 Komunikacja
+
+**Użytkownik:**
+
+> W takim razie teraz punkt 1.7
+
+### ✅ Wykonane zadania
+
+- **Utworzenie katalogu .vscode** - struktura konfiguracji VS Code
+- **Konfiguracja settings.json** - automatyczne formatowanie i lintowanie przy zapisie
+- **Konfiguracja extensions.json** - rekomendowane rozszerzenia
+- **Konfiguracja launch.json** - debugowanie Next.js i FastAPI
+- **Przeprowadzenie testów** zgodnie z docs/TESTING_STRATEGY.md:
+  1. ✅ Test wykrywania błędów formatowania przez ESLint
+  2. ✅ Test automatycznego naprawiania błędów przez lint:fix
+  3. ✅ Test działania Prettier
+  4. ✅ Test finalnej konfiguracji
+- **Posprzątanie projektu** - usunięcie plików testowych
+- **Aktualizacja dokumentacji** - TODO.md i History/AiStory.md
+
+### 📝 Uwagi i decyzje
+
+- **Automatyczne formatowanie przy zapisie** - `editor.formatOnSave: true`
+- **ESLint jako linter przy zapisie** - `eslint.run: "onSave"`
+- **Prettier jako domyślny formatter** - dla wszystkich typów plików
+- **Rekomendowane rozszerzenia** - ESLint, Prettier, TypeScript, Python, Git
+- **Konfiguracja debugowania** - Next.js i FastAPI
+
+### 🔗 Powiązane pliki
+
+- `.vscode/settings.json` - konfiguracja automatycznego formatowania i lintowania
+- `.vscode/extensions.json` - rekomendowane rozszerzenia
+- `.vscode/launch.json` - konfiguracja debugowania
+- `TODO.md` - punkt 1.7 oznaczony jako zakończony
+- `History/AiStory.md` - dokumentacja testów
+
+### 🧪 **Wyniki testów punktu 1.7:**
+
+- ✅ **Wykrywanie błędów** - ESLint wykrywa błędy formatowania
+- ✅ **Automatyczne naprawianie** - lint:fix naprawia błędy formatowania
+- ✅ **Działanie Prettier** - formatowanie działa poprawnie
+- ✅ **Finalna konfiguracja** - wszystkie testy przeszły pomyślnie
+- ✅ **Konfiguracja VS Code** - automatyczne formatowanie i lintowanie przy zapisie
+- ✅ Wszystkie testy przeszły pomyślnie
+
+---
+
+## [2024-01-23 23:00] - Naprawa konfiguracji Next.js i instalacja UI frameworków
+
+### 🎯 Cel sesji
+
+Naprawa przestarzałej konfiguracji Next.js i instalacja Tailwind CSS + shadcn/ui zgodnie z PRD.
+
+### 💬 Komunikacja
+
+**Użytkownik:**
+
+> Dodaj punkty i zacznij konfigurację
+
+### ✅ Wykonane zadania
+
+- **Dodanie punktów do TODO.md** - nowa sekcja "Frontend - UI i Design" (1.8-1.12)
+- **Naprawa konfiguracji Next.js** - migracja z `experimental.turbo` na `turbopack`
+- **Instalacja Tailwind CSS** - wersja 3.4.0 z pełną konfiguracją
+- **Instalacja shadcn/ui** - inicjalizacja i podstawowe komponenty
+- **Przeprowadzenie testów** zgodnie z docs/TESTING_STRATEGY.md:
+  1. ✅ Test konfiguracji Tailwind CSS
+  2. ✅ Test komponentów shadcn/ui
+  3. ✅ Test build bez ostrzeżeń
+  4. ✅ Test funkcjonalności UI
+- **Aktualizacja dokumentacji** - TODO.md i History/AiStory.md
+
+### 📝 Uwagi i decyzje
+
+- **Next.js 15** - zaktualizowano konfigurację turbopack (bez ostrzeżeń)
+- **Tailwind CSS 3.4.0** - stabilna wersja z pełnym wsparciem
+- **shadcn/ui** - nowoczesne komponenty UI z dark/light mode
+- **CSS Variables** - gotowe zmienne dla motywów
+- **Wszystkie testy przeszły pomyślnie** - konfiguracja jest w pełni funkcjonalna
+
+### 🔗 Powiązane pliki
+
+- `frontend/next.config.js` - zaktualizowana konfiguracja turbopack
+- `frontend/tailwind.config.js` - konfiguracja Tailwind CSS
+- `frontend/components.json` - konfiguracja shadcn/ui
+- `frontend/src/components/ui/` - komponenty Button, Card, Input
+- `frontend/app/globals.css` - zmienne CSS dla motywów
+- `TODO.md` - punkty 1.8 i 1.9 oznaczone jako zakończone
+- `History/AiStory.md` - dokumentacja zmian
+
+### 🧪 **Wyniki testów:**
+
+- ✅ **Next.js build** - bez ostrzeżeń, turbopack działa poprawnie
+- ✅ **Tailwind CSS** - utility classes działają w komponentach
+- ✅ **shadcn/ui** - komponenty renderują się poprawnie
+- ✅ **Dark/Light mode** - zmienne CSS skonfigurowane
+- ✅ **TypeScript** - pełne wsparcie typów
+- ✅ **ESLint + Prettier** - formatowanie działa poprawnie
 - ✅ Wszystkie testy przeszły pomyślnie
 
 ---
@@ -769,3 +887,7 @@ Utworzę strukturę katalogów i plików zgodnie z planem. Sprawdzę które już
 ---
 
 _Ten plik będzie aktualizowany przy każdej sesji komunikacji z AI, aby zachować pełną historię rozwoju projektu RepoScope._
+
+```
+
+```

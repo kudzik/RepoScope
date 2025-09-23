@@ -1,6 +1,3 @@
-Konfiguracja projektu RepoScope — Edytor, Lintery i Repozytorium
-
-```markdown
 # 🚀 Konfiguracja projektu RepoScope — Edytor, Lintery i Repozytorium
 
 ---
@@ -11,7 +8,7 @@ Konfiguracja projektu RepoScope — Edytor, Lintery i Repozytorium
   - Lekki, popularny, z dużą liczbą rozszerzeń
   - Obsługuje JavaScript/TypeScript i Python natywnie (frontend & backend)
 
-### VS Code - rekomendowane rozszerzenia:
+### VS Code - rekomendowane rozszerzenia
 
 - **Prettier** (autoformatowanie kodu)
 - **ESLint** (linting JS/TS)
@@ -53,7 +50,7 @@ Konfiguracja projektu RepoScope — Edytor, Lintery i Repozytorium
 
 ## 3. ⚙️ Pliki konfiguracyjne do repozytorium
 
-### Podstawowe pliki:
+### Podstawowe pliki
 
 - `.eslintrc.json` — konfiguracja ESLint dla frontend
 - `.prettierrc` — ustawienia Prettier
@@ -81,7 +78,6 @@ Konfiguracja projektu RepoScope — Edytor, Lintery i Repozytorium
 ---
 
 ## 5. 🔧 Przykładowa struktura katalogów i plików
-```
 
 /reposcope
 ├── backend/
@@ -109,13 +105,9 @@ Konfiguracja projektu RepoScope — Edytor, Lintery i Repozytorium
 ├── .github/workflows/ci.yml # GitHub Actions
 ├── pre-commit-config.yaml # pre-commit hooks config
 
-```
-
 ---
 
-# ✅ Proponowany commit message na start konfiguracji
-
-```
+- ✅ Proponowany commit message na start konfiguracji
 
 chore(setup): konfiguracja linterów, formatowania i CI/CD dla RepoScope
 
@@ -124,16 +116,11 @@ chore(setup): konfiguracja linterów, formatowania i CI/CD dla RepoScope
 - Konfiguracja pre-commit hooks do automatycznej walidacji kodu
 - Dodanie szkieletu workflow CI/CD do GitHub Actions z testami i skanowaniem zależności
 
-```
-
 ---
 
 Jeśli chcesz, mogę wygenerować przykładowe pliki konfiguracyjne ESLint, Prettier, flake8, black, mypy oraz plik workflow CI/CD do GitHub Actions.
-```
 
 ---
-
-**User**
 
 Twoim zadaniem jest wygenerowanie
 szczegółowego planu działania dla Konfiguracja projektu RepoScope — Edytor, Lintery i Repozytorium

@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-0.1.0-green.svg)](CHANGELOG.md)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/your-username/RepoScope/actions)
 
 ## 📋 Przegląd
 
@@ -38,28 +38,46 @@ RepoScope to zaawansowane narzędzie do automatycznej analizy repozytoriów GitH
 
 ## ✅ Status konfiguracji
 
-### Zakończone kroki:
+### Zakończone kroki
 
 - ✅ **ESLint** - konfiguracja Next.js 15 z ESLint CLI
 - ✅ **Prettier** - formatowanie kodu zgodne z regułami
 - ✅ **EditorConfig** - spójne ustawienia edytora
+- ✅ **Next.js 15** - migracja na turbopack (bez ostrzeżeń)
+- ✅ **Tailwind CSS** - konfiguracja z CSS variables
+- ✅ **shadcn/ui** - komponenty UI z dark/light mode
+- ✅ **VS Code** - automatyczne formatowanie i lintowanie
 - ✅ **Testy** - wszystkie konfiguracje przetestowane
 
-### W trakcie:
+### W trakcie
 
-- 🔄 **Skrypty package.json** - dodatkowe polecenia
+- 🔄 **Dark/Light mode** - konfiguracja next-themes
 - 🔄 **Pre-commit hooks** - automatyzacja sprawdzania
 - 🔄 **VS Code** - ustawienia edytora
 
 ## 🛠️ Stos technologiczny
 
-<!-- TODO: Dodać szczegółowy stos technologiczny -->
+### Frontend
 
-- **Frontend**: Next.js 15 + shadcn/ui
-- **Backend**: FastAPI + LangChain
-- **AI**: OpenRouter/OpenAI
-- **Baza danych**: Supabase
-- **Autoryzacja**: SuperTokens
+- **Framework**: Next.js 15 (App Router + Turbopack)
+- **Styling**: Tailwind CSS 3.4 + shadcn/ui
+- **Language**: TypeScript
+- **Linting**: ESLint (flat config) + Prettier
+- **Components**: shadcn/ui (Button, Card, Input, etc.)
+
+### Backend (planowane)
+
+- **Framework**: FastAPI 0.111 + LangChain 0.1.20
+- **Language**: Python 3.11
+- **Linting**: flake8 + black + mypy + isort
+- **AI Integration**: OpenRouter/OpenAI API
+
+### Infrastructure (planowane)
+
+- **Database**: Supabase
+- **Authentication**: SuperTokens
+- **Hosting**: Vercel (frontend) + Render (backend)
+- **Monitoring**: Highlight.io + Sentry
 
 ## 🤝 Współpraca
 

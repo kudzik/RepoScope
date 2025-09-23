@@ -312,14 +312,14 @@ def test_mypy_config():
 
 ## 📊 Kryteria akceptacji testów
 
-### ✅ Każdy krok konfiguracji musi przejść:
+### ✅ Każdy krok konfiguracji musi przejść
 
 1. **Test podstawowy** - Narzędzie uruchamia się bez błędów
 2. **Test funkcjonalny** - Narzędzie wykonuje swoją funkcję (linting, formatowanie)
 3. **Test integracyjny** - Narzędzie współpracuje z innymi narzędziami
 4. **Test regresyjny** - Zmiany nie zepsuły istniejącej funkcjonalności
 
-### 📈 Metryki jakości:
+### 📈 Metryki jakości
 
 - **0 błędów lintingu** w kodzie produkcyjnym
 - **100% plików sformatowanych** zgodnie z regułami
@@ -329,14 +329,14 @@ def test_mypy_config():
 
 ## ✅ Aktualny status testów
 
-### Zakończone testy (punkty 1.1, 1.2, 1.3):
+### Zakończone testy (punkty 1.1, 1.2, 1.3)
 
 - ✅ **ESLint** - uruchamia się bez błędów, wykrywa reguły, integracja z Prettier
 - ✅ **Prettier** - formatuje pliki poprawnie, wszystkie reguły działają
 - ✅ **EditorConfig** - plik istnieje, ustawienia respektowane przez Prettier
 - ✅ **Integracja** - ESLint + Prettier + EditorConfig współpracują bez konfliktów
 
-### Do wykonania (punkty 1.4+):
+### Do wykonania (punkty 1.4+)
 
 - 🔄 **Skrypty package.json** - dodatkowe polecenia
 - 🔄 **Pre-commit hooks** - husky i lint-staged
@@ -383,13 +383,13 @@ mypy .
 
 ## 📝 Checklist testowania
 
-### Przed każdym krokiem:
+### Przed każdym krokiem
 
 - [ ] Utworzono pliki testowe
 - [ ] Zdefiniowano oczekiwane wyniki
 - [ ] Przygotowano skrypty testowe
 
-### Po każdym kroku:
+### Po każdym kroku
 
 - [ ] Uruchomiono testy podstawowe
 - [ ] Uruchomiono testy funkcjonalne
@@ -397,12 +397,133 @@ mypy .
 - [ ] Sprawdzono metryki jakości
 - [ ] Zaktualizowano dokumentację testów
 
-### Przy problemach:
+### Przy problemach
 
 - [ ] Zidentyfikowano przyczynę błędu
 - [ ] Naprawiono konfigurację
 - [ ] Ponownie uruchomiono testy
 - [ ] Udokumentowano rozwiązanie
+
+---
+
+## 🎨 Testy UI Frameworków
+
+### Tailwind CSS (punkt 1.8)
+
+#### Test 1: Konfiguracja Tailwind CSS
+
+```bash
+# Test kompilacji CSS
+npx tailwindcss -i ./app/globals.css -o ./test-output.css
+
+# Sprawdzenie czy plik został utworzony
+ls -la test-output.css
+
+# Test build Next.js
+npm run build
+```
+
+**Oczekiwany wynik:**
+
+- ✅ Plik `test-output.css` został utworzony
+- ✅ Build Next.js zakończył się sukcesem
+- ✅ Tailwind utility classes działają w komponentach
+
+#### Test 2: Utility classes w komponentach
+
+```typescript
+// Test w app/page.tsx
+<div className="bg-blue-500 text-white p-4 rounded-lg">Tailwind CSS Test</div>
+```
+
+**Oczekiwany wynik:**
+
+- ✅ Style Tailwind CSS są aplikowane
+- ✅ Komponent renderuje się poprawnie
+
+### shadcn/ui (punkt 1.9)
+
+#### Test 1: Instalacja komponentów
+
+```bash
+# Sprawdzenie czy komponenty zostały zainstalowane
+ls -la src/components/ui/
+
+# Test importu komponentów
+```
+
+**Oczekiwany wynik:**
+
+- ✅ Komponenty Button, Card, Input są dostępne
+- ✅ Import komponentów działa poprawnie
+
+#### Test 2: Renderowanie komponentów
+
+```typescript
+// Test w app/page.tsx
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+
+export default function TestPage() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>shadcn/ui Test</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Input placeholder="Test input" />
+        <Button>Test Button</Button>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+**Oczekiwany wynik:**
+
+- ✅ Komponenty renderują się bez błędów
+- ✅ Style shadcn/ui są aplikowane
+- ✅ TypeScript nie zgłasza błędów
+
+#### Test 3: CSS Variables i theming
+
+```bash
+# Sprawdzenie czy CSS variables są zdefiniowane
+grep -n "var(--" app/globals.css
+```
+
+**Oczekiwany wynik:**
+
+- ✅ CSS variables dla light/dark mode są zdefiniowane
+- ✅ Kolory shadcn/ui są dostępne
+
+### Next.js 15 (punkt 1.8-1.9)
+
+#### Test 1: Turbopack configuration
+
+```bash
+# Test build z turbopack
+npm run build
+```
+
+**Oczekiwany wynik:**
+
+- ✅ Build zakończył się sukcesem
+- ✅ Brak ostrzeżeń o przestarzałej konfiguracji
+- ✅ Turbopack działa poprawnie
+
+#### Test 2: TypeScript integration
+
+```bash
+# Test type checking
+npm run type-check
+```
+
+**Oczekiwany wynik:**
+
+- ✅ TypeScript check przeszedł bez błędów
+- ✅ Wszystkie typy są poprawne
 
 ---
 

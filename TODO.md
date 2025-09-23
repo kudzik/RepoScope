@@ -57,14 +57,51 @@
   - Prettier: `prettier`, `eslint-config-prettier`
   - **Test**: `npm list` pokazuje wszystkie zainstalowane pakiety
 
-- [ ] **1.6** Skonfigurować integrację Prettier z ESLint (`eslint-plugin-prettier`) tak, by oba narzędzia współpracowały
+- [x] **1.6** Skonfigurować integrację Prettier z ESLint (`eslint-plugin-prettier`) tak, by oba narzędzia współpracowały
 
   - **Test**: Brak konfliktów między ESLint a Prettier
 
-- [ ] **1.7** Dodać plik `.vscode/settings.json` (opcjonalnie) z konfiguracją automatycznego formatowania i lintowania przy zapisie:
+- [x] **1.7** Dodać plik `.vscode/settings.json` (opcjonalnie) z konfiguracją automatycznego formatowania i lintowania przy zapisie:
   - Włączenie `editor.formatOnSave`
   - Włączenie ESLint jako linter przy zapisie
   - **Test**: Automatyczne formatowanie przy zapisie pliku
+  - ✅ **ZAKOŃCZONE**: Konfiguracja VS Code utworzona, wszystkie testy przeszły pomyślnie
+
+### Frontend - UI i Design
+
+- [x] **1.8** Instalacja i konfiguracja Tailwind CSS:
+
+  - Zainstalować Tailwind CSS i jego zależności
+  - Skonfigurować tailwind.config.js
+  - Dodać Tailwind do globals.css
+  - **Test**: Tailwind CSS działa w komponentach
+
+- [x] **1.9** Instalacja i konfiguracja shadcn/ui:
+
+  - Zainstalować shadcn/ui CLI
+  - Skonfigurować components.json
+  - Zainstalować podstawowe komponenty (Button, Input, Card)
+  - **Test**: Komponenty shadcn/ui działają poprawnie
+
+- [ ] **1.10** Konfiguracja Dark/Light mode:
+
+  - Skonfigurować next-themes
+  - Dodać ThemeProvider
+  - Stworzyć ThemeToggle komponent
+  - **Test**: Przełączanie motywów działa
+
+- [ ] **1.11** Responsywny design i mobile optimization:
+
+  - Skonfigurować breakpoints Tailwind
+  - Dodać mobile-first approach
+  - Przetestować na różnych rozmiarach ekranu
+  - **Test**: UI jest responsywny na wszystkich urządzeniach
+
+- [ ] **1.12** Accessibility (WCAG 2.1 compliance):
+  - Dodać ARIA labels i roles
+  - Skonfigurować focus management
+  - Przetestować z screen reader
+  - **Test**: Aplikacja jest dostępna dla użytkowników z niepełnosprawnościami
 
 ### Backend - Python Lintery
 
@@ -116,7 +153,7 @@
 
 ## 🏃‍♂️ 2. Plan realizacji w sprintach Agile
 
-### Podział zadania na subtasks / user stories:
+### Podział zadania na subtasks / user stories
 
 - [ ] **US1**: Utworzenie i konfiguracja ESLint dla frontend (2 dni)
 - [ ] **US2**: Utworzenie i konfiguracja Prettier oraz integracja z ESLint (1 dzień)
@@ -127,7 +164,7 @@
 
 ### Szacowany czas: 6-7 dni roboczych (jeden sprint tygodniowy)
 
-### Kryteria akceptacji (Definition of Done):
+### Kryteria akceptacji (Definition of Done)
 
 - [ ] Pliki konfiguracyjne są dostępne i kompletnie skonfigurowane
 - [ ] Linter i Prettier działają bez błędów lokalnie i w CI
@@ -135,7 +172,7 @@
 - [ ] Dokumentacja lokalnego workflow jest kompletna
 - [ ] Pull request zatwierdzony w code review, z testami i bez błędów
 
-### Praktyki i spotkania zespołu:
+### Praktyki i spotkania zespołu
 
 - **Daily Stand-up:** omówienie bieżącego statusu i przeszkód
 - **Sprint Planning:** podział user stories i przydział zadań
@@ -143,7 +180,7 @@
 - **Sprint Review & Retrospective:** feedback i ulepszanie procesu
 - **Pair Programming / Mob Programming:** przy pierwszej konfiguracji dla lepszego transferu wiedzy
 
-### Komunikacja i feedback:
+### Komunikacja i feedback
 
 - Wykorzystanie Slack/Teams do szybkiego feedbacku
 - Dokumentacja w repozytorium i wiki projektu

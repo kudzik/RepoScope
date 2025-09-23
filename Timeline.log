@@ -1,0 +1,79 @@
+# 📅 Timeline rozwoju RepoScope
+
+## 📋 Przegląd
+
+Ten plik zawiera chronologiczną historię rozwoju projektu RepoScope, dokumentując wszystkie istotne wydarzenia, decyzje i osiągnięcia.
+
+## 📅 Format wpisów
+
+```
+YYYY-MM-DD HH:MM - [TYP] Tytuł wydarzenia
+- Szczegóły wydarzenia
+- Dodatkowe informacje
+- Odnośniki do commitów/PR/issues
+```
+
+## 📊 Legenda typów
+
+- 🚀 **INIT** - Inicjalizacja projektu
+- ✨ **FEAT** - Nowa funkcjonalność
+- 🐛 **FIX** - Naprawa błędu
+- 📝 **DOCS** - Aktualizacja dokumentacji
+- 🔧 **CONFIG** - Zmiana konfiguracji
+- 🏗️ **ARCH** - Zmiana architektury
+- 🧪 **TEST** - Dodanie/usunięcie testów
+- 🚀 **DEPLOY** - Deployment/wdrożenie
+- 🔄 **REFACTOR** - Refaktoryzacja kodu
+- 💬 **MEETING** - Spotkanie zespołu
+- 📋 **DECISION** - Ważna decyzja projektowa
+
+## 📅 Historia projektu
+
+### 2024-01-XX
+```
+2024-01-XX XX:XX - [INIT] Inicjalizacja projektu RepoScope
+- Utworzenie repozytorium GitHub
+- Przygotowanie szkieletu dokumentacji
+- Ustanowienie zasad programowania zgodnych z VibeCoding
+- Komit: [link do commita]
+```
+
+<!-- TODO: Dodać więcej wpisów w miarę rozwoju projektu -->
+
+## 📊 Statystyki rozwoju
+
+- **Dni od rozpoczęcia**: [liczba dni]
+- **Łączna liczba commitów**: [liczba]
+- **Liczba wydanych wersji**: [liczba]
+- **Liczba zgłoszonych błędów**: [liczba]
+- **Liczba naprawionych błędów**: [liczba]
+
+## 🎯 Kamienie milowe
+
+### MVP (Minimum Viable Product)
+- [ ] Data: [planowana data]
+- [ ] Opis: Podstawowa funkcjonalność analizy repozytoriów
+
+### Beta Release
+- [ ] Data: [planowana data]
+- [ ] Opis: Wersja beta dla wybranych użytkowników
+
+### Public Launch
+- [ ] Data: [planowana data]
+- [ ] Opis: Oficjalne uruchomienie dla wszystkich użytkowników
+
+## 📈 Metryki rozwoju
+
+### Tempo rozwoju
+- **Średnia liczba commitów/dzień**: [liczba]
+- **Średnia liczba funkcjonalności/sprint**: [liczba]
+- **Czas od zgłoszenia do naprawy błędu**: [średnia]
+
+### Jakość kodu
+- **Pokrycie testami**: [procent]%
+- **Liczba linting errors**: [liczba]
+- **Cyclomatic complexity**: [średnia]
+
+---
+
+**Uwaga**: Ten plik powinien być aktualizowany przy każdej istotnej zmianie w projekcie.

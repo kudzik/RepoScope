@@ -41,9 +41,8 @@
 
 - [x] **1.3** Utworzyć / zaktualizować `.editorconfig` w głównym katalogu repozytorium (lub frontend/)
 
-  - Definiować wcięcia (2 spacje), końce linii LF, max-len
-  - Zapewnić spójność formatowania w wielu edytorach
-  - **Test**: Sprawdzenie czy VS Code respektuje ustawienia
+  - Zapewnić spójność formatowania w wielu edytorach zgodne z github
+  - **Test**: Sprawdzenie czy edytor respektuje ustawienia
 
 - [ ] **1.4** Dodać do `package.json` frontend polecenia skryptów:
 

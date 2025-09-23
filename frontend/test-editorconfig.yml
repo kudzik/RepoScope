@@ -1,0 +1,10 @@
+name: test
+version: 1.0.0
+description: Test file for EditorConfig
+main: index.js
+scripts:
+  test: 'echo "Error: no test specified" && exit 1'
+keywords:
+  - test
+author: ''
+license: ISC

@@ -1,0 +1,109 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+# 📜 Zasady programowania dla projektu RepoScope zgodne z VibeCoding i najlepszymi praktykami
+
+---
+
+## 🎯 Ogólne zasady komunikacji i współpracy
+
+- **Zawsze odpowiadaj po polsku** 🇵🇱
+- **Dopytuj, jeśli nie masz pewności** ❓
+- Wybieraj zasady i technologie pod kątem charakteru projektu i zespołu 🧩
+
+---
+
+## 🚀 Wybór technologii i frameworków
+
+- Preferuj **Open Source** i darmowe rozwiązania, jeśli spełniają wymagania
+- Dla dużych projektów SaaS wybierz **pełne frameworki** i dojrzałe technologie
+- Zespół powinien korzystać z dobrze udokumentowanych technologii z aktywną społecznością
+- Sprawdzaj roadmapy i wsparcie projektów (np. LangChain, Supabase, SuperTokens)
+- Stawiaj na elastyczność i skalowalność (np. Next.js, FastAPI, Vercel, Render)
+
+---
+
+## 📝 Dokumentacja i zarządzanie zmianami
+
+- Dokumentuj wszystko w `docs/`: PRD, ARCHITECTURE, TESTS, DEPLOYMENT, ROADMAP, SECURITY, CHANGELOG zgodnie z Keep a Changelog
+- Aktualizuj `README.md` i `FEATURES.md` przy istotnych zmianach
+- Stosuj semantyczne wersjonowanie i Conventional Commits
+- Prowadź `Timeline.log` i śledzenie błędów w `BUGS.md`
+- Wprowadź ADR do kluczowych decyzji architektonicznych
+
+---
+
+## 💻 Styl kodu i architektura
+
+- Stosuj **Separation of Concerns** i **Single Responsibility Principle**
+- Modularizuj kod i externalizuj konfigurację
+- Wykorzystuj automatyczne formatery (Prettier, Black) i lintery
+- Nadaj zmiennym i funkcjom opisowe nazwy, unikaj skrótów i magicznych liczb
+- Komentuj **dlaczego** a nie **co** robi kod, unikaj oczywistych komentarzy
+- Oznacz eksperymentalne fragmenty: `EXPERIMENTAL`, `TODO`
+
+---
+
+## 🛡️ Bezpieczeństwo i obsługa błędów
+
+- Waliduj i sanityzuj wszystkie dane wejściowe (URL, auth)
+- Używaj HTTPS, certyfikatów (Let’s Encrypt), security headers (CSP, HSTS)
+- Stosuj wielopoziomową autoryzację i kontrolę dostępu (SuperTokens)
+- Wprowadzaj **Fail Fast** i **Graceful Degradation**
+- Loguj błędy strukturalnie (JSON), izoluj błędy za pomocą **Error Boundaries**
+- Regularnie audytuj zależności (npm audit, Snyk, SonarQube community)
+- Implementuj rate limiting i circuit breaker dla API
+
+---
+
+## ⚡ Wydajność i testowanie
+
+- Stawiaj na optymalizację (lazy loading, code splitting, caching, indeksowanie)
+- Ustal performance budgets (np. LCP < 2.5s)
+- Prowadź testy:
+  - Jednostkowe (min. 80% dla krytycznych komponentów)
+  - Integracyjne i E2E (Cypress, Playwright)
+  - Testy obciążeniowe i bezpieczeństwa
+- Integruj testy i skanery bezpieczeństwa w CI/CD (GitHub Actions)
+
+---
+
+## 🔄 Git i zarządzanie wersjami
+
+- Stosuj konwencję Conventional Commits z jasnymi typami (feat, fix, docs, test, chore)
+- Twórz atomiczne commity z jednoznacznym opisem
+- Taguj wersje semantycznie (vX.Y.Z)
+- Aktualizuj `ISSUE.md` i `BUGS.md` zgodnie ze statusem zadania
+
+---
+
+## 🧑‍💻 Workflow i zarządzanie zadaniami
+
+- Planowanie → Setup dokumentacji → Implementacja → Testowanie → Wdrożenie
+- Dokumentuj decyzje i zmiany w ADR i changelog
+- Aktualizuj TODO i Issue na bieżąco
+- Wprowadź system priorytetów i kategoryzację błędów (🔴, 🟠, 🟡, 🟢)
+
+---
+
+## 💡 Propozycje uzupełniające dla RepoScope
+
+- Wprowadź API Contract Testing, aby zapewnić spójność frontend/backend/LLM
+- Dodaj mechanizm feedbacku użytkowników do monitorowania UX i doskonalenia produktu
+- Zadbaj o accessibility (WCAG 2.1 AA) — klawiatura, ARIA, kontrasty kolorów
+- Przygotuj roadmapę z planem ewolucji funkcji LLM i integracji AI
+
+---
+
+ ✅ Proponowany commit message
+
+```text
+feat(setup): dodanie kompletnego zestawu zasad kodowania, dokumentacji i bezpieczeństwa dla RepoScope zgodnie z VibeCoding
+
+- Wprowadzenie workflow, git conventions i bezpieczeństwa
+- Ustawienie zasad dotyczących stylu kodu i architektury
+- Definicja standardów dokumentacji i zarządzania zmianami
+```

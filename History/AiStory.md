@@ -235,6 +235,208 @@ Aktualizacja dokumentacji zgodnie z ukończonymi punktami 1.1, 1.2 i 1.3 - dodan
 
 ---
 
+## [2024-01-23 22:05] - Testowanie skryptów package.json (punkt 1.4)
+
+### 🎯 Cel sesji
+
+Sprawdzenie czy skrypty w package.json (punkt 1.4) są prawidłowe i działają zgodnie z wymaganiami.
+
+### 💬 Komunikacja
+
+**Użytkownik:**
+
+> teraz punkt 1.4
+
+### ✅ Wykonane zadania
+
+- **Analiza wymagań punktu 1.4** - sprawdzenie zgodności z aktualną konfiguracją
+- **Przeprowadzenie 5 testów** zgodnie z docs/TESTING_STRATEGY.md:
+  1. ✅ Test skryptu lint - ESLint uruchamia się bez błędów
+  2. ✅ Test skryptu format - Prettier formatuje pliki poprawnie
+  3. ✅ Test skryptu lint:fix - ESLint fix działa poprawnie
+  4. ✅ Test dodatkowych skryptów - format:check, type-check działają
+  5. ✅ Test wszystkich skryptów - npm run pokazuje wszystkie dostępne skrypty
+- **Posprzątanie projektu** - usunięcie plików testowych
+- **Aktualizacja TODO.md** - oznaczenie punktu 1.4 jako zakończony
+
+### 📝 Uwagi i decyzje
+
+- **Wszystkie wymagane skrypty działają poprawnie** - lint, format, lint:fix
+- **Dodatkowe skrypty** - format:check, type-check, dev, build, start
+- **Unused variables** - nie mogą być automatycznie naprawione przez ESLint (wymaga decyzji programisty)
+- **Wszystkie testy przeszły pomyślnie** - konfiguracja jest w pełni funkcjonalna
+
+### 🔗 Powiązane pliki
+
+- `frontend/package.json` - skrypty npm (już istniały)
+- `TODO.md` - punkt 1.4 oznaczony jako zakończony
+- `docs/TESTING_STRATEGY.md` - strategia testowania
+
+### 🧪 **Wyniki testów punktu 1.4:**
+
+- ✅ Skrypt `lint` - ESLint uruchamia się bez błędów
+- ✅ Skrypt `format` - Prettier formatuje pliki poprawnie
+- ✅ Skrypt `lint:fix` - ESLint fix działa poprawnie
+- ✅ Skrypt `format:check` - sprawdza formatowanie
+- ✅ Skrypt `type-check` - sprawdza typy TypeScript
+- ✅ Wszystkie skrypty dostępne przez `npm run`
+- ✅ Wszystkie testy przeszły pomyślnie
+
+---
+
+## [2024-01-23 22:10] - Testowanie zależności frontend (punkt 1.5)
+
+### 🎯 Cel sesji
+
+Sprawdzenie czy wszystkie wymagane zależności ESLint i Prettier (punkt 1.5) są zainstalowane i działają poprawnie.
+
+### 💬 Komunikacja
+
+**Użytkownik:**
+
+> Teraz zajmijmy się punktem 1.5
+
+### ✅ Wykonane zadania
+
+- **Analiza wymagań punktu 1.5** - sprawdzenie zgodności z aktualną konfiguracją
+- **Przeprowadzenie 5 testów** zgodnie z docs/TESTING_STRATEGY.md:
+  1. ✅ Test npm list - wszystkie wymagane pakiety są zainstalowane
+  2. ✅ Test szczegółowy pakietów - wszystkie zależności są poprawne
+  3. ✅ Test działania ESLint - wszystkie pluginy działają poprawnie
+  4. ✅ Test działania Prettier - formatowanie działa poprawnie
+  5. ✅ Test integracji - ESLint + Prettier współpracują bez konfliktów
+- **Posprzątanie projektu** - usunięcie plików testowych
+- **Aktualizacja TODO.md** - oznaczenie punktu 1.5 jako zakończony
+
+### 📝 Uwagi i decyzje
+
+- **Wszystkie wymagane pakiety są zainstalowane** - ESLint, Prettier i wszystkie pluginy
+- **Wersje pakietów są stabilne** - ESLint 8.57.1 (nie 9.x ze względu na kompatybilność)
+- **Integracja działa poprawnie** - eslint-config-prettier i eslint-plugin-prettier
+- **Wszystkie testy przeszły pomyślnie** - konfiguracja jest w pełni funkcjonalna
+
+### 🔗 Powiązane pliki
+
+- `frontend/package.json` - wszystkie zależności (już istniały)
+- `frontend/package-lock.json` - zależności zainstalowane
+- `TODO.md` - punkt 1.5 oznaczony jako zakończony
+- `docs/TESTING_STRATEGY.md` - strategia testowania
+
+### 🧪 **Wyniki testów punktu 1.5:**
+
+- ✅ **ESLint i pluginy** - wszystkie 9 wymaganych pakietów zainstalowane
+- ✅ **Prettier** - wszystkie 2 wymagane pakiety zainstalowane
+- ✅ **npm list** - pokazuje wszystkie zainstalowane pakiety
+- ✅ **Funkcjonalność** - ESLint i Prettier działają poprawnie
+- ✅ **Integracja** - brak konfliktów między ESLint a Prettier
+- ✅ **Wersje** - wszystkie pakiety w stabilnych wersjach
+- ✅ Wszystkie testy przeszły pomyślnie
+
+---
+
+## [2024-01-23 22:25] - Aktualizacja pakietów do najnowszych wersji
+
+### 🎯 Cel sesji
+
+Aktualizacja wszystkich pakietów frontend do najnowszych wersji zgodnie z sugestią użytkownika.
+
+### 💬 Komunikacja
+
+**Użytkownik:**
+
+> Czy nie powinniśmy zaktualizować wersji pakietów na najnowsze
+
+### ✅ Wykonane zadania
+
+- **Analiza dostępnych aktualizacji** - sprawdzenie `npm outdated`
+- **Aktualizacja React** - `react@19.1.1`, `react-dom@19.1.1`
+- **Aktualizacja @types/node** - `@types/node@24.5.2`
+- **Aktualizacja ESLint** - `eslint@9.36.0` (z 8.57.1)
+- **Aktualizacja pluginów** - `eslint-plugin-react-hooks@5.2.0`, `eslint-config-prettier@10.1.8`
+- **Testowanie kompatybilności** - sprawdzenie czy wszystkie narzędzia działają
+- **Aktualizacja dokumentacji** - TODO.md i History/AiStory.md
+
+### 📝 Uwagi i decyzje
+
+- **ESLint 9.x jest teraz kompatybilny** - wszystkie pluginy działają poprawnie
+- **React 19.1.1** - najnowsza stabilna wersja
+- **@types/node 24.5.2** - najnowsza wersja z pełnym wsparciem dla Node.js 24
+- **Wszystkie testy przeszły pomyślnie** - lint, format:check, type-check
+- **Brak konfliktów** - wszystkie pakiety są kompatybilne
+
+### 🔗 Powiązane pliki
+
+- `frontend/package.json` - zaktualizowane wersje pakietów
+- `frontend/package-lock.json` - nowe zależności
+- `TODO.md` - punkt 1.5 zaktualizowany o informacje o nowych wersjach
+- `History/AiStory.md` - dokumentacja aktualizacji
+
+### 🧪 **Wyniki testów po aktualizacji:**
+
+- ✅ **ESLint 9.36.0** - działa poprawnie z wszystkimi pluginami
+- ✅ **React 19.1.1** - najnowsza wersja, pełna kompatybilność
+- ✅ **@types/node 24.5.2** - najnowsza wersja Node.js types
+- ✅ **eslint-plugin-react-hooks 5.2.0** - najnowsza wersja
+- ✅ **eslint-config-prettier 10.1.8** - najnowsza wersja
+- ✅ **Wszystkie testy** - lint, format:check, type-check działają
+- ✅ **Brak konfliktów** - wszystkie pakiety są kompatybilne
+
+### 📊 **Porównanie wersji:**
+
+| Pakiet                    | Przed    | Po     | Status            |
+| ------------------------- | -------- | ------ | ----------------- |
+| eslint                    | 8.57.1   | 9.36.0 | ✅ Zaktualizowany |
+| react                     | 19.1.0   | 19.1.1 | ✅ Zaktualizowany |
+| react-dom                 | 19.1.0   | 19.1.1 | ✅ Zaktualizowany |
+| @types/node               | 20.19.17 | 24.5.2 | ✅ Zaktualizowany |
+| eslint-plugin-react-hooks | 4.6.2    | 5.2.0  | ✅ Zaktualizowany |
+| eslint-config-prettier    | 9.1.2    | 10.1.8 | ✅ Zaktualizowany |
+
+---
+
+## [2024-01-23 22:35] - Konfiguracja integracji Prettier + ESLint (punkt 1.6)
+
+### 🎯 Cel sesji
+Skonfigurowanie integracji Prettier z ESLint (`eslint-plugin-prettier`) tak, by oba narzędzia współpracowały bez konfliktów.
+
+### 💬 Komunikacja
+**Użytkownik:**
+> Sprawdźmy kolejny krok na liście TODO
+
+### ✅ Wykonane zadania
+- **Analiza aktualnej konfiguracji** - sprawdzenie eslint.config.mjs i .prettierrc
+- **Konfiguracja integracji** - dodanie eslint-config-prettier i eslint-plugin-prettier do ESLint
+- **Przeprowadzenie testów** zgodnie z docs/TESTING_STRATEGY.md:
+  1. ✅ Test wykrywania błędów formatowania przez ESLint
+  2. ✅ Test automatycznego naprawiania błędów przez lint:fix
+  3. ✅ Test konfliktów między ESLint a Prettier
+  4. ✅ Test niezależnego działania Prettier
+  5. ✅ Test finalnej konfiguracji
+- **Posprzątanie projektu** - usunięcie plików testowych
+- **Aktualizacja dokumentacji** - TODO.md i History/AiStory.md
+
+### 📝 Uwagi i decyzje
+- **Integracja skonfigurowana w eslint.config.mjs** - dodano 'prettier' do extends i eslint-plugin-prettier
+- **Reguła 'prettier/prettier': 'error'** - ESLint traktuje błędy formatowania jako błędy
+- **Wszystkie testy przeszły pomyślnie** - brak konfliktów między ESLint a Prettier
+- **Automatyczne naprawianie** - lint:fix naprawia błędy formatowania
+
+### 🔗 Powiązane pliki
+- `frontend/eslint.config.mjs` - dodana integracja z Prettier
+- `frontend/.prettierrc` - konfiguracja Prettier (już istniała)
+- `TODO.md` - punkt 1.6 oznaczony jako zakończony
+- `History/AiStory.md` - dokumentacja testów
+
+### 🧪 **Wyniki testów punktu 1.6:**
+- ✅ **Wykrywanie błędów** - ESLint wykrywa błędy formatowania Prettier
+- ✅ **Automatyczne naprawianie** - lint:fix naprawia błędy formatowania
+- ✅ **Brak konfliktów** - ESLint i Prettier współpracują bez konfliktów
+- ✅ **Niezależne działanie** - Prettier działa samodzielnie
+- ✅ **Finalna konfiguracja** - wszystkie testy przeszły pomyślnie
+- ✅ Wszystkie testy przeszły pomyślnie
+
+---
+
 ## [2024-01-23 21:08] - Analiza zasad i tworzenie szkieletu dokumentacji
 
 ### 🎯 Cel sesji

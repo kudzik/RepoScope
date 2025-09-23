@@ -44,14 +44,14 @@
   - Zapewnić spójność formatowania w wielu edytorach zgodne z github
   - **Test**: Sprawdzenie czy edytor respektuje ustawienia
 
-- [ ] **1.4** Dodać do `package.json` frontend polecenia skryptów:
+- [x] **1.4** Dodać do `package.json` frontend polecenia skryptów:
 
   - `lint` — uruchamia ESLint na `src/`, `pages/`
   - `format` — uruchamia Prettier do formatowania plików
   - `lint:fix` — uruchamia ESLint z auto-naprawą błędów
   - **Test**: Wszystkie skrypty uruchamiają się poprawnie
 
-- [ ] **1.5** Zainstalować odpowiednie zależności w `frontend`:
+- [x] **1.5** Zainstalować odpowiednie zależności w `frontend`:
 
   - ESLint i konfigi: `eslint`, `eslint-config-next`, `@typescript-eslint/parser`, `@typescript-eslint/eslint-plugin`, `eslint-plugin-react`, `eslint-plugin-react-hooks`, `eslint-plugin-jsx-a11y`, `eslint-config-prettier`, `eslint-plugin-prettier`
   - Prettier: `prettier`, `eslint-config-prettier`

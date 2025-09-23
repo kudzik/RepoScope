@@ -29,12 +29,27 @@ RepoScope to zaawansowane narzędzie do automatycznej analizy repozytoriów GitH
 
 - [Product Requirements Document](docs/PRD.md)
 - [Architektura systemu](docs/ARCHITECTURE.md)
-- [Środowisko deweloperskie](docs/DEVELOPMENT.md)
-- [Strategia testowania](docs/TESTS.md)
+- [Środowisko deweloperskie](docs/DEVELOPMENT.md) ✅
+- [Strategia testowania](docs/TESTING_STRATEGY.md) ✅
 - [Deployment](docs/DEPLOYMENT.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Bezpieczeństwo](docs/SECURITY.md)
 - [Changelog](docs/CHANGELOG.md)
+
+## ✅ Status konfiguracji
+
+### Zakończone kroki:
+
+- ✅ **ESLint** - konfiguracja Next.js 15 z ESLint CLI
+- ✅ **Prettier** - formatowanie kodu zgodne z regułami
+- ✅ **EditorConfig** - spójne ustawienia edytora
+- ✅ **Testy** - wszystkie konfiguracje przetestowane
+
+### W trakcie:
+
+- 🔄 **Skrypty package.json** - dodatkowe polecenia
+- 🔄 **Pre-commit hooks** - automatyzacja sprawdzania
+- 🔄 **VS Code** - ustawienia edytora
 
 ## 🛠️ Stos technologiczny
 

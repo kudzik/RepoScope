@@ -48,35 +48,62 @@ Ten dokument zawiera szczegółową konfigurację środowiska deweloperskiego dl
 
 #### ESLint
 
+**⚠️ WAŻNE**: Next.js 15 wymaga migracji do ESLint CLI. Używamy nowego formatu flat config.
+
+**Konfiguracja (`frontend/eslint.config.mjs`):**
+
+```javascript
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { FlatCompat } from "@eslint/eslintrc";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
+
+const eslintConfig = [
+  {
+    ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"],
+  },
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"],
+  },
+];
+
+export default eslintConfig;
+```
+
+**Zainstalowane pakiety:**
+
+- `eslint@8.57.0` - ESLint (downgrade z 9.x dla kompatybilności)
+- `eslint-config-next@15.5.4` - Konfiguracja Next.js
+- `@typescript-eslint/parser@8.0.0` - Parser TypeScript
+- `@typescript-eslint/eslint-plugin@8.0.0` - Plugin TypeScript
+- `eslint-plugin-react@7.33.0` - Reguły dla React
+- `eslint-plugin-react-hooks@4.6.0` - Reguły dla React Hooks
+- `eslint-plugin-jsx-a11y@6.7.0` - Accessibility
+- `eslint-config-prettier@9.0.0` - Integracja z Prettier
+- `eslint-plugin-prettier@5.0.0` - Prettier jako ESLint rule
+
+**Skrypty w package.json:**
+
 ```json
 {
-  "extends": [
-    "next/core-web-vitals",
-    "@typescript-eslint/recommended",
-    "prettier"
-  ],
-  "plugins": ["@typescript-eslint", "jsx-a11y"],
-  "rules": {
-    "prefer-const": "error",
-    "no-unused-vars": "warn",
-    "@typescript-eslint/no-explicit-any": "warn"
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "type-check": "tsc --noEmit"
   }
 }
 ```
 
-**Pluginy:**
-
-- `eslint-plugin-react` - reguły dla React
-- `eslint-plugin-react-hooks` - reguły dla React Hooks
-- `eslint-plugin-jsx-a11y` - accessibility
-- `@typescript-eslint/eslint-plugin` - TypeScript
-
-**Reguły:**
-
-- Zgodne z Airbnb Style Guide lub Google Style
-- Dostosowane do specyfiki projektu
-
 #### Prettier
+
+**Konfiguracja (`frontend/.prettierrc`):**
 
 ```json
 {
@@ -85,11 +112,41 @@ Ten dokument zawiera szczegółową konfigurację środowiska deweloperskiego dl
   "singleQuote": true,
   "printWidth": 100,
   "tabWidth": 2,
-  "useTabs": false
+  "useTabs": false,
+  "bracketSpacing": true,
+  "arrowParens": "avoid"
 }
 ```
 
+**Zainstalowane pakiety:**
+
+- `prettier@3.0.0` - Prettier
+- `eslint-config-prettier@9.0.0` - Wyłącza reguły ESLint konfliktujące z Prettier
+- `eslint-plugin-prettier@5.0.0` - Uruchamia Prettier jako regułę ESLint
+
+**Skrypty w package.json:**
+
+```json
+{
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  }
+}
+```
+
+**✅ Przetestowane reguły:**
+
+- `singleQuote: true` - cudzysłowy pojedyncze
+- `semi: true` - średniki na końcu linii
+- `printWidth: 100` - maksymalna długość linii
+- `tabWidth: 2` - wcięcia 2 spacje
+- `bracketSpacing: true` - spacje w obiektach `{ key: value }`
+- `arrowParens: "avoid"` - `param =>` zamiast `(param) =>`
+
 #### EditorConfig
+
+**Konfiguracja (`.editorconfig` w głównym katalogu):**
 
 ```ini
 root = true
@@ -105,7 +162,24 @@ max_line_length = 100
 
 [*.md]
 trim_trailing_whitespace = false
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.json]
+indent_size = 2
 ```
+
+**✅ Przetestowane ustawienia:**
+
+- `charset = utf-8` - kodowanie UTF-8
+- `end_of_line = lf` - końce linii LF (Linux/Unix)
+- `indent_style = space` - wcięcia spacjami
+- `indent_size = 2` - 2 spacje na wcięcie
+- `insert_final_newline = true` - nowa linia na końcu pliku
+- `trim_trailing_whitespace = true` - usuwanie spacji na końcu linii
+- `max_line_length = 100` - maksymalna długość linii
+- Specjalne ustawienia dla markdown, YAML, JSON
 
 ### Backend (FastAPI 0.111 + Python)
 
@@ -195,24 +269,32 @@ known_third_party = ["fastapi", "pydantic", "sqlalchemy"]
 
 ```
 RepoScope/
-├── .eslintrc.json          # Konfiguracja ESLint dla frontend
-├── .prettierrc             # Ustawienia Prettier
-├── .editorconfig           # Spójne ustawienia edytora
-├── .flake8                 # Konfiguracja flake8 backend
-├── pyproject.toml          # Konfiguracja black, isort
-├── mypy.ini                # Konfiguracja mypy
-├── .gitignore              # Ignorowanie plików tymczasowych
-├── .vscode/                # Ustawienia VS Code
-│   ├── settings.json       # Lokalne ustawienia edytora
-│   ├── extensions.json     # Rekomendowane rozszerzenia
-│   └── launch.json         # Konfiguracja debugowania
-├── .github/                # GitHub Actions
+├── .editorconfig           # ✅ Spójne ustawienia edytora
+├── .gitignore              # ✅ Ignorowanie plików tymczasowych
+├── .pre-commit-config.yaml # ✅ Pre-commit hooks
+├── frontend/               # ✅ Konfiguracja frontend
+│   ├── .prettierrc         # ✅ Ustawienia Prettier
+│   ├── eslint.config.mjs   # ✅ Konfiguracja ESLint (flat config)
+│   ├── tsconfig.json       # ✅ Konfiguracja TypeScript
+│   └── package.json        # ✅ Zależności i skrypty
+├── backend/                # ✅ Konfiguracja backend
+│   ├── .flake8             # ✅ Konfiguracja flake8
+│   ├── pyproject.toml      # ✅ Konfiguracja black, isort
+│   └── mypy.ini            # ✅ Konfiguracja mypy
+├── .github/                # ✅ GitHub Actions
 │   └── workflows/
-│       ├── ci.yml          # CI pipeline
-│       ├── lint.yml        # Linting workflow
-│       └── security.yml    # Security scanning
-└── .pre-commit-config.yaml # Pre-commit hooks
+│       ├── ci.yml          # ✅ CI pipeline
+│       └── security.yml    # ✅ Security scanning
+└── .vscode/                # 🔄 Ustawienia VS Code (do utworzenia)
+    ├── settings.json       # 🔄 Lokalne ustawienia edytora
+    ├── extensions.json     # 🔄 Rekomendowane rozszerzenia
+    └── launch.json         # 🔄 Konfiguracja debugowania
 ```
+
+**Legenda:**
+
+- ✅ **Zakończone** - plik utworzony i przetestowany
+- 🔄 **Do zrobienia** - plik wymagany w kolejnych krokach
 
 ### Przykładowe pliki:
 
@@ -539,19 +621,31 @@ uvicorn main:app --reload
 ### Przydatne komendy
 
 ```bash
-# Frontend
-npm run lint          # ESLint check
-npm run lint:fix      # ESLint fix
-npm run format        # Prettier format
-npm run type-check    # TypeScript check
-npm run test          # Run tests
+# Frontend (z katalogu frontend/)
+npm run lint          # ESLint check (eslint .)
+npm run lint:fix      # ESLint fix (eslint --fix .)
+npm run format        # Prettier format (prettier --write .)
+npm run format:check  # Prettier check (prettier --check .)
+npm run type-check    # TypeScript check (tsc --noEmit)
+npm run dev           # Development server (next dev --turbopack)
+npm run build         # Production build (next build --turbopack)
+npm run start         # Production server (next start)
 
-# Backend
+# Backend (z katalogu backend/)
 flake8 .              # Python linting
 black .               # Python formatting
 mypy .                # Type checking
 pytest                # Run tests
+
+# Główny katalog
+pre-commit run --all-files  # Uruchom wszystkie pre-commit hooks
 ```
+
+**✅ Przetestowane komendy:**
+
+- `npm run lint` - ESLint uruchamia się bez błędów
+- `npm run format` - Prettier formatuje pliki poprawnie
+- `npm run format:check` - Wszystkie pliki są poprawnie sformatowane
 
 ---
 

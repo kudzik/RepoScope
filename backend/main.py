@@ -30,7 +30,7 @@ app.add_middleware(
 )
 
 
-@app.get("/")
+@app.get("/")  # type: ignore[misc]
 async def root() -> JSONResponse:
     """Root endpoint - API health check."""
     return JSONResponse(
@@ -43,7 +43,7 @@ async def root() -> JSONResponse:
     )
 
 
-@app.get("/health")
+@app.get("/health")  # type: ignore[misc]
 async def health_check() -> JSONResponse:
     """Health check endpoint."""
     return JSONResponse(content={"status": "healthy", "service": "reposcope-api"})
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     # Run the application
     uvicorn.run(
         "main:app",
-        host="0.0.0.0",
+        host="0.0.0.0",  # nosec B104
         port=8000,
         reload=True,
         log_level="info",

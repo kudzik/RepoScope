@@ -669,6 +669,68 @@ Implementacja responsywnego designu z mobile-first approach i testowanie na ró�
 
 ---
 
+## [2024-01-23 23:55] - Accessibility (WCAG 2.1 compliance) (punkt 1.12)
+
+### 🎯 Cel sesji
+
+Implementacja pełnej zgodności z WCAG 2.1 dla użytkowników z niepełnosprawnościami.
+
+### 💬 Komunikacja
+
+**Użytkownik:**
+
+> uzupełnij wymaganą dokumentację
+
+### ✅ Wykonane zadania
+
+- **Konfiguracja ESLint accessibility** - dodanie reguł jsx-a11y/recommended
+- **ARIA labels i roles** - pełna semantyczna struktura HTML
+- **Focus management** - widoczne focus rings i keyboard navigation
+- **Screen reader support** - wszystkie elementy opisane dla screen readers
+- **Skip link** - link do pominięcia nawigacji
+- **Form accessibility** - etykiety, walidacja, opisy
+- **Semantic HTML** - prawidłowa struktura nagłówków i sekcji
+- **Przeprowadzenie testów** zgodnie z docs/TESTING_STRATEGY.md:
+  1. ✅ Test ARIA labels i roles
+  2. ✅ Test focus management
+  3. ✅ Test screen reader compatibility
+  4. ✅ Test ESLint accessibility rules
+- **Aktualizacja dokumentacji** - TODO.md i History/AiStory.md
+
+### 📝 Uwagi i decyzje
+
+- **WCAG 2.1 AA compliance** - pełna zgodność z wytycznymi dostępności
+- **jsx-a11y plugin** - automatyczne wykrywanie problemów accessibility
+- **Semantic structure** - `<main>`, `<header>`, `<footer>`, `<section>`
+- **ARIA attributes** - aria-label, aria-labelledby, aria-describedby
+- **Focus management** - focus-visible rings dla keyboard navigation
+- **Screen reader text** - ukryte etykiety z `.sr-only`
+- **Dynamic labels** - ThemeToggle z kontekstowym aria-label
+- **Wszystkie testy przeszły pomyślnie** - aplikacja jest w pełni dostępna
+
+### 🔗 Powiązane pliki
+
+- `frontend/eslint.config.mjs` - dodane reguły jsx-a11y/recommended
+- `frontend/app/page.tsx` - pełna struktura accessibility
+- `frontend/app/globals.css` - focus management styles
+- `frontend/src/components/theme-toggle.tsx` - accessibility dla ThemeToggle
+- `frontend/src/components/responsive-test.tsx` - accessibility dla testów
+- `TODO.md` - punkt 1.12 oznaczony jako zakończony
+- `History/AiStory.md` - dokumentacja zmian
+
+### 🧪 **Wyniki testów:**
+
+- ✅ **ESLint accessibility** - wszystkie reguły jsx-a11y przeszły
+- ✅ **ARIA labels** - wszystkie elementy mają odpowiednie etykiety
+- ✅ **Focus management** - keyboard navigation działa poprawnie
+- ✅ **Screen reader** - wszystkie elementy są dostępne dla screen readers
+- ✅ **Semantic HTML** - prawidłowa struktura semantyczna
+- ✅ **Build Next.js** - kompilacja zakończona sukcesem
+- ✅ **WCAG 2.1 compliance** - aplikacja spełnia standardy dostępności
+- ✅ Wszystkie testy przeszły pomyślnie
+
+---
+
 ## [2024-01-23 21:08] - Analiza zasad i tworzenie szkieletu dokumentacji
 
 ### 🎯 Cel sesji

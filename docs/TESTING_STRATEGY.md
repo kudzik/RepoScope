@@ -527,4 +527,58 @@ npm run type-check
 
 ---
 
+### Accessibility (punkt 1.12)
+
+#### Test 1: ESLint accessibility rules
+
+```bash
+# Test ESLint accessibility rules
+npm run lint
+```
+
+**Oczekiwany wynik:**
+
+- ✅ Wszystkie reguły jsx-a11y przeszły pomyślnie
+- ✅ Brak błędów accessibility
+- ✅ ARIA labels i roles prawidłowe
+
+#### Test 2: Build z accessibility
+
+```bash
+# Test build z accessibility
+npm run build
+```
+
+**Oczekiwany wynik:**
+
+- ✅ Kompilacja zakończona sukcesem
+- ✅ Brak błędów accessibility
+- ✅ Wszystkie komponenty dostępne
+
+#### Test 3: Focus management
+
+```bash
+# Test focus management
+# Ręczne testowanie z klawiaturą
+```
+
+**Oczekiwany wynik:**
+
+- ✅ Focus rings widoczne dla keyboard navigation
+- ✅ Skip link działa poprawnie
+- ✅ Wszystkie elementy dostępne z klawiatury
+
+#### Test 4: Screen reader compatibility
+
+```bash
+# Test screen reader compatibility
+# Ręczne testowanie z screen reader
+```
+
+**Oczekiwany wynik:**
+
+- ✅ Wszystkie elementy mają ARIA labels
+- ✅ Semantic HTML structure prawidłowa
+- ✅ Ukryte etykiety (.sr-only) działają poprawnie
+
 **Uwaga**: Ten dokument będzie aktualizowany w miarę dodawania nowych narzędzi i konfiguracji.

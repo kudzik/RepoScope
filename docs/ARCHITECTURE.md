@@ -43,6 +43,7 @@ frontend/
 
 - ✅ **Dark/Light mode** - CSS variables + shadcn/ui theming
 - ✅ **Responsive design** - Tailwind CSS breakpoints
+- ✅ **Accessibility** - WCAG 2.1 AA compliance
 - ✅ **TypeScript** - pełne wsparcie typów
 - ✅ **Component library** - shadcn/ui komponenty
 - ✅ **Performance** - Turbopack + Next.js 15 optimizations

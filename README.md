@@ -46,14 +46,15 @@ RepoScope to zaawansowane narzędzie do automatycznej analizy repozytoriów GitH
 - ✅ **Next.js 15** - migracja na turbopack (bez ostrzeżeń)
 - ✅ **Tailwind CSS** - konfiguracja z CSS variables
 - ✅ **shadcn/ui** - komponenty UI z dark/light mode
+- ✅ **Accessibility** - WCAG 2.1 AA compliance
 - ✅ **VS Code** - automatyczne formatowanie i lintowanie
 - ✅ **Testy** - wszystkie konfiguracje przetestowane
 
 ### W trakcie
 
-- 🔄 **Dark/Light mode** - konfiguracja next-themes
 - 🔄 **Pre-commit hooks** - automatyzacja sprawdzania
-- 🔄 **VS Code** - ustawienia edytora
+- 🔄 **Testy lokalne** - weryfikacja funkcjonalności
+- 🔄 **Aktualizacja README** - instrukcje korzystania
 
 ## 🛠️ Stos technologiczny
 
@@ -63,6 +64,7 @@ RepoScope to zaawansowane narzędzie do automatycznej analizy repozytoriów GitH
 - **Styling**: Tailwind CSS 3.4 + shadcn/ui
 - **Language**: TypeScript
 - **Linting**: ESLint (flat config) + Prettier
+- **Accessibility**: WCAG 2.1 AA compliance
 - **Components**: shadcn/ui (Button, Card, Input, etc.)
 
 ### Backend (planowane)

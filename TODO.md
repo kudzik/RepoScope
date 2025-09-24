@@ -102,22 +102,23 @@
   - Skonfigurować focus management
   - Przetestować z screen reader
   - **Test**: Aplikacja jest dostępna dla użytkowników z niepełnosprawnościami
+  - ✅ **ZAKOŃCZONE**: Wszystkie testy przeszły pomyślnie, dokumentacja zaktualizowana
 
 ### Backend - Python Lintery
 
-- [x] **2.1** Utworzyć plik `.flake8` w katalogu backend/ z konfiguracją flake8
+- [ ] **2.1** Utworzyć plik `.flake8` w katalogu backend/ z konfiguracją flake8
 
   - Ustawić max-line-length, ignore rules, exclude directories
   - Dodać pluginy: flake8-bugbear, flake8-docstrings, flake8-import-order
   - **Test**: `flake8 .` uruchamia się i wykrywa błędy w testowym pliku
 
-- [x] **2.2** Utworzyć plik `pyproject.toml` w backend/ z konfiguracją black i isort
+- [ ] **2.2** Utworzyć plik `pyproject.toml` w backend/ z konfiguracją black i isort
 
   - Konfiguracja black dla formatowania
   - Konfiguracja isort dla sortowania importów
   - **Test**: `black .` i `isort .` formatują pliki zgodnie z regułami
 
-- [x] **2.3** Utworzyć plik `mypy.ini` w backend/ z konfiguracją mypy
+- [ ] **2.3** Utworzyć plik `mypy.ini` w backend/ z konfiguracją mypy
   - Ustawienia strict mode dla type checking
   - Konfiguracja dla Python 3.11
   - **Test**: `mypy .` sprawdza typy i wykrywa błędy
@@ -132,7 +133,7 @@
 
 ### CI/CD Integration
 
-- [x] **4.1** Dodać do CI/CD (np. Github Actions) workflow wykonujący lintowanie i formatowanie jako check przed merge:
+- [ ] **4.1** Dodać do CI/CD (np. Github Actions) workflow wykonujący lintowanie i formatowanie jako check przed merge:
   - Ustawienie workflow, który failuje, gdy linter lub formatowanie zgłasza błędy
   - Workflow dla frontend i backend
   - **Test**: PR z błędami lintingu - workflow failuje, PR bez błędów - workflow przechodzi

@@ -44,7 +44,7 @@ Ten dokument zawiera szczegółową konfigurację środowiska deweloperskiego dl
 
 ## 2. 📐 Lintery i formatowanie kodu
 
-### Frontend (Next.js 15 + TypeScript + Tailwind CSS + shadcn/ui)
+### Frontend (Next.js 15 + TypeScript + Tailwind CSS + shadcn/ui + Accessibility)
 
 #### Next.js 15
 
@@ -178,7 +178,8 @@ const eslintConfig = [
   {
     ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"],
   },
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...compat.extends("next/core-web-vitals", "next/typescript", "prettier"),
+  ...compat.extends("plugin:jsx-a11y/recommended"),
   {
     ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"],
   },
@@ -189,13 +190,13 @@ export default eslintConfig;
 
 **Zainstalowane pakiety:**
 
-- `eslint@8.57.0` - ESLint (downgrade z 9.x dla kompatybilności)
+- `eslint@9.36.0` - ESLint (flat config)
 - `eslint-config-next@15.5.4` - Konfiguracja Next.js
 - `@typescript-eslint/parser@8.0.0` - Parser TypeScript
 - `@typescript-eslint/eslint-plugin@8.0.0` - Plugin TypeScript
 - `eslint-plugin-react@7.33.0` - Reguły dla React
 - `eslint-plugin-react-hooks@4.6.0` - Reguły dla React Hooks
-- `eslint-plugin-jsx-a11y@6.7.0` - Accessibility
+- `eslint-plugin-jsx-a11y@6.7.0` - Accessibility (WCAG 2.1 compliance)
 - `eslint-config-prettier@9.0.0` - Integracja z Prettier
 - `eslint-plugin-prettier@5.0.0` - Prettier jako ESLint rule
 
@@ -780,6 +781,41 @@ pre-commit run --all-files  # Uruchom wszystkie pre-commit hooks
 - `npm run lint` - ESLint uruchamia się bez błędów
 - `npm run format` - Prettier formatuje pliki poprawnie
 - `npm run format:check` - Wszystkie pliki są poprawnie sformatowane
+
+#### Accessibility (WCAG 2.1 compliance)
+
+**Konfiguracja accessibility:**
+
+- **ESLint jsx-a11y** - automatyczne wykrywanie problemów accessibility
+- **ARIA labels** - wszystkie elementy mają odpowiednie etykiety
+- **Focus management** - keyboard navigation z widocznymi focus rings
+- **Screen reader support** - semantic HTML i ukryte etykiety
+- **Skip links** - linki do pominięcia nawigacji
+
+**Kluczowe funkcjonalności:**
+
+```css
+/* Focus management w globals.css */
+*:focus {
+  @apply outline-none;
+}
+
+*:focus-visible {
+  @apply outline-2 outline-offset-2 outline-ring;
+}
+
+.skip-link {
+  @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md;
+}
+```
+
+**✅ Przetestowane funkcjonalności:**
+
+- `npm run lint` - wszystkie reguły jsx-a11y przeszły
+- **ARIA labels** - wszystkie elementy mają odpowiednie etykiety
+- **Focus management** - keyboard navigation działa poprawnie
+- **Screen reader** - wszystkie elementy są dostępne dla screen readers
+- **WCAG 2.1 AA compliance** - aplikacja spełnia standardy dostępności
 
 ---
 

@@ -19,7 +19,7 @@
 - [ ] **ENV-4** Dodać GitHub API token (opcjonalnie)
 
 ### 1.2 Integracja Frontend-Backend
-- [ ] **API-1** Utworzyć `lib/api-client.ts` w frontend
+- [x] **API-1** Utworzyć `lib/api-client.ts` w frontend ✅
 - [ ] **API-2** Podłączyć formularz do POST /analysis/
 - [ ] **API-3** Utworzyć komponenty wyświetlania wyników
 - [ ] **API-4** Dodać obsługę błędów i loading states

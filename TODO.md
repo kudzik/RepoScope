@@ -90,14 +90,14 @@
   - Stworzyć ThemeToggle komponent
   - **Test**: Przełączanie motywów działa
 
-- [ ] **1.11** Responsywny design i mobile optimization:
+- [x] **1.11** Responsywny design i mobile optimization:
 
   - Skonfigurować breakpoints Tailwind
   - Dodać mobile-first approach
   - Przetestować na różnych rozmiarach ekranu
   - **Test**: UI jest responsywny na wszystkich urządzeniach
 
-- [ ] **1.12** Accessibility (WCAG 2.1 compliance):
+- [x] **1.12** Accessibility (WCAG 2.1 compliance):
   - Dodać ARIA labels i roles
   - Skonfigurować focus management
   - Przetestować z screen reader

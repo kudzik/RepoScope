@@ -4,8 +4,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 export function ResponsiveTest() {
   return (
-    <div className="p-4 space-y-4">
-      <h2 className="text-2xl font-bold text-center mb-6">Responsive Design Test</h2>
+    <section className="p-4 space-y-4" aria-labelledby="responsive-test-title">
+      <h2 id="responsive-test-title" className="text-2xl font-bold text-center mb-6">
+        Responsive Design Test
+      </h2>
 
       {/* Breakpoint indicators */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -82,6 +84,6 @@ export function ResponsiveTest() {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </section>
   );
 }

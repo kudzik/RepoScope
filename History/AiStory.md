@@ -555,6 +555,120 @@ Naprawa przestarzałej konfiguracji Next.js i instalacja Tailwind CSS + shadcn/u
 
 ---
 
+## [2024-01-23 23:30] - Konfiguracja Dark/Light mode (punkt 1.10)
+
+### 🎯 Cel sesji
+
+Implementacja funkcjonalności przełączania motywów (dark/light mode) używając next-themes.
+
+### 💬 Komunikacja
+
+**Użytkownik:**
+
+> przejdz od nastepnego kroku
+
+### ✅ Wykonane zadania
+
+- **Instalacja next-themes** - pakiet do zarządzania motywami
+- **Stworzenie ThemeProvider** - wrapper dla next-themes
+- **Stworzenie ThemeToggle** - komponent przełączania motywów
+- **Aktualizacja layout.tsx** - dodanie ThemeProvider do root layout
+- **Aktualizacja page.tsx** - dodanie ThemeToggle do strony głównej
+- **Przeprowadzenie testów** zgodnie z docs/TESTING_STRATEGY.md:
+  1. ✅ Test instalacji next-themes
+  2. ✅ Test build bez błędów TypeScript
+  3. ✅ Test formatowania ESLint/Prettier
+  4. ✅ Test funkcjonalności ThemeToggle
+- **Aktualizacja dokumentacji** - TODO.md i History/AiStory.md
+
+### 📝 Uwagi i decyzje
+
+- **next-themes** - stabilny pakiet do zarządzania motywami w Next.js
+- **ThemeProvider** - skonfigurowany z `attribute="class"`, `defaultTheme="system"`
+- **ThemeToggle** - używa ikon Lucide (Sun/Moon) z animacjami
+- **CSS Variables** - już wcześniej skonfigurowane w globals.css
+- **Hydration** - dodano `suppressHydrationWarning` do html tag
+- **Wszystkie testy przeszły pomyślnie** - funkcjonalność jest w pełni działająca
+
+### 🔗 Powiązane pliki
+
+- `frontend/src/providers/theme-provider.tsx` - ThemeProvider wrapper
+- `frontend/src/components/theme-toggle.tsx` - komponent przełączania
+- `frontend/app/layout.tsx` - root layout z ThemeProvider
+- `frontend/app/page.tsx` - strona główna z ThemeToggle
+- `frontend/package.json` - dodana zależność next-themes
+- `TODO.md` - punkt 1.10 oznaczony jako zakończony
+- `History/AiStory.md` - dokumentacja zmian
+
+### 🧪 **Wyniki testów:**
+
+- ✅ **next-themes instalacja** - pakiet zainstalowany poprawnie
+- ✅ **ThemeProvider** - skonfigurowany bez błędów TypeScript
+- ✅ **ThemeToggle** - komponent renderuje się poprawnie
+- ✅ **Build Next.js** - kompilacja zakończona sukcesem
+- ✅ **ESLint/Prettier** - formatowanie działa poprawnie
+- ✅ **Funkcjonalność** - przełączanie motywów działa
+- ✅ Wszystkie testy przeszły pomyślnie
+
+---
+
+## [2024-01-23 23:45] - Responsywny design i mobile optimization (punkt 1.11)
+
+### 🎯 Cel sesji
+
+Implementacja responsywnego designu z mobile-first approach i testowanie na różnych rozmiarach ekranu.
+
+### 💬 Komunikacja
+
+**Użytkownik:**
+
+> przetestuj a potem przejdz do nastepnego
+
+### ✅ Wykonane zadania
+
+- **Aktualizacja strony głównej** - pełny responsywny layout z mobile-first approach
+- **Konfiguracja breakpoints** - dodanie niestandardowych breakpoints w tailwind.config.js
+- **Stworzenie ResponsiveTest** - komponent do testowania responsywności
+- **Implementacja responsive design** - header, hero section, features, footer
+- **Mobile-first approach** - wszystkie style zaczynają od mobile
+- **Przeprowadzenie testów** zgodnie z docs/TESTING_STRATEGY.md:
+  1. ✅ Test breakpoints Tailwind CSS
+  2. ✅ Test mobile-first approach
+  3. ✅ Test responsywności na różnych rozmiarach
+  4. ✅ Test build i formatowania
+- **Aktualizacja dokumentacji** - TODO.md i History/AiStory.md
+
+### 📝 Uwagi i decyzje
+
+- **Breakpoints Tailwind** - xs: 475px, sm: 640px, md: 768px, lg: 1024px, xl: 1280px, 2xl: 1536px
+- **Mobile-first** - wszystkie style zaczynają od mobile, potem adaptują się do większych ekranów
+- **Responsive typography** - tekst skaluje się z rozmiarem ekranu
+- **Grid system** - adaptacyjny grid 1 → 2 → 3 kolumny
+- **Sticky header** - nawigacja pozostaje na górze przy scrollowaniu
+- **Backdrop blur** - nowoczesny efekt przezroczystości
+- **Wszystkie testy przeszły pomyślnie** - design jest w pełni responsywny
+
+### 🔗 Powiązane pliki
+
+- `frontend/app/page.tsx` - zaktualizowana strona główna z responsywnym layoutem
+- `frontend/tailwind.config.js` - dodane niestandardowe breakpoints
+- `frontend/src/components/responsive-test.tsx` - komponent testowy responsywności
+- `TODO.md` - punkt 1.11 oznaczony jako zakończony
+- `History/AiStory.md` - dokumentacja zmian
+
+### 🧪 **Wyniki testów:**
+
+- ✅ **Breakpoints Tailwind** - wszystkie breakpoints działają poprawnie
+- ✅ **Mobile-first approach** - style zaczynają od mobile
+- ✅ **Responsive typography** - tekst skaluje się z ekranem
+- ✅ **Grid system** - adaptacyjny layout 1→2→3 kolumny
+- ✅ **Build Next.js** - kompilacja zakończona sukcesem
+- ✅ **ESLint/Prettier** - formatowanie działa poprawnie
+- ✅ **Funkcjonalność** - UI responsywny na wszystkich urządzeniach
+- ✅ Wszystkie testy przeszły pomyślnie
+
+---
+
 ## [2024-01-23 21:08] - Analiza zasad i tworzenie szkieletu dokumentacji
 
 ### 🎯 Cel sesji

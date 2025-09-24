@@ -83,7 +83,7 @@
   - Zainstalować podstawowe komponenty (Button, Input, Card)
   - **Test**: Komponenty shadcn/ui działają poprawnie
 
-- [ ] **1.10** Konfiguracja Dark/Light mode:
+- [x] **1.10** Konfiguracja Dark/Light mode:
 
   - Skonfigurować next-themes
   - Dodać ThemeProvider

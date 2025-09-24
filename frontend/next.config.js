@@ -6,7 +6,7 @@ const nextConfig = {
         loaders: ['@svgr/webpack'],
         as: '*.js',
       },
-    }
+    },
   },
 };
 

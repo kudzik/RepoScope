@@ -313,6 +313,9 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <Shield className="h-4 w-4" />
               <CardTitle className="text-sm">Security</CardTitle>
             </div>
+            <CardDescription className="text-xs">
+              Security vulnerabilities, hardcoded secrets, and security best practices
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
@@ -325,9 +328,24 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <Progress value={safeNumber(result.security?.score, 0)} className="h-2" />
               {result.security?.summary && (
                 <div className="text-xs text-muted-foreground space-y-1">
-                  <div>Issues: {safeNumber(result.security.summary.total_issues, 0)}</div>
-                  <div>High: {safeNumber(result.security.summary.high_severity, 0)}</div>
-                  <div>Medium: {safeNumber(result.security.summary.medium_severity, 0)}</div>
+                  <div
+                    className="cursor-help"
+                    title="Total security issues found in the repository"
+                  >
+                    Issues: {safeNumber(result.security.summary.total_issues, 0)}
+                  </div>
+                  <div
+                    className="cursor-help"
+                    title="High severity security issues that require immediate attention"
+                  >
+                    High: {safeNumber(result.security.summary.high_severity, 0)}
+                  </div>
+                  <div
+                    className="cursor-help"
+                    title="Medium severity security issues that should be addressed"
+                  >
+                    Medium: {safeNumber(result.security.summary.medium_severity, 0)}
+                  </div>
                 </div>
               )}
             </div>

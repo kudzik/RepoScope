@@ -7,10 +7,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import { useAnalyzeRepository } from '@/hooks/use-api';
+import { AnalysisList } from './analysis-list';
+import { AnalysisResults } from './analysis-results';
+import type { AnalysisResponse } from '@/lib/api-types';
 
 export function AnalysisForm() {
   const [url, setUrl] = useState('');
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<AnalysisResponse | null>(null);
+  const [selectedAnalysis, setSelectedAnalysis] = useState<AnalysisResponse | null>(null);
+  const [showList, setShowList] = useState(false);
   const { execute, loading, error } = useAnalyzeRepository();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -22,6 +27,7 @@ export function AnalysisForm() {
     if (analysisResult) {
       setResult(analysisResult);
       setUrl(''); // Clear form on success
+      setShowList(true); // Show analyses list
     }
   };
 
@@ -106,6 +112,30 @@ export function AnalysisForm() {
           )}
         </CardContent>
       </Card>
+
+      {/* Show selected analysis results */}
+      {selectedAnalysis && (
+        <div className="mt-8">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-semibold">Analysis Results</h3>
+            <Button
+              onClick={() => setSelectedAnalysis(null)}
+              variant="outline"
+              size="sm"
+            >
+              Close
+            </Button>
+          </div>
+          <AnalysisResults analysis={selectedAnalysis} />
+        </div>
+      )}
+
+      {/* Show analyses list */}
+      {showList && !selectedAnalysis && (
+        <div className="mt-8">
+          <AnalysisList onSelectAnalysis={setSelectedAnalysis} />
+        </div>
+      )}
     </div>
   );
 }

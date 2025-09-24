@@ -9,6 +9,18 @@ a projekt używa [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- **Ulepszone formatowanie AI Analysis Summary**
+  - Rozszerzony prompt w `backend/services/analysis_service.py` z emoji i strukturą
+  - Ulepszony system prompt w `backend/services/ai_client.py` dla lepszego formatowania
+  - Dodana funkcja `formatAISummary` w `frontend/src/lib/utils.ts` dla formatowania markdown
+  - Lepsze style wizualne z gradientami i ikonami w `analysis-results.tsx`
+  - Obsługa HTML rendering dla sformatowanych podsumowań
+
+- **Tooltips dla Test Coverage**
+  - Dodane tooltips z opisami dla wszystkich metryk Test Coverage
+  - Kolorowanie statusu testów (zielone ✓ dla obecności, czerwone ✗ dla braku)
+  - Spójne opisy w języku angielskim dla wszystkich tooltips
+
 - **System kolorów dla poziomów bezpieczeństwa**
   - Funkcja `getSeverityColor` w `utils.ts` dla mapowania poziomów na kolory
   - Kolory: High (czerwony), Medium (pomarańczowy), Low (żółty), Issues (biały/szary)

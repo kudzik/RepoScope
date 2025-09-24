@@ -12,14 +12,14 @@ RepoScope to zaawansowane narzędzie do automatycznej analizy repozytoriów GitH
 
 ## ✨ Kluczowe funkcjonalności
 
-<!-- TODO: Dodać szczegółowy opis funkcjonalności -->
-
-- 🧩 Analiza struktury kodu i technologii
-- 📚 Ocena jakości dokumentacji
-- 🧪 Wykrywanie i analiza testów
-- ⚖️ Sprawdzanie licencji i ryzyk prawnych
-- 🤖 Generowanie raportów przez AI
-- 🔐 Bezpieczne zarządzanie użytkownikami
+- 🧩 **Analiza struktury kodu** - Tree-sitter parsing i analiza technologii
+- 📚 **Ocena dokumentacji** - Sprawdzanie README, komentarzy i jakości
+- 🧪 **Wykrywanie testów** - Identyfikacja testów jednostkowych i integracyjnych
+- ⚖️ **Sprawdzanie licencji** - Analiza licencji i potencjalnych konfliktów
+- 🤖 **AI-powered raporty** - Inteligentne podsumowania z emoji i formatowaniem
+- 🎨 **Nowoczesny UI** - Responsywny design z trybem ciemnym
+- 💡 **Inteligentne tooltips** - Opisowe podpowiedzi dla wszystkich metryk
+- 🎯 **System kolorów** - Spójne kolory dla poziomów bezpieczeństwa i jakości
 
 ## 🚀 Szybki start
 

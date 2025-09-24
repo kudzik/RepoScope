@@ -9,7 +9,11 @@ from fastapi import HTTPException
 from pydantic import HttpUrl
 
 from config.llm_optimization import TaskComplexity
-from middleware.cost_optimization import cost_optimization_middleware
+from config.test_mode import test_config
+from middleware.cost_optimization import (
+    cost_optimization_middleware,
+    test_cost_optimization_middleware,
+)
 from schemas.analysis import AnalysisResult, AnalysisStatus, RepositoryInfo
 from services.code_analyzer import CodeAnalyzer
 from services.github_service import GitHubService
@@ -27,7 +31,13 @@ class AnalysisService:
         self.github_service = GitHubService()
         self.code_analyzer = CodeAnalyzer()
         self.llm_service = LLMService()
-        self.cost_optimizer = cost_optimization_middleware
+
+        # Use test mode middleware if test mode is enabled
+        if test_config.should_use_cache():
+            self.cost_optimizer = test_cost_optimization_middleware
+            print("🧪 Using test mode AI cache")
+        else:
+            self.cost_optimizer = cost_optimization_middleware
 
     async def close(self) -> None:
         """Close the GitHub service."""
@@ -159,7 +169,60 @@ class AnalysisService:
                     "recommendations": ["Check repository access"],
                 }
 
+            # NOTE: analysis.result will be created after security analysis to ensure security_issues is available
+
+            # Real test coverage analysis
+            if repo_path and os.path.exists(repo_path):
+                try:
+                    analysis.test_coverage = await self._analyze_test_coverage(repo_path)
+                except Exception as e:
+                    print(f"Error analyzing test coverage: {e}")
+                    analysis.test_coverage = {
+                        "has_tests": False,
+                        "test_frameworks": [],
+                        "coverage_percentage": 0.0,
+                        "test_files": [],
+                        "issues": [f"Test analysis failed: {str(e)}"],
+                        "recommendations": ["Check repository access and permissions"],
+                    }
+            else:
+                analysis.test_coverage = {
+                    "has_tests": False,
+                    "test_frameworks": [],
+                    "coverage_percentage": 0.0,
+                    "test_files": [],
+                    "issues": ["Repository path not available"],
+                    "recommendations": ["Check repository access"],
+                }
+
+            # Real security analysis
+            if repo_path and os.path.exists(repo_path):
+                try:
+                    analysis.security_issues = await self._analyze_security_issues(repo_path)
+                except Exception as e:
+                    print(f"Error analyzing security: {e}")
+                    analysis.security_issues = [
+                        {
+                            "type": "error",
+                            "severity": "high",
+                            "description": (f"Security analysis failed: {str(e)}"),
+                            "file": "N/A",
+                            "line": 0,
+                        }
+                    ]
+            else:
+                analysis.security_issues = [
+                    {
+                        "type": "error",
+                        "severity": "high",
+                        "description": ("Repository path not available for security analysis"),
+                        "file": "N/A",
+                        "line": 0,
+                    }
+                ]
+
             # Add PRD-compliant result structure for frontend
+            # NOTE: This is now created AFTER security analysis to ensure security_issues is available
             analysis.result = {
                 "summary": analysis.ai_summary or "Analysis completed",
                 "code_quality": {
@@ -307,56 +370,6 @@ class AnalysisService:
                     "largest_files": ((analysis.code_structure or {}).get("largest_files", [])[:5]),
                 },
             }
-
-            # Real test coverage analysis
-            if repo_path and os.path.exists(repo_path):
-                try:
-                    analysis.test_coverage = await self._analyze_test_coverage(repo_path)
-                except Exception as e:
-                    print(f"Error analyzing test coverage: {e}")
-                    analysis.test_coverage = {
-                        "has_tests": False,
-                        "test_frameworks": [],
-                        "coverage_percentage": 0.0,
-                        "test_files": [],
-                        "issues": [f"Test analysis failed: {str(e)}"],
-                        "recommendations": ["Check repository access and permissions"],
-                    }
-            else:
-                analysis.test_coverage = {
-                    "has_tests": False,
-                    "test_frameworks": [],
-                    "coverage_percentage": 0.0,
-                    "test_files": [],
-                    "issues": ["Repository path not available"],
-                    "recommendations": ["Check repository access"],
-                }
-
-            # Real security analysis
-            if repo_path and os.path.exists(repo_path):
-                try:
-                    analysis.security_issues = await self._analyze_security_issues(repo_path)
-                except Exception as e:
-                    print(f"Error analyzing security: {e}")
-                    analysis.security_issues = [
-                        {
-                            "type": "error",
-                            "severity": "high",
-                            "description": (f"Security analysis failed: {str(e)}"),
-                            "file": "N/A",
-                            "line": 0,
-                        }
-                    ]
-            else:
-                analysis.security_issues = [
-                    {
-                        "type": "error",
-                        "severity": "high",
-                        "description": ("Repository path not available for security analysis"),
-                        "file": "N/A",
-                        "line": 0,
-                    }
-                ]
 
             # Real license analysis
             if repo_path and os.path.exists(repo_path):
@@ -552,16 +565,19 @@ class AnalysisService:
 
     def _create_summary_prompt(self, repo_info: RepositoryInfo, code_structure: Dict) -> str:
         """Create optimized prompt for AI summary generation."""
-        # Keep prompt concise to minimize costs and response time
-        prompt = f"""Analyze this repository: {repo_info.name}
+        # Create a more generic prompt for better cache hits
+        # Use repository type and language for cache key instead of specific details
+        repo_type = "web_framework" if "react" in repo_info.name.lower() else "library"
+        language = repo_info.language or "Mixed"
 
-Repository: {repo_info.full_name}
-Language: {repo_info.language or 'Mixed'}
-Stars: {repo_info.stars} | Forks: {repo_info.forks}
-Description: {repo_info.description or 'No description'}
-Files: {code_structure.get('total_files', 0)} | Lines: {code_structure.get('total_lines', 0)}
-Languages: {list(code_structure.get('languages', {}).keys())}
-Complexity: {code_structure.get('complexity_score', 0)}
+        prompt = f"""Analyze this {repo_type} repository written in {language}.
+
+Repository type: {repo_type}
+Primary language: {language}
+File count: {code_structure.get('total_files', 0)}
+Lines of code: {code_structure.get('total_lines', 0)}
+Languages used: {list(code_structure.get('languages', {}).keys())}
+Complexity score: {code_structure.get('complexity_score', 0)}
 
 Provide a concise analysis covering:
 1. Project purpose and functionality

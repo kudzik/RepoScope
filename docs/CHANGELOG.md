@@ -9,6 +9,12 @@ a projekt używa [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- **System kolorów dla poziomów bezpieczeństwa**
+  - Funkcja `getSeverityColor` w `utils.ts` dla mapowania poziomów na kolory
+  - Kolory: High (czerwony), Medium (pomarańczowy), Low (żółty), Issues (biały/szary)
+  - Obsługa trybu ciemnego dla wszystkich poziomów bezpieczeństwa
+  - Zaktualizowane komponenty `analysis-results.tsx` i `analysis-list.tsx`
+  - Dokumentacja systemu kolorów w `docs/SECURITY_COLORS.md`
 - Podstawowa struktura projektu RepoScope
 - Konfiguracja linterów i formatowania (ESLint, Prettier, EditorConfig)
 - Next.js 15 z App Router i Turbopack

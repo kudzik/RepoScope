@@ -1,6 +1,8 @@
 """Cost optimization middleware for LLM usage."""
 
 import hashlib
+import json
+import os
 from datetime import datetime
 from typing import Any, Dict, Optional
 
@@ -88,11 +90,23 @@ class CostMonitor:
 class ResponseCache:
     """Cache for LLM responses to reduce costs."""
 
-    def __init__(self, max_size: int = 1000, ttl: int = 3600) -> None:
+    def __init__(
+        self,
+        max_size: int = 1000,
+        ttl: int = 3600,
+        test_mode: bool = False,
+        cache_file: Optional[str] = None,
+    ) -> None:
         """Initialize the response cache."""
         self.cache: Dict[str, Dict[str, Any]] = {}
         self.max_size = max_size
         self.ttl = ttl
+        self.test_mode = test_mode
+        self.cache_file = cache_file or "ai_responses_cache.json"
+
+        # Load existing cache if in test mode
+        if self.test_mode:
+            self._load_cache_from_file()
 
     def _generate_cache_key(self, prompt: str, model: str) -> str:
         """Generate cache key for prompt and model."""
@@ -124,7 +138,16 @@ class ResponseCache:
             oldest_key = min(self.cache.keys(), key=lambda k: self.cache[k]["timestamp"])
             del self.cache[oldest_key]
 
-        self.cache[cache_key] = {"response": response, "timestamp": datetime.now().timestamp()}
+        self.cache[cache_key] = {
+            "response": response,
+            "timestamp": datetime.now().timestamp(),
+            "prompt": prompt,
+            "model": model,
+        }
+
+        # Save to file if in test mode
+        if self.test_mode:
+            self._save_cache_to_file()
 
     def clear(self) -> None:
         """Clear all cached responses."""
@@ -134,15 +157,94 @@ class ResponseCache:
         """Get cache statistics."""
         return {"size": len(self.cache), "max_size": self.max_size, "ttl": self.ttl}
 
+    def _load_cache_from_file(self) -> None:
+        """Load cache from file in test mode."""
+        if os.path.exists(self.cache_file):
+            try:
+                with open(self.cache_file, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    self.cache = data.get("cache", {})
+                    print(f"Loaded {len(self.cache)} cached AI responses from {self.cache_file}")
+            except Exception as e:
+                print(f"Error loading cache file: {e}")
+                self.cache = {}
+
+    def _save_cache_to_file(self) -> None:
+        """Save cache to file in test mode."""
+        try:
+            cache_data = {
+                "cache": self.cache,
+                "metadata": {
+                    "saved_at": datetime.now().isoformat(),
+                    "test_mode": True,
+                    "total_responses": len(self.cache),
+                },
+            }
+            with open(self.cache_file, "w", encoding="utf-8") as f:
+                json.dump(cache_data, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            print(f"Error saving cache file: {e}")
+
+    def export_cache_for_tests(self, export_file: str = "test_ai_responses.json") -> None:
+        """Export cache for use in tests."""
+        if not self.test_mode:
+            print("Export only available in test mode")
+            return
+
+        try:
+            # Create a clean export without timestamps for tests
+            export_data = {}
+            for key, value in self.cache.items():
+                export_data[key] = {
+                    "response": value["response"],
+                    "prompt": value["prompt"],
+                    "model": value["model"],
+                }
+
+            with open(export_file, "w", encoding="utf-8") as f:
+                json.dump(export_data, f, indent=2, ensure_ascii=False)
+            print(f"Exported {len(export_data)} AI responses to {export_file}")
+        except Exception as e:
+            print(f"Error exporting cache: {e}")
+
+    def import_cache_for_tests(self, import_file: str) -> None:
+        """Import cache from test file."""
+        if not self.test_mode:
+            print("Import only available in test mode")
+            return
+
+        if not os.path.exists(import_file):
+            print(f"Import file {import_file} not found")
+            return
+
+        try:
+            with open(import_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+
+            # Convert imported data to cache format
+            for key, value in data.items():
+                self.cache[key] = {
+                    "response": value["response"],
+                    "prompt": value["prompt"],
+                    "model": value["model"],
+                    "timestamp": datetime.now().timestamp(),
+                }
+
+            self._save_cache_to_file()
+            print(f"Imported {len(data)} AI responses from {import_file}")
+        except Exception as e:
+            print(f"Error importing cache: {e}")
+
 
 class CostOptimizationMiddleware:
     """Middleware for optimizing LLM costs."""
 
-    def __init__(self) -> None:
+    def __init__(self, test_mode: bool = False, cache_file: Optional[str] = None) -> None:
         """Initialize the cost optimization middleware."""
         self.cost_monitor = CostMonitor()
-        self.response_cache = ResponseCache()
+        self.response_cache = ResponseCache(test_mode=test_mode, cache_file=cache_file)
         self.llm_config = llm_config
+        self.test_mode = test_mode
 
     async def process_request(
         self, prompt: str, task_complexity: TaskComplexity, available_models: Optional[list] = None
@@ -162,6 +264,8 @@ class CostOptimizationMiddleware:
         if self.llm_config.should_use_cache(prompt):
             cached_response = self.response_cache.get(prompt, "any")
             if cached_response:
+                if self.test_mode:
+                    print(f"Using cached AI response for prompt: {prompt[:50]}...")
                 return {"response": cached_response, "cached": True, "cost": 0.0, "model": "cached"}
 
         # 2. Select optimal model
@@ -222,6 +326,13 @@ class CostOptimizationMiddleware:
             str: AI-generated response
         """
         try:
+            # Check cache first in test mode
+            if self.test_mode:
+                cached_response = self.response_cache.get(prompt, model)
+                if cached_response:
+                    print(f"🧪 Using cached AI response for prompt: {prompt[:50]}...")
+                    return cached_response
+
             # Use the AI client to generate response
             result = await ai_client.generate_summary(prompt=prompt, model=model, max_tokens=1000)
 
@@ -229,7 +340,14 @@ class CostOptimizationMiddleware:
                 # Fallback to basic response if AI call fails
                 return f"AI analysis unavailable: {result['error']}"
 
-            return result.get("response", "No response generated")
+            response = result.get("response", "No response generated")
+
+            # Cache the response in test mode
+            if self.test_mode:
+                self.response_cache.set(prompt, model, response)
+                print(f"🧪 Cached new AI response for prompt: {prompt[:50]}...")
+
+            return response
 
         except Exception as e:
             # Fallback to basic response on any error
@@ -241,6 +359,7 @@ class CostOptimizationMiddleware:
             "usage_stats": self.cost_monitor.get_usage_stats(),
             "cache_stats": self.response_cache.get_cache_stats(),
             "alerts": self.cost_monitor.get_alerts(),
+            "test_mode": self.test_mode,
         }
 
     def reset_stats(self) -> None:
@@ -248,6 +367,33 @@ class CostOptimizationMiddleware:
         self.cost_monitor.reset_daily_stats()
         self.response_cache.clear()
 
+    def export_cache_for_tests(self, export_file: str = "test_ai_responses.json") -> None:
+        """Export cache for use in tests."""
+        if not self.test_mode:
+            print("Export only available in test mode")
+            return
+        self.response_cache.export_cache_for_tests(export_file)
+
+    def import_cache_for_tests(self, import_file: str) -> None:
+        """Import cache from test file."""
+        if not self.test_mode:
+            print("Import only available in test mode")
+            return
+        self.response_cache.import_cache_for_tests(import_file)
+
+    def clear_test_cache(self) -> None:
+        """Clear test cache."""
+        if not self.test_mode:
+            print("Clear cache only available in test mode")
+            return
+        self.response_cache.clear()
+        print("Test cache cleared")
+
 
 # Global middleware instance
 cost_optimization_middleware = CostOptimizationMiddleware()
+
+# Test mode middleware instance
+test_cost_optimization_middleware = CostOptimizationMiddleware(
+    test_mode=True, cache_file="test_ai_responses_cache.json"
+)

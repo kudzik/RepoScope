@@ -1,21 +1,22 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useDeleteAnalysisWithToast, useGetAnalysesWithToast } from '@/hooks/use-toast-api';
+import type { AnalysisResponse } from '@/lib/api-types';
+import { getSeverityColor } from '@/lib/utils';
 import {
+  AlertCircle,
   CheckCircle,
   Clock,
-  XCircle,
-  Trash2,
   ExternalLink,
   RefreshCw,
-  AlertCircle,
+  Trash2,
+  XCircle,
 } from 'lucide-react';
-import { useGetAnalysesWithToast, useDeleteAnalysisWithToast } from '@/hooks/use-toast-api';
-import type { AnalysisResponse } from '@/lib/api-types';
+import { useCallback, useEffect, useState } from 'react';
 
 interface AnalysisListProps {
   onSelectAnalysis?: (analysis: AnalysisResponse) => void;
@@ -27,14 +28,14 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
   const { execute: fetchAnalyses, loading, error } = useGetAnalysesWithToast();
   const { execute: deleteAnalysis, loading: deleting } = useDeleteAnalysisWithToast();
 
-  const loadAnalyses = async () => {
+  const loadAnalyses = useCallback(async () => {
     const result = await fetchAnalyses(page, 10);
     if (result && result.analyses) {
       setAnalyses(result.analyses);
     } else {
       setAnalyses([]);
     }
-  };
+  }, [fetchAnalyses, page]);
 
   useEffect(() => {
     loadAnalyses();
@@ -271,11 +272,19 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
                             <div className="max-h-20 overflow-y-auto space-y-1">
                               {analysis.result.security.vulnerabilities
                                 .slice(0, 3)
-                                .map((vuln: { type: string; severity: string }, index: number) => (
-                                  <div key={index} className="text-xs text-muted-foreground">
-                                    • {vuln.type} ({vuln.severity})
-                                  </div>
-                                ))}
+                                .map((vuln: { type: string; severity: string }, index: number) => {
+                                  const severityColors = getSeverityColor(vuln.severity);
+                                  return (
+                                    <div key={index} className="flex items-center gap-2 text-xs">
+                                      <span
+                                        className={`px-2 py-1 rounded text-xs font-medium ${severityColors.badge}`}
+                                      >
+                                        {vuln.severity}
+                                      </span>
+                                      <span className="text-muted-foreground">{vuln.type}</span>
+                                    </div>
+                                  );
+                                })}
                               {analysis.result.security.vulnerabilities.length > 3 && (
                                 <div className="text-xs text-muted-foreground">
                                   ... i {analysis.result.security.vulnerabilities.length - 3} więcej

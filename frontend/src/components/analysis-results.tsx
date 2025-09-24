@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import type { AnalysisResponse } from '@/lib/api-types';
+import { getSeverityColor } from '@/lib/utils';
 import {
   AlertCircle,
   AlertTriangle,
@@ -326,28 +327,44 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                 </span>
               </div>
               <Progress value={safeNumber(result.security?.score, 0)} className="h-2" />
-              {result.security?.summary && (
-                <div className="text-xs text-muted-foreground space-y-1">
-                  <div
-                    className="cursor-help"
-                    title="Total security issues found in the repository"
-                  >
-                    Issues: {safeNumber(result.security.summary.total_issues, 0)}
-                  </div>
-                  <div
-                    className="cursor-help"
-                    title="High severity security issues that require immediate attention"
-                  >
-                    High: {safeNumber(result.security.summary.high_severity, 0)}
-                  </div>
-                  <div
-                    className="cursor-help"
-                    title="Medium severity security issues that should be addressed"
-                  >
-                    Medium: {safeNumber(result.security.summary.medium_severity, 0)}
-                  </div>
+              <div className="text-xs text-muted-foreground space-y-1">
+                <div
+                  className="cursor-help flex items-center gap-1"
+                  title="Total security issues found in the repository. This includes all severity levels (high, medium, low)."
+                >
+                  <span>Issues:</span>
+                  <span className="font-mono">
+                    {safeNumber(result.security?.summary?.total_issues, 0)}
+                  </span>
                 </div>
-              )}
+                <div
+                  className="cursor-help flex items-center gap-1"
+                  title="High severity security issues that require immediate attention. These are critical vulnerabilities that should be fixed as soon as possible."
+                >
+                  <span>High:</span>
+                  <span className="font-mono">
+                    {safeNumber(result.security?.summary?.high_severity, 0)}
+                  </span>
+                </div>
+                <div
+                  className="cursor-help flex items-center gap-1"
+                  title="Medium severity security issues that should be addressed. These are important security concerns that should be fixed in the near future."
+                >
+                  <span>Medium:</span>
+                  <span className="font-mono">
+                    {safeNumber(result.security?.summary?.medium_severity, 0)}
+                  </span>
+                </div>
+                <div
+                  className="cursor-help flex items-center gap-1"
+                  title="Low severity security issues that can be addressed when convenient. These are minor security concerns that can be fixed during regular maintenance."
+                >
+                  <span>Low:</span>
+                  <span className="font-mono">
+                    {safeNumber(result.security?.summary?.low_severity, 0)}
+                  </span>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -536,22 +553,30 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                     Security Vulnerabilities ({result.security.vulnerabilities.length})
                   </h4>
                   <div className="space-y-2 max-h-32 overflow-y-auto">
-                    {result.security.vulnerabilities.map((vuln, index: number) => (
-                      <div key={index} className="text-sm p-2 bg-red-50 dark:bg-red-900/20 rounded">
-                        <div className="flex justify-between items-start">
-                          <span className="font-medium">{vuln?.type || 'Unknown'}</span>
-                          <Badge variant={vuln?.severity === 'high' ? 'destructive' : 'secondary'}>
-                            {vuln?.severity || 'Unknown'}
-                          </Badge>
+                    {result.security.vulnerabilities.map((vuln, index: number) => {
+                      const severityColors = getSeverityColor(vuln?.severity || 'issues');
+                      return (
+                        <div
+                          key={index}
+                          className={`text-sm p-2 ${severityColors.bg} ${severityColors.border} border rounded`}
+                        >
+                          <div className="flex justify-between items-start">
+                            <span className={`font-medium ${severityColors.text}`}>
+                              {vuln?.type || 'Unknown'}
+                            </span>
+                            <Badge className={severityColors.badge}>
+                              {vuln?.severity || 'Unknown'}
+                            </Badge>
+                          </div>
+                          <p className="text-muted-foreground text-xs mt-1">
+                            {vuln?.description || 'No description'}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            File: {vuln?.file || 'Unknown'}:{vuln?.line || 'Unknown'}
+                          </p>
                         </div>
-                        <p className="text-muted-foreground text-xs mt-1">
-                          {vuln?.description || 'No description'}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          File: {vuln?.file || 'Unknown'}:{vuln?.line || 'Unknown'}
-                        </p>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               )}

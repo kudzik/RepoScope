@@ -69,9 +69,12 @@ async def list_analyses(
     try:
         analyses = await service.list_analyses(page=page, page_size=page_size)
 
+        # Get total count for pagination
+        total_count = len(list(service._analyses.values()))
+
         return AnalysisListResponse(
             analyses=analyses,
-            total=len(analyses),
+            total=total_count,
             page=page,
             page_size=page_size,
         )
@@ -116,8 +119,10 @@ async def delete_analysis(
     Removes the analysis and all associated data from the system.
     """
     try:
-        # This would typically delete from database
-        # For now, just return success
+        success = await service.delete_analysis(str(analysis_id))
+
+        if not success:
+            raise HTTPException(status_code=404, detail="Analysis not found")
 
         return JSONResponse(
             content={
@@ -126,5 +131,7 @@ async def delete_analysis(
             }
         )
 
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to delete analysis: {str(e)}")

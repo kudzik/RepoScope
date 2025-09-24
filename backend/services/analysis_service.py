@@ -19,6 +19,9 @@ from services.llm_service import LLMService
 class AnalysisService:
     """Service for repository analysis."""
 
+    # In-memory storage for MVP (replace with database later)
+    _analyses: Dict[str, AnalysisResult] = {}
+
     def __init__(self) -> None:
         """Initialize the analysis service."""
         self.github_service = GitHubService()
@@ -137,6 +140,9 @@ class AnalysisService:
             analysis.completed_at = datetime.now(timezone.utc)
             analysis.analysis_duration = (analysis.completed_at - start_time).total_seconds()
 
+            # Store in memory
+            AnalysisService._analyses[str(analysis.id)] = analysis
+
             return analysis
 
         except Exception as e:
@@ -167,6 +173,10 @@ class AnalysisService:
                 analysis_duration=None,
                 error_message=str(e),
             )
+
+            # Store failed analysis too
+            AnalysisService._analyses[str(analysis.id)] = analysis
+
             return analysis
 
     def clone_repository(self, url: str) -> Optional[str]:
@@ -257,13 +267,24 @@ class AnalysisService:
         )
 
     async def get_analysis(self, analysis_id: str) -> Optional[AnalysisResult]:
-        """Get analysis by ID (placeholder implementation)."""
-        # This would typically query a database
-        # For now, return None as we don't have persistent storage
-        return None
+        """Get analysis by ID."""
+        return AnalysisService._analyses.get(analysis_id)
 
     async def list_analyses(self, page: int = 1, page_size: int = 10) -> List[AnalysisResult]:
-        """List analyses (placeholder implementation)."""
-        # This would typically query a database
-        # For now, return empty list as we don't have persistent storage
-        return []
+        """List analyses with pagination."""
+        all_analyses = list(AnalysisService._analyses.values())
+        # Sort by creation time (newest first)
+        all_analyses.sort(key=lambda x: x.created_at, reverse=True)
+
+        # Apply pagination
+        start_idx = (page - 1) * page_size
+        end_idx = start_idx + page_size
+
+        return all_analyses[start_idx:end_idx]
+
+    async def delete_analysis(self, analysis_id: str) -> bool:
+        """Delete analysis by ID."""
+        if analysis_id in AnalysisService._analyses:
+            del AnalysisService._analyses[analysis_id]
+            return True
+        return False

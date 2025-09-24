@@ -18,6 +18,9 @@ i projekt używa [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Usunięto 🗑️
 
 ### Naprawiono 🐛
+- Typy API frontend dopasowane do schematów backendu
+- Obsługa undefined w komponencie AnalysisList
+- Problem z kodowaniem emoji w Windows (test_api_connection.py)
 
 ## [0.1.0] - 2024-12-19
 

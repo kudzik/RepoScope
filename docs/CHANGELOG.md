@@ -41,10 +41,13 @@ a projekt używa [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - flake8: używa .flake8 config file (max-line-length=100)
 - black/isort: identyczne ustawienia (line-length=100, profile=black)
 - **Testy jednostkowe backend**
-- pytest z 93% pokryciem kodu
+- pytest z 94% pokryciem kodu (22 testy)
 - Testy endpointów API (`/`, `/health`, `/docs`, `/redoc`)
 - Testy konfiguracji CORS i middleware
 - Testy metadanych aplikacji
+- Testy API analizy repozytoriów (`/analysis/`)
+- Testy Pydantic schemas i walidacji
+- Testy Analysis service z GitHub API
 - pytest-cov dla raportów pokrycia kodu
 - **Konfiguracja edytora**
 - pyrightconfig.json z prawidłowymi ścieżkami Python
@@ -55,6 +58,15 @@ a projekt używa [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Instrukcje uruchamiania testów
 - Metryki jakości i cele
 - Roadmap testów (Faza 1-3)
+- **Automatyzacja jakości kodu**
+- Skrypty naprawcze: fix-code-quality.py, quick-fix.bat/.ps1, auto-fix.py
+- Pre-commit hooks z automatycznym naprawianiem problemów
+- Kompletna dokumentacja w scripts/README.md
+- **API endpoints dla analizy repozytoriów**
+- POST/GET/DELETE /analysis/ endpoints
+- Pydantic schemas dla walidacji danych
+- Analysis service z integracją GitHub API
+- Kompletne testy jednostkowe (22 testy, 94% pokrycie)
 
 ### Changed
 

@@ -988,17 +988,42 @@ python -m mypy main.py
 
 **Aktualne wyniki:**
 
-- **Pokrycie kodu**: 93% (backend)
-- **Testy jednostkowe**: 13/13 przechodzi (100%)
+- **Pokrycie kodu**: 94% (backend)
+- **Testy jednostkowe**: 22/22 przechodzi (100%)
 - **Linting**: 0 błędów (flake8, black, mypy)
-- **Czas wykonania**: <1s (testy jednostkowe)
+- **Czas wykonania**: <2s (testy jednostkowe)
+- **Automatyzacja**: Skrypty naprawcze działają
 
 **Cele jakości:**
 
-- **Pokrycie kodu**: minimum 80% (osiągnięte: 93%)
+- **Pokrycie kodu**: minimum 80% (osiągnięte: 94%)
 - **Testy jednostkowe**: 100% przechodzi (osiągnięte)
 - **Linting**: 0 błędów (osiągnięte)
 - **Czas odpowiedzi API**: <200ms (planowane)
+
+### Automatyzacja jakości kodu
+
+**Skrypty naprawcze:**
+
+```bash
+# Główny skrypt naprawczy
+python scripts/fix-code-quality.py
+
+# Szybkie skrypty (Windows)
+scripts\quick-fix.bat
+.\scripts\quick-fix.ps1
+
+# Auto-fix (ręczne naprawy)
+python scripts/auto-fix.py
+```
+
+**Pre-commit hooks:**
+- **trailing-whitespace** - usuwa białe znaki
+- **end-of-file-fixer** - dodaje nowe linie
+- **black** - formatuje kod
+- **isort** - sortuje importy
+- **flake8** - sprawdza styl
+- **mypy** - sprawdza typy
 
 ### CI/CD Pipeline
 

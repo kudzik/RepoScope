@@ -114,14 +114,14 @@ npm test
 - ✅ **Środowisko Python** - venv + pyproject.toml
 - ✅ **Zależności** - FastAPI, Uvicorn, LangChain, Tree-sitter
 - ✅ **Lintery** - flake8, black, isort, mypy (wszystkie przetestowane)
-- ✅ **Testy jednostkowe** - pytest z 93% pokryciem kodu
+- ✅ **Testy jednostkowe** - pytest z 94% pokryciem kodu (22 testy)
 - ✅ **Konfiguracja edytora** - pyright, VS Code settings
 - ✅ **Dokumentacja** - zaktualizowana dokumentacja deweloperska
-
-### W trakcie
-
-- 🔄 **Pre-commit hooks** - automatyzacja sprawdzania
-- 🔄 **Dodatkowe testy** - testy integracyjne i E2E
+- ✅ **Pre-commit hooks** - automatyzacja sprawdzania jakości kodu
+- ✅ **Automatyzacja jakości** - skrypty naprawcze i narzędzia
+- ✅ **API endpoints** - analiza repozytoriów z GitHub API
+- ✅ **Pydantic schemas** - walidacja danych i typy
+- ✅ **Analysis service** - integracja z GitHub API
 
 ## 🛠️ Stos technologiczny
 
@@ -154,6 +154,8 @@ npm test
 - **GitHub Actions**: Automatyczne linting, testy, security scanning
 - **Pre-commit hooks**: Sprawdzanie jakości kodu przed commitami
 - **Code Quality**: ESLint, Prettier, flake8, black, mypy, isort
+- **Automatyzacja**: Skrypty naprawcze dla Windows i Linux/Mac
+- **Narzędzia**: fix-code-quality.py, quick-fix scripts, auto-fix.py
 - **Spójność**: Identyczne parametry w lokalnym i CI/CD środowisku
 
 ## 🤝 Współpraca

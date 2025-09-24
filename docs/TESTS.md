@@ -10,7 +10,7 @@ RepoScope wykorzystuje kompleksowe podejście do testowania, obejmujące testy j
 
 **Backend (Python/FastAPI)**
 
-- **Pokrycie**: 93% kodu (bardzo dobry wynik)
+- **Pokrycie**: 94% kodu (bardzo dobry wynik)
 - **Narzędzia**: pytest 8.4.2, pytest-cov 7.0.0
 - **Lokalizacja**: `backend/tests/`
 - **Testowane komponenty**:
@@ -18,6 +18,9 @@ RepoScope wykorzystuje kompleksowe podejście do testowania, obejmujące testy j
   - Konfiguracja CORS
   - Metadane aplikacji
   - Middleware i routing
+  - API analizy repozytoriów (`/analysis/`)
+  - Pydantic schemas i walidacja
+  - Analysis service z GitHub API
 
 **Frontend (Next.js/TypeScript)**
 
@@ -82,14 +85,15 @@ cypress                 # Testy E2E (alternatywa)
 
 ### Aktualne wyniki
 
-- **Pokrycie kodu**: 93% (backend)
-- **Testy jednostkowe**: 13/13 przechodzi (100%)
+- **Pokrycie kodu**: 94% (backend)
+- **Testy jednostkowe**: 22/22 przechodzi (100%)
 - **Linting**: 0 błędów (flake8, black, mypy)
-- **Czas wykonania**: <1s (testy jednostkowe)
+- **Czas wykonania**: <2s (testy jednostkowe)
+- **Automatyzacja**: Skrypty naprawcze działają
 
 ### Cele jakości
 
-- **Pokrycie kodu**: minimum 80% (osiągnięte: 93%)
+- **Pokrycie kodu**: minimum 80% (osiągnięte: 94%)
 - **Testy jednostkowe**: 100% przechodzi (osiągnięte)
 - **Linting**: 0 błędów (osiągnięte)
 - **Czas odpowiedzi API**: <200ms (planowane)
@@ -144,6 +148,20 @@ python -m pytest tests/ --cov=main --cov-report=html
 python -m flake8 main.py tests/
 python -m black main.py tests/
 python -m mypy main.py
+```
+
+### Automatyzacja jakości kodu
+
+```bash
+# Główny skrypt naprawczy
+python scripts/fix-code-quality.py
+
+# Szybkie skrypty (Windows)
+scripts\quick-fix.bat
+.\scripts\quick-fix.ps1
+
+# Auto-fix (ręczne naprawy)
+python scripts/auto-fix.py
 ```
 
 ### Frontend (planowane)

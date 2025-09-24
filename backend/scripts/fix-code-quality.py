@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 Script to automatically fix code quality issues before commit.
+
 This script runs all linters and formatters to ensure code quality.
 """
 
@@ -10,7 +11,15 @@ from pathlib import Path
 
 
 def run_command(command: list[str], description: str) -> bool:
-    """Run a command and return True if successful."""
+    """Run a command and return True if successful.
+
+    Args:
+        command: List of command arguments to run
+        description: Description of the command being run
+
+    Returns:
+        True if command succeeded, False otherwise
+    """
     print(f"🔧 {description}...")
     try:
         subprocess.run(command, check=True, capture_output=True, text=True)
@@ -23,7 +32,7 @@ def run_command(command: list[str], description: str) -> bool:
 
 
 def main():
-    """Main function to run all code quality fixes."""
+    """Run all code quality fixes."""
     print("🚀 Running code quality fixes...")
 
     # Get the backend directory

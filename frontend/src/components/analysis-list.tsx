@@ -14,7 +14,7 @@ import {
   RefreshCw,
   AlertCircle
 } from 'lucide-react';
-import { useGetAnalyses, useDeleteAnalysis } from '@/hooks/use-api';
+import { useGetAnalysesWithToast, useDeleteAnalysisWithToast } from '@/hooks/use-toast-api';
 import type { AnalysisResponse } from '@/lib/api-types';
 
 interface AnalysisListProps {
@@ -24,8 +24,8 @@ interface AnalysisListProps {
 export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
   const [page, setPage] = useState(1);
   const [analyses, setAnalyses] = useState<AnalysisResponse[]>([]);
-  const { execute: fetchAnalyses, loading, error } = useGetAnalyses();
-  const { execute: deleteAnalysis, loading: deleting } = useDeleteAnalysis();
+  const { execute: fetchAnalyses, loading, error } = useGetAnalysesWithToast();
+  const { execute: deleteAnalysis, loading: deleting } = useDeleteAnalysisWithToast();
 
   const loadAnalyses = async () => {
     const result = await fetchAnalyses(page, 10);

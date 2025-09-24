@@ -6,7 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, AlertCircle, CheckCircle } from 'lucide-react';
-import { useAnalyzeRepository } from '@/hooks/use-api';
+import { useAnalyzeRepositoryWithToast } from '@/hooks/use-toast-api';
+import { useNetworkStatus } from '@/hooks/use-network-status';
 import { AnalysisList } from './analysis-list';
 import { AnalysisResults } from './analysis-results';
 import type { AnalysisResponse } from '@/lib/api-types';
@@ -16,7 +17,8 @@ export function AnalysisForm() {
   const [result, setResult] = useState<AnalysisResponse | null>(null);
   const [selectedAnalysis, setSelectedAnalysis] = useState<AnalysisResponse | null>(null);
   const [showList, setShowList] = useState(false);
-  const { execute, loading, error } = useAnalyzeRepository();
+  const { execute, loading, error } = useAnalyzeRepositoryWithToast();
+  const { isOnline } = useNetworkStatus();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,12 +75,18 @@ export function AnalysisForm() {
                   Please enter a valid GitHub repository URL
                 </p>
               )}
+
+              {!isOnline && (
+                <p className="text-sm text-destructive">
+                  No internet connection. Please check your network.
+                </p>
+              )}
             </div>
 
             <Button
               type="submit"
               className="w-full text-sm sm:text-base"
-              disabled={loading || !url.trim() || !isValidGitHubUrl(url)}
+              disabled={loading || !url.trim() || !isValidGitHubUrl(url) || !isOnline}
             >
               {loading ? (
                 <>

@@ -24,7 +24,7 @@
 - [x] **API-1.2** Dodać TypeScript typy dla API ✅
 - [x] **API-2** Podłączyć formularz do POST /analysis/ ✅
 - [x] **API-3** Utworzyć komponenty wyświetlania wyników ✅
-- [ ] **API-4** Dodać obsługę błędów i loading states
+- [x] **API-4** Dodać obsługę błędów i loading states ✅
 
 ---
 

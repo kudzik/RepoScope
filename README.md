@@ -46,6 +46,12 @@ cd backend
 # Instalacja zależności
 python -m pip install -e ".[dev]"
 
+# Konfiguracja kluczy API (wymagane)
+python setup_api_keys.py
+
+# Test konfiguracji
+python test_api_connection.py
+
 # Uruchomienie serwera deweloperskiego
 python main.py
 ```
@@ -83,6 +89,7 @@ npm test
 
 ## 📖 Dokumentacja
 
+- [🔑 API Keys Setup Guide](docs/API_KEYS_SETUP.md) ✅
 - [Product Requirements Document](docs/PRD.md)
 - [Architektura systemu](docs/ARCHITECTURE.md)
 - [Środowisko deweloperskie](docs/DEVELOPMENT.md) ✅

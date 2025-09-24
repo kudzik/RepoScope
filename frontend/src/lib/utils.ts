@@ -328,7 +328,6 @@ export function getScoreLevel(
   score: number,
   _type: 'security' | 'quality' | 'coverage' | 'documentation' = 'quality'
 ): string {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   if (score >= 90) return 'excellent';
   if (score >= 80) return 'good';
   if (score >= 60) return 'fair';

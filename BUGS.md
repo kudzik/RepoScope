@@ -80,12 +80,14 @@ Jak system faktycznie się zachowuje.
 ## ✅ Naprawione błędy
 
 ### 🎨 UI/UX Issues
+
 - ✅ **BUG-UI-001** Brak tooltips dla Test Coverage - Naprawiono dodając opisowe tooltips
 - ✅ **BUG-UI-002** Słabe formatowanie AI Summary - Ulepszono z emoji i gradientami
 - ✅ **BUG-UI-003** Brak spójnego systemu kolorów - Zaimplementowano system kolorów
 - ✅ **BUG-UI-004** Problemy z responsywnością - Naprawiono wszystkie breakpoints
 
 ### 🔧 Backend Issues
+
 - ✅ **BUG-BE-001** Słabe formatowanie odpowiedzi AI - Ulepszono prompty
 - ✅ **BUG-BE-002** Brak instrukcji formatowania - Dodano do system prompt
 

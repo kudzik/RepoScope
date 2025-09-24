@@ -1,0 +1,7 @@
+pyproject.toml
+reposcope_backend.egg-info/PKG-INFO
+reposcope_backend.egg-info/SOURCES.txt
+reposcope_backend.egg-info/dependency_links.txt
+reposcope_backend.egg-info/entry_points.txt
+reposcope_backend.egg-info/requires.txt
+reposcope_backend.egg-info/top_level.txt

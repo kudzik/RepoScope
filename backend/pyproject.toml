@@ -1,3 +1,68 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reposcope-backend"
+version = "1.0.0"
+description = "Repository Analysis Tool powered by AI"
+authors = [{name = "RepoScope Team", email = "team@reposcope.com"}]
+license = {text = "MIT"}
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+
+dependencies = [
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic>=2.0.0",
+    "langchain>=0.1.20",
+    "langchain-openai>=0.1.0",
+    "requests>=2.31.0",
+    "tree-sitter>=0.20.0",
+    "python-multipart>=0.0.6",
+    "python-jose[cryptography]>=3.3.0",
+    "passlib[bcrypt]>=1.7.4",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.0.0",
+    "httpx>=0.25.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "flake8-bugbear>=23.0.0",
+    "flake8-docstrings>=1.7.0",
+    "flake8-import-order>=0.18.0",
+    "flake8-comprehensions>=3.14.0",
+    "mypy>=1.0.0",
+    "pre-commit>=3.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/reposcope/reposcope"
+Repository = "https://github.com/reposcope/reposcope"
+Documentation = "https://docs.reposcope.com"
+"Bug Tracker" = "https://github.com/reposcope/reposcope/issues"
+
+[project.scripts]
+reposcope = "main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*", "api*", "models*", "schemas*", "services*"]
+exclude = ["tests*", "venv*"]
+
 [tool.black]
 line-length = 100
 target-version = ['py311']
@@ -25,3 +90,16 @@ multi_line_output = 3
 line_length = 100
 known_first_party = ["reposcope"]
 known_third_party = ["fastapi", "pydantic", "sqlalchemy", "langchain"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers --strict-config"
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]

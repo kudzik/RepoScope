@@ -104,24 +104,79 @@
   - **Test**: Aplikacja jest dostępna dla użytkowników z niepełnosprawnościami
   - ✅ **ZAKOŃCZONE**: Wszystkie testy przeszły pomyślnie, dokumentacja zaktualizowana
 
-### Backend - Python Lintery
+## Backend - Python Lintery
 
-- [ ] **2.1** Utworzyć plik `.flake8` w katalogu backend/ z konfiguracją flake8
+---
 
-  - Ustawić max-line-length, ignore rules, exclude directories
-  - Dodać pluginy: flake8-bugbear, flake8-docstrings, flake8-import-order
-  - **Test**: `flake8 .` uruchamia się i wykrywa błędy w testowym pliku
+1. **Utworzenie bazowej struktury projektu backend (FastAPI)**
 
-- [ ] **2.2** Utworzyć plik `pyproject.toml` w backend/ z konfiguracją black i isort
+   - [x] **2.1** Załóż katalog `backend/` z podkatalogami `app/`, `tests/`, `schemas/`, `services/`, `api/`, `models/` ✅ **ZAKOŃCZONE**: Wszystkie katalogi utworzone pomyślnie
+   - [x] **2.2** Stwórz plik `main.py` z inicjalizacją aplikacji FastAPI ✅ **ZAKOŃCZONE**: FastAPI aplikacja z CORS middleware i endpointami
 
-  - Konfiguracja black dla formatowania
-  - Konfiguracja isort dla sortowania importów
-  - **Test**: `black .` i `isort .` formatują pliki zgodnie z regułami
+2. **Inicjalizacja środowiska Python (np. venv/Poetry)**
 
-- [ ] **2.3** Utworzyć plik `mypy.ini` w backend/ z konfiguracją mypy
-  - Ustawienia strict mode dla type checking
-  - Konfiguracja dla Python 3.11
-  - **Test**: `mypy .` sprawdza typy i wykrywa błędy
+   - [x] **3.1** Utwórz i aktywuj środowisko virtualne ✅ **ZAKOŃCZONE**: Python 3.13.7 venv aktywowany
+   - [x] **3.2** Dodaj plik `pyproject.toml` lub `requirements.txt` ✅ **ZAKOŃCZONE**: Kompletny pyproject.toml z zależnościami
+   - [x] **3.3** Zainstaluj wymagane zależności: FastAPI, Uvicorn, LangChain, requests, pydantic, Tree-sitter ✅ **ZAKOŃCZONE**: Wszystkie pakiety zainstalowane i zweryfikowane
+
+3. **Konfiguracja linterów i formatowania kodu**
+
+   - [ ] **4.1** Dodaj pliki konfiguracyjne `.flake8`, `pyproject.toml` (black, isort), `mypy.ini`
+   - [ ] **4.2** Skonfiguruj pre-commit hooki (flake8, black, isort, mypy)
+
+4. **Stworzenie bazowych endpointów REST API**
+
+   - [ ] **5.1** POST `/analyze/` — przyjmuje URL repozytorium do analizy
+   - [ ] **5.2** GET `/analyses/` — zwraca listę analiz użytkownika
+   - [ ] **5.3** GET `/analyses/{id}/` — szczegóły pojedynczego raportu
+
+5. **Implementacja integracji z GitHub API i Tree-sitter**
+
+   - [ ] **6.1** Funkcja pobierania repozytorium po URL
+   - [ ] **6.2** Moduł analizy struktury i statystyk kodu (Tree-sitter)
+
+6. **Integracja warstwy LLM z LangChain/OpenRouter**
+
+   - [ ] **7.1** Moduł generujący podsumowania i rekomendacje z kodu
+
+7. **Implementacja obsługi błędów i walidacja danych**
+
+   - [ ] **8.1** Walidacja URL, kontrola typów danych wejściowych (pydantic)
+   - [ ] **8.2** Standardowe odpowiedzi błędów REST (HTTPException)
+
+8. **Dodanie bazy danych i ORM (Supabase)**
+
+   - [ ] **9.1** Modele danych analizy/raportów, powiązanie z użytkownikiem
+   - [ ] **9.2** Warstwa zapisu/odczytu do bazy
+
+9. **Dodanie autoryzacji użytkowników (SuperTokens)**
+
+   - [ ] **10.1** Integracja z middleware dla endpointów REST
+   - [ ] **10.2** Opis dostępnych ról w kodzie
+
+10. **Implementacja i testy jednostkowe (pytest) dla kluczowych endpointów**
+
+    - [ ] **11.1** Testy success/failure dla analizy repozytorium
+    - [ ] **11.2** Mockowanie API/labda do testów offline
+
+11. **Konfiguracja pipeline CI/CD (GitHub Actions)**
+
+    - [ ] **12.1** Job do lintowania, testów, sprawdzenia typów
+    - [ ] **12.2** Automatyczne budowanie obrazu Dockera backendu
+
+12. **Dokumentacja API i projektu**
+    - [ ] **13.1** OpenAPI/Swagger automatycznie w FastAPI
+    - [ ] **13.2** README.md — opis konfiguracji uruchomienia backendu, dokumentacja endpointów API
+
+[1](https://dev.to/prathamesh_patil_98/a-complete-guide-to-accessibility-compliance-with-wcag-21-2of)
+[2](https://www.w3.org/TR/WCAG21/)
+[3](https://smultron.software/blog/the-implementation-of-wcag-2-1-using-the-example-of-the-uczelniadostepna-pl-project)
+[4](https://github.com/swagger-api/swagger-ui/issues/5248)
+[5](https://www.syzygy.pl/en/blog/implementing-web-content-accessibility-guidelines-wcag/)
+[6](https://www.allaccessible.org/wcag-2-1-explained-a-comprehensive-guide-for-web-development-agencies/)
+[7](https://charisol.io/wcag-2-1/)
+[8](https://dev.to/adamgolan/web-accessibility-a-developers-guide-to-wcag-21-10o7)
+[9](https://edify.cr/insights/mastering-accessibility-best-practices-for-wcag-2-1-compliance-in-visual-design/)
 
 ### Pre-commit hooks
 
@@ -152,51 +207,6 @@
 
 ---
 
-## 🏃‍♂️ 2. Plan realizacji w sprintach Agile
+```
 
-### Podział zadania na subtasks / user stories
-
-- [ ] **US1**: Utworzenie i konfiguracja ESLint dla frontend (2 dni)
-- [ ] **US2**: Utworzenie i konfiguracja Prettier oraz integracja z ESLint (1 dzień)
-- [ ] **US3**: Konfiguracja Python linterów (flake8, black, mypy, isort) (1 dzień)
-- [ ] **US4**: Konfiguracja pre-commit hook (husky + lint-staged) (1 dzień)
-- [ ] **US5**: Integracja workflow CI/CD do lintowania i formatowania (1-2 dni)
-- [ ] **US6**: Testy, debugging i dokumentacja procesów (1 dzień)
-
-### Szacowany czas: 6-7 dni roboczych (jeden sprint tygodniowy)
-
-### Kryteria akceptacji (Definition of Done)
-
-- [ ] Pliki konfiguracyjne są dostępne i kompletnie skonfigurowane
-- [ ] Linter i Prettier działają bez błędów lokalnie i w CI
-- [ ] Pre-commit hook blokuje commity z błędami formatowania lub lintu
-- [ ] Dokumentacja lokalnego workflow jest kompletna
-- [ ] Pull request zatwierdzony w code review, z testami i bez błędów
-
-### Praktyki i spotkania zespołu
-
-- **Daily Stand-up:** omówienie bieżącego statusu i przeszkód
-- **Sprint Planning:** podział user stories i przydział zadań
-- **Code Review:** każdy PR przechodzi przegląd pod kątem stylu i poprawności lintingu
-- **Sprint Review & Retrospective:** feedback i ulepszanie procesu
-- **Pair Programming / Mob Programming:** przy pierwszej konfiguracji dla lepszego transferu wiedzy
-
-### Komunikacja i feedback
-
-- Wykorzystanie Slack/Teams do szybkiego feedbacku
-- Dokumentacja w repozytorium i wiki projektu
-- Devs powinni raportować problemy z konfiguracją od razu, by iteracyjnie poprawiać ustawienia
-
----
-
-## 📝 Historia zmian
-
-### [2024-01-23] - Utworzenie pliku TODO
-
-- Utworzono szczegółowy plan działania dla konfiguracji projektu
-- Zdefiniowano 15 konkretnych zadań do wykonania
-- Ustalone kryteria akceptacji i timeline realizacji
-
----
-
-**Uwaga**: Ten plik będzie aktualizowany w miarę realizacji zadań. Każde ukończone zadanie powinno być zaznaczone jako ✅ wraz z datą realizacji.
+```

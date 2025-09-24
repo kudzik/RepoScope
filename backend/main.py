@@ -64,4 +64,6 @@ if __name__ == "__main__":
         port=8000,
         reload=True,
         log_level="info",
+        timeout_keep_alive=120,  # Increased timeout for long AI operations
+        timeout_graceful_shutdown=30,
     )

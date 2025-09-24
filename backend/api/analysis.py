@@ -6,12 +6,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import JSONResponse
 
-from schemas.analysis import (
-    AnalysisCreateResponse,
-    AnalysisListResponse,
-    AnalysisRequest,
-    AnalysisResult,
-)
+from schemas.analysis import AnalysisListResponse, AnalysisRequest, AnalysisResult
 from services.analysis_service import AnalysisService
 
 router = APIRouter(prefix="/analysis", tags=["analysis"])
@@ -39,16 +34,34 @@ async def create_analysis(
     security issues, and AI-generated summary.
     """
     try:
-        # Start analysis (this would typically be done asynchronously)
-        analysis = await service.analyze_repository(str(request.repository_url))
+        import asyncio
+
+        # Start analysis with overall timeout handling
+        analysis = await asyncio.wait_for(
+            service.analyze_repository(str(request.repository_url)),
+            timeout=120.0,  # 2 minutes total timeout
+        )
 
         # Return the full analysis result instead of just create response
         return analysis
 
     except HTTPException:
         raise
+    except asyncio.TimeoutError:
+        raise HTTPException(
+            status_code=408,
+            detail=(
+                "Analysis timeout - repository may be too large or AI service is slow. "
+                "Try with a smaller repository."
+            ),
+        )
+    except TimeoutError:
+        raise HTTPException(
+            status_code=408,
+            detail=("Analysis timeout - repository may be too large or AI service is slow"),
+        )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to start analysis: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to start analysis: {str(e)}") from e
 
 
 @router.get("/", response_model=AnalysisListResponse)
@@ -66,7 +79,7 @@ async def list_analyses(
         analyses = await service.list_analyses(page=page, page_size=page_size)
 
         # Get total count for pagination
-        total_count = len(list(service._analyses.values()))
+        total_count = len(list(service._analyses.values()))  # noqa: SLF001
 
         return AnalysisListResponse(
             analyses=analyses,
@@ -76,7 +89,7 @@ async def list_analyses(
         )
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to list analyses: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to list analyses: {str(e)}") from e
 
 
 @router.get("/{analysis_id}", response_model=AnalysisResult)
@@ -101,7 +114,7 @@ async def get_analysis(
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to get analysis: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get analysis: {str(e)}") from e
 
 
 @router.delete("/{analysis_id}")
@@ -130,4 +143,4 @@ async def delete_analysis(
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to delete analysis: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to delete analysis: {str(e)}") from e

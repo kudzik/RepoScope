@@ -44,7 +44,39 @@ class CodeAnalyzer:
         try:
             import tree_sitter_typescript
 
-            self.languages["typescript"] = Language(tree_sitter_typescript.language())
+            # Try different approaches to get the language
+            try:
+                # Method 1: Standard approach
+                self.languages["typescript"] = Language(tree_sitter_typescript.language())
+            except (AttributeError, TypeError):
+                try:
+                    # Method 2: Check if it's a callable
+                    if callable(tree_sitter_typescript.language):
+                        self.languages["typescript"] = Language(tree_sitter_typescript.language())
+                    else:
+                        self.languages["typescript"] = Language(tree_sitter_typescript.language)
+                except (AttributeError, TypeError):
+                    try:
+                        # Method 3: Try to find the language function
+                        if hasattr(tree_sitter_typescript, "language"):
+                            lang_func = getattr(tree_sitter_typescript, "language")
+                            if callable(lang_func):
+                                self.languages["typescript"] = Language(lang_func())
+                            else:
+                                self.languages["typescript"] = Language(lang_func)
+                        else:
+                            # Method 4: Skip TypeScript if all methods fail
+                            print(
+                                "Warning: TypeScript Tree-sitter language function "
+                                "not found, skipping TypeScript analysis"
+                            )
+                    except Exception:
+                        print(
+                            "Warning: TypeScript Tree-sitter not available, "
+                            "skipping TypeScript analysis"
+                        )
+        except ImportError:
+            print("Warning: tree_sitter_typescript not installed, " "skipping TypeScript analysis")
         except Exception as e:
             print(f"Warning: Could not load TypeScript Tree-sitter: {e}")
 
@@ -176,7 +208,11 @@ class CodeAnalyzer:
         }
 
         def traverse_node(node):
-            if node.type in ["function_declaration", "arrow_function", "function_expression"]:
+            if node.type in [
+                "function_declaration",
+                "arrow_function",
+                "function_expression",
+            ]:
                 stats["functions"] += 1
             elif node.type == "class_declaration":
                 stats["classes"] += 1
@@ -324,7 +360,11 @@ class CodeAnalyzer:
                 "code_duplication": 0.0,
                 "test_coverage": 0.0,
             },
-            "code_patterns": {"design_patterns": [], "anti_patterns": [], "code_smells": []},
+            "code_patterns": {
+                "design_patterns": [],
+                "anti_patterns": [],
+                "code_smells": [],
+            },
             "architecture_score": 0.0,
             "hotspots": [],
         }
@@ -367,7 +407,11 @@ class CodeAnalyzer:
                     # Track largest files
                     largest_files = stats["largest_files"]
                     largest_files.append(
-                        {"path": file_path, "lines": file_stats["lines_of_code"], "language": lang}
+                        {
+                            "path": file_path,
+                            "lines": file_stats["lines_of_code"],
+                            "language": lang,
+                        }
                     )
 
                 except Exception as e:
@@ -554,7 +598,11 @@ class CodeAnalyzer:
 
     def _detect_code_patterns_repository(self, repo_path: str) -> Dict:
         """Detect code patterns across the entire repository."""
-        patterns: Dict[str, list] = {"design_patterns": [], "anti_patterns": [], "code_smells": []}
+        patterns: Dict[str, list] = {
+            "design_patterns": [],
+            "anti_patterns": [],
+            "code_smells": [],
+        }
 
         # Walk through repository and analyze files
         for root, dirs, files in os.walk(repo_path):
@@ -583,7 +631,11 @@ class CodeAnalyzer:
 
     def _detect_file_patterns(self, content: str, filename: str) -> Dict:
         """Detect patterns in a single file."""
-        patterns: Dict[str, list] = {"design_patterns": [], "anti_patterns": [], "code_smells": []}
+        patterns: Dict[str, list] = {
+            "design_patterns": [],
+            "anti_patterns": [],
+            "code_smells": [],
+        }
 
         lines = content.splitlines()
 
@@ -594,19 +646,34 @@ class CodeAnalyzer:
             # Singleton pattern
             if "singleton" in line_lower or "__new__" in line_lower:
                 patterns["design_patterns"].append(
-                    {"pattern": "Singleton", "file": filename, "line": i + 1, "confidence": 0.7}
+                    {
+                        "pattern": "Singleton",
+                        "file": filename,
+                        "line": i + 1,
+                        "confidence": 0.7,
+                    }
                 )
 
             # Factory pattern
             if "factory" in line_lower and "create" in line_lower:
                 patterns["design_patterns"].append(
-                    {"pattern": "Factory", "file": filename, "line": i + 1, "confidence": 0.6}
+                    {
+                        "pattern": "Factory",
+                        "file": filename,
+                        "line": i + 1,
+                        "confidence": 0.6,
+                    }
                 )
 
             # Observer pattern
             if "observer" in line_lower or "subscribe" in line_lower:
                 patterns["design_patterns"].append(
-                    {"pattern": "Observer", "file": filename, "line": i + 1, "confidence": 0.6}
+                    {
+                        "pattern": "Observer",
+                        "file": filename,
+                        "line": i + 1,
+                        "confidence": 0.6,
+                    }
                 )
 
         # Detect anti-patterns
@@ -617,7 +684,12 @@ class CodeAnalyzer:
             method_count = len([line for line in lines if "def " in line])
             if "class" in line_lower and method_count > 20:
                 patterns["anti_patterns"].append(
-                    {"pattern": "God Class", "file": filename, "line": i + 1, "confidence": 0.8}
+                    {
+                        "pattern": "God Class",
+                        "file": filename,
+                        "line": i + 1,
+                        "confidence": 0.8,
+                    }
                 )
 
             # Long method
@@ -636,7 +708,12 @@ class CodeAnalyzer:
             # Dead code
             if "unused" in line_lower or "deprecated" in line_lower:
                 patterns["code_smells"].append(
-                    {"pattern": "Dead Code", "file": filename, "line": i + 1, "confidence": 0.6}
+                    {
+                        "pattern": "Dead Code",
+                        "file": filename,
+                        "line": i + 1,
+                        "confidence": 0.6,
+                    }
                 )
 
         return patterns
@@ -703,8 +780,12 @@ class CodeAnalyzer:
                         "type": "large_file",
                         "file": file_info.get("path", ""),
                         "lines": file_info.get("lines", 0),
-                        "severity": "high" if file_info.get("lines", 0) > 1000 else "medium",
-                        "description": f"Large file with {file_info.get('lines', 0)} lines",
+                        "severity": ("high" if file_info.get("lines", 0) > 1000 else "medium"),
+                        "description": (
+                            f"Large file with {
+                                file_info.get(
+                                    'lines', 0)} lines"
+                        ),
                     }
                 )
 
@@ -717,7 +798,7 @@ class CodeAnalyzer:
                     "file": "repository",
                     "lines": 0,
                     "severity": "high",
-                    "description": f"High overall complexity: {complexity:.2f}",
+                    "description": (f"High overall complexity: {complexity:.2f}"),
                 }
             )
 
@@ -731,7 +812,7 @@ class CodeAnalyzer:
                         "file": f"{lang} files",
                         "lines": info.get("lines", 0),
                         "severity": "medium",
-                        "description": f"Many {lang} files: {info.get('files', 0)} files",
+                        "description": (f"Many {lang} files: {info.get('files', 0)} files"),
                     }
                 )
 
@@ -742,7 +823,8 @@ class CodeAnalyzer:
         if stats["total_files"] == 0:
             return 0.0
 
-        # Simple complexity score based on file count, lines, and language diversity
+        # Simple complexity score based on file count, lines, and language
+        # diversity
         file_score = min(stats["total_files"] / 100, 1.0)  # Normalize to 0-1
         line_score = min(stats["total_lines"] / 10000, 1.0)  # Normalize to 0-1
         diversity_score = min(len(stats["languages"]) / 5, 1.0)  # Normalize to 0-1
@@ -801,12 +883,20 @@ class CodeAnalyzer:
 
             # Increment for control structures
             if language == "python":
-                if node.type in ["if_statement", "while_statement", "for_statement"]:
+                if node.type in [
+                    "if_statement",
+                    "while_statement",
+                    "for_statement",
+                ]:
                     complexity += 1 + level
                 elif node.type in ["try_statement", "except_clause"]:
                     complexity += 1
             elif language in ["javascript", "typescript"]:
-                if node.type in ["if_statement", "while_statement", "for_statement"]:
+                if node.type in [
+                    "if_statement",
+                    "while_statement",
+                    "for_statement",
+                ]:
                     complexity += 1 + level
                 elif node.type in ["switch_statement", "catch_clause"]:
                     complexity += 1
@@ -1004,7 +1094,10 @@ class CodeAnalyzer:
         # Simplified maintainability index calculation
         # Based on cyclomatic complexity and lines of code
         cc = max(complexity.cyclomatic_complexity, 1)
-        mi = max(0, (171 - 5.2 * (cc**0.23) - 0.23 * cc - 16.2 * (loc**0.5)) * 100 / 171)
+        mi = max(
+            0,
+            (171 - 5.2 * (cc**0.23) - 0.23 * cc - 16.2 * (loc**0.5)) * 100 / 171,
+        )
 
         return min(100.0, mi)
 
@@ -1069,7 +1162,10 @@ class CodeAnalyzer:
             language="unknown",
             lines_of_code=loc,
             complexity=ComplexityMetrics(
-                cyclomatic_complexity=0, cognitive_complexity=0, nesting_depth=0, function_length=0
+                cyclomatic_complexity=0,
+                cognitive_complexity=0,
+                nesting_depth=0,
+                function_length=0,
             ),
             quality=QualityMetrics(
                 maintainability_index=50.0,

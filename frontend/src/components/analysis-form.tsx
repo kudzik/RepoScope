@@ -8,15 +8,21 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import { useAnalyzeRepositoryWithToast } from '@/hooks/use-toast-api';
 import { useNetworkStatus } from '@/hooks/use-network-status';
-import { AnalysisList } from './analysis-list';
-import { AnalysisResults } from './analysis-results';
 import type { AnalysisResponse } from '@/lib/api-types';
 
-export function AnalysisForm() {
+interface AnalysisFormProps {
+  onAnalysisComplete?: (analysis: AnalysisResponse) => void;
+  onAnalysisStart?: () => void;
+  onAnalysisError?: (error: string) => void;
+}
+
+export function AnalysisForm({
+  onAnalysisComplete,
+  onAnalysisStart,
+  onAnalysisError,
+}: AnalysisFormProps) {
   const [url, setUrl] = useState('');
   const [result, setResult] = useState<AnalysisResponse | null>(null);
-  const [selectedAnalysis, setSelectedAnalysis] = useState<AnalysisResponse | null>(null);
-  const [showList, setShowList] = useState(false);
   const { execute, loading, error } = useAnalyzeRepositoryWithToast();
   const { isOnline } = useNetworkStatus();
 
@@ -25,11 +31,25 @@ export function AnalysisForm() {
 
     if (!url.trim()) return;
 
+    // Call start callback
+    if (onAnalysisStart) {
+      onAnalysisStart();
+    }
+
     const analysisResult = await execute(url.trim());
     if (analysisResult) {
       setResult(analysisResult);
       setUrl(''); // Clear form on success
-      setShowList(true); // Show analyses list
+
+      // Call the success callback
+      if (onAnalysisComplete) {
+        onAnalysisComplete(analysisResult);
+      }
+    } else {
+      // Call error callback if analysis failed
+      if (onAnalysisError && error) {
+        onAnalysisError(error);
+      }
     }
   };
 
@@ -41,9 +61,7 @@ export function AnalysisForm() {
     <div className="space-y-6">
       <Card className="max-w-sm mx-auto sm:max-w-md md:max-w-lg lg:max-w-xl">
         <CardHeader className="space-y-2">
-          <CardTitle className="text-xl sm:text-2xl">
-            Analyze Repository
-          </CardTitle>
+          <CardTitle className="text-xl sm:text-2xl">Analyze Repository</CardTitle>
           <CardDescription className="text-sm sm:text-base">
             Enter a GitHub repository URL to get AI-powered insights about code quality,
             documentation, and more.
@@ -59,7 +77,7 @@ export function AnalysisForm() {
                 id="repository-url"
                 type="url"
                 value={url}
-                onChange={(e) => setUrl(e.target.value)}
+                onChange={e => setUrl(e.target.value)}
                 placeholder="https://github.com/username/repository"
                 className="text-sm sm:text-base"
                 aria-describedby="repository-help"
@@ -91,7 +109,7 @@ export function AnalysisForm() {
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Analyzing...
+                  Analyzing... (This may take up to 2 minutes)
                 </>
               ) : (
                 'Analyze Repository'
@@ -120,30 +138,6 @@ export function AnalysisForm() {
           )}
         </CardContent>
       </Card>
-
-      {/* Show selected analysis results */}
-      {selectedAnalysis && (
-        <div className="mt-8">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-semibold">Analysis Results</h3>
-            <Button
-              onClick={() => setSelectedAnalysis(null)}
-              variant="outline"
-              size="sm"
-            >
-              Close
-            </Button>
-          </div>
-          <AnalysisResults analysis={selectedAnalysis} />
-        </div>
-      )}
-
-      {/* Show analyses list */}
-      {showList && !selectedAnalysis && (
-        <div className="mt-8">
-          <AnalysisList onSelectAnalysis={setSelectedAnalysis} />
-        </div>
-      )}
     </div>
   );
 }

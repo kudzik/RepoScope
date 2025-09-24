@@ -22,7 +22,7 @@ interface AnalysisListProps {
 }
 
 export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const [analyses, setAnalyses] = useState<AnalysisResponse[]>([]);
   const { execute: fetchAnalyses, loading, error } = useGetAnalysesWithToast();
   const { execute: deleteAnalysis, loading: deleting } = useDeleteAnalysisWithToast();
@@ -38,7 +38,7 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
 
   useEffect(() => {
     loadAnalyses();
-  }, [page]);
+  }, [page, loadAnalyses]);
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this analysis?')) {
@@ -271,7 +271,7 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
                             <div className="max-h-20 overflow-y-auto space-y-1">
                               {analysis.result.security.vulnerabilities
                                 .slice(0, 3)
-                                .map((vuln: any, index: number) => (
+                                .map((vuln: { type: string; severity: string }, index: number) => (
                                   <div key={index} className="text-xs text-muted-foreground">
                                     • {vuln.type} ({vuln.severity})
                                   </div>

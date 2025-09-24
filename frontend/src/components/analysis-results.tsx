@@ -158,7 +158,7 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
       </Card>
 
       {/* Main Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Code Quality */}
         <Card>
           <CardHeader className="pb-2">
@@ -259,8 +259,18 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <Progress value={result.test_coverage.coverage_percentage} className="h-2" />
               <div className="text-xs text-muted-foreground space-y-1">
                 <div>Has Tests: {result.test_coverage.has_tests ? '✓' : '✗'}</div>
-                <div>Frameworks: {result.test_coverage.test_frameworks.length}</div>
-                <div>Files: {result.test_coverage.test_files.length}</div>
+                <div>
+                  Frameworks:{' '}
+                  {Array.isArray(result.test_coverage.test_frameworks)
+                    ? result.test_coverage.test_frameworks.length
+                    : 0}
+                </div>
+                <div>
+                  Files:{' '}
+                  {Array.isArray(result.test_coverage.test_files)
+                    ? result.test_coverage.test_files.length
+                    : 0}
+                </div>
               </div>
             </div>
           </CardContent>
@@ -276,7 +286,7 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="space-y-4">
               <h4 className="font-medium text-sm">Basic Metrics</h4>
               <div className="space-y-2 text-sm">
@@ -302,9 +312,12 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                   <div key={lang} className="space-y-1">
                     <div className="flex justify-between text-sm">
                       <span>{lang}</span>
-                      <span>{percentage as number}%</span>
+                      <span>{typeof percentage === 'number' ? percentage : 0}%</span>
                     </div>
-                    <Progress value={percentage as number} className="h-1" />
+                    <Progress
+                      value={typeof percentage === 'number' ? percentage : 0}
+                      className="h-1"
+                    />
                   </div>
                 ))}
               </div>
@@ -315,8 +328,8 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <div className="space-y-1 text-sm">
                 {result.metrics.largest_files.map((file, index: number) => (
                   <div key={index} className="flex justify-between">
-                    <span className="truncate">{file.name}</span>
-                    <span className="text-muted-foreground">{file.lines} lines</span>
+                    <span className="truncate">{file?.name || 'Unknown'}</span>
+                    <span className="text-muted-foreground">{file?.lines || 0} lines</span>
                   </div>
                 ))}
               </div>
@@ -326,7 +339,7 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
       </Card>
 
       {/* Detailed Analysis Results */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* Code Quality Details */}
         <Card>
           <CardHeader>
@@ -336,7 +349,7 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {result.code_quality.issues.length > 0 && (
+            {Array.isArray(result.code_quality.issues) && result.code_quality.issues.length > 0 && (
               <div>
                 <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
                   <AlertTriangle className="h-4 w-4 text-yellow-500" />
@@ -345,45 +358,48 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                 <ul className="space-y-1 text-sm max-h-32 overflow-y-auto">
                   {result.code_quality.issues.map((issue: string, index: number) => (
                     <li key={index} className="text-muted-foreground">
-                      • {issue}
+                      • {typeof issue === 'string' ? issue : String(issue)}
                     </li>
                   ))}
                 </ul>
               </div>
             )}
 
-            {result.code_quality.recommendations.length > 0 && (
-              <div>
-                <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                  <Target className="h-4 w-4 text-green-500" />
-                  Recommendations ({result.code_quality.recommendations.length})
-                </h4>
-                <ul className="space-y-1 text-sm max-h-32 overflow-y-auto">
-                  {result.code_quality.recommendations.map((rec: string, index: number) => (
-                    <li key={index} className="text-muted-foreground">
-                      • {rec}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            {Array.isArray(result.code_quality.recommendations) &&
+              result.code_quality.recommendations.length > 0 && (
+                <div>
+                  <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
+                    <Target className="h-4 w-4 text-green-500" />
+                    Recommendations ({result.code_quality.recommendations.length})
+                  </h4>
+                  <ul className="space-y-1 text-sm max-h-32 overflow-y-auto">
+                    {result.code_quality.recommendations.map((rec: string, index: number) => (
+                      <li key={index} className="text-muted-foreground">
+                        • {typeof rec === 'string' ? rec : String(rec)}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
             {result.code_quality.patterns && (
               <div>
                 <h4 className="font-medium text-sm mb-2">Code Patterns</h4>
                 <div className="space-y-2 text-sm">
-                  {result.code_quality.patterns.design_patterns.length > 0 && (
-                    <div>
-                      <span className="text-green-600">Design Patterns: </span>
-                      <span>{result.code_quality.patterns.design_patterns.join(', ')}</span>
-                    </div>
-                  )}
-                  {result.code_quality.patterns.anti_patterns.length > 0 && (
-                    <div>
-                      <span className="text-red-600">Anti-patterns: </span>
-                      <span>{result.code_quality.patterns.anti_patterns.join(', ')}</span>
-                    </div>
-                  )}
+                  {Array.isArray(result.code_quality.patterns.design_patterns) &&
+                    result.code_quality.patterns.design_patterns.length > 0 && (
+                      <div>
+                        <span className="text-green-600">Design Patterns: </span>
+                        <span>{result.code_quality.patterns.design_patterns.join(', ')}</span>
+                      </div>
+                    )}
+                  {Array.isArray(result.code_quality.patterns.anti_patterns) &&
+                    result.code_quality.patterns.anti_patterns.length > 0 && (
+                      <div>
+                        <span className="text-red-600">Anti-patterns: </span>
+                        <span>{result.code_quality.patterns.anti_patterns.join(', ')}</span>
+                      </div>
+                    )}
                 </div>
               </div>
             )}
@@ -399,46 +415,50 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {result.security.vulnerabilities.length > 0 && (
-              <div>
-                <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                  <AlertCircle className="h-4 w-4 text-red-500" />
-                  Security Vulnerabilities ({result.security.vulnerabilities.length})
-                </h4>
-                <div className="space-y-2 max-h-32 overflow-y-auto">
-                  {result.security.vulnerabilities.map((vuln, index: number) => (
-                    <div key={index} className="text-sm p-2 bg-red-50 dark:bg-red-900/20 rounded">
-                      <div className="flex justify-between items-start">
-                        <span className="font-medium">{vuln.type}</span>
-                        <Badge variant={vuln.severity === 'high' ? 'destructive' : 'secondary'}>
-                          {vuln.severity}
-                        </Badge>
+            {Array.isArray(result.security.vulnerabilities) &&
+              result.security.vulnerabilities.length > 0 && (
+                <div>
+                  <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
+                    <AlertCircle className="h-4 w-4 text-red-500" />
+                    Security Vulnerabilities ({result.security.vulnerabilities.length})
+                  </h4>
+                  <div className="space-y-2 max-h-32 overflow-y-auto">
+                    {result.security.vulnerabilities.map((vuln, index: number) => (
+                      <div key={index} className="text-sm p-2 bg-red-50 dark:bg-red-900/20 rounded">
+                        <div className="flex justify-between items-start">
+                          <span className="font-medium">{vuln?.type || 'Unknown'}</span>
+                          <Badge variant={vuln?.severity === 'high' ? 'destructive' : 'secondary'}>
+                            {vuln?.severity || 'Unknown'}
+                          </Badge>
+                        </div>
+                        <p className="text-muted-foreground text-xs mt-1">
+                          {vuln?.description || 'No description'}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          File: {vuln?.file || 'Unknown'}:{vuln?.line || 'Unknown'}
+                        </p>
                       </div>
-                      <p className="text-muted-foreground text-xs mt-1">{vuln.description}</p>
-                      <p className="text-xs text-muted-foreground">
-                        File: {vuln.file}:{vuln.line}
-                      </p>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {result.security.recommendations.length > 0 && (
-              <div>
-                <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                  <Info className="h-4 w-4 text-blue-500" />
-                  Security Recommendations
-                </h4>
-                <ul className="space-y-1 text-sm max-h-24 overflow-y-auto">
-                  {result.security.recommendations.map((rec: string, index: number) => (
-                    <li key={index} className="text-muted-foreground">
-                      • {rec}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            {Array.isArray(result.security.recommendations) &&
+              result.security.recommendations.length > 0 && (
+                <div>
+                  <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
+                    <Info className="h-4 w-4 text-blue-500" />
+                    Security Recommendations
+                  </h4>
+                  <ul className="space-y-1 text-sm max-h-24 overflow-y-auto">
+                    {result.security.recommendations.map((rec: string, index: number) => (
+                      <li key={index} className="text-muted-foreground">
+                        • {typeof rec === 'string' ? rec : String(rec)}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
             {result.documentation.details && (
               <div>
@@ -496,7 +516,7 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
       </div>
 
       {/* Test Coverage & License Info */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* Test Coverage Details */}
         <Card>
           <CardHeader>
@@ -514,44 +534,49 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <Progress value={result.test_coverage.coverage_percentage} className="h-2" />
             </div>
 
-            {result.test_coverage.test_frameworks.length > 0 && (
-              <div>
-                <h4 className="font-medium text-sm mb-2">Test Frameworks</h4>
-                <div className="flex flex-wrap gap-1">
-                  {result.test_coverage.test_frameworks.map((framework: string, index: number) => (
-                    <Badge key={index} variant="outline" className="text-xs">
-                      {framework}
-                    </Badge>
-                  ))}
+            {Array.isArray(result.test_coverage.test_frameworks) &&
+              result.test_coverage.test_frameworks.length > 0 && (
+                <div>
+                  <h4 className="font-medium text-sm mb-2">Test Frameworks</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {result.test_coverage.test_frameworks.map(
+                      (framework: string, index: number) => (
+                        <Badge key={index} variant="outline" className="text-xs">
+                          {typeof framework === 'string' ? framework : String(framework)}
+                        </Badge>
+                      )
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {result.test_coverage.issues.length > 0 && (
-              <div>
-                <h4 className="font-medium text-sm mb-2">Test Issues</h4>
-                <ul className="space-y-1 text-sm max-h-24 overflow-y-auto">
-                  {result.test_coverage.issues.map((issue: string, index: number) => (
-                    <li key={index} className="text-muted-foreground">
-                      • {issue}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            {Array.isArray(result.test_coverage.issues) &&
+              result.test_coverage.issues.length > 0 && (
+                <div>
+                  <h4 className="font-medium text-sm mb-2">Test Issues</h4>
+                  <ul className="space-y-1 text-sm max-h-24 overflow-y-auto">
+                    {result.test_coverage.issues.map((issue: string, index: number) => (
+                      <li key={index} className="text-muted-foreground">
+                        • {typeof issue === 'string' ? issue : String(issue)}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
-            {result.test_coverage.recommendations.length > 0 && (
-              <div>
-                <h4 className="font-medium text-sm mb-2">Test Recommendations</h4>
-                <ul className="space-y-1 text-sm max-h-24 overflow-y-auto">
-                  {result.test_coverage.recommendations.map((rec: string, index: number) => (
-                    <li key={index} className="text-muted-foreground">
-                      • {rec}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            {Array.isArray(result.test_coverage.recommendations) &&
+              result.test_coverage.recommendations.length > 0 && (
+                <div>
+                  <h4 className="font-medium text-sm mb-2">Test Recommendations</h4>
+                  <ul className="space-y-1 text-sm max-h-24 overflow-y-auto">
+                    {result.test_coverage.recommendations.map((rec: string, index: number) => (
+                      <li key={index} className="text-muted-foreground">
+                        • {typeof rec === 'string' ? rec : String(rec)}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
           </CardContent>
         </Card>
 

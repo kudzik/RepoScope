@@ -24,7 +24,7 @@ if (missingVars.length > 0) {
 export const env = {
   // API Configuration
   API_URL: requiredEnvVars.NEXT_PUBLIC_API_URL!,
-  API_TIMEOUT: parseInt(process.env.NEXT_PUBLIC_API_TIMEOUT || '30000', 10),
+  API_TIMEOUT: parseInt(process.env.NEXT_PUBLIC_API_TIMEOUT || '120000', 10), // 2 minutes
 
   // Supabase Configuration (optional for now)
   SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || '',

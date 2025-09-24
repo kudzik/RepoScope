@@ -72,6 +72,28 @@ a projekt używa [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Dokumentacja strategii optymalizacji kosztów
 - Wsparcie dla modeli open-source (Llama, Mistral)
 - Implementacja fallback na tańsze modele
+- **Zaawansowana analiza kodu z Tree-sitter**
+- Wsparcie dla wielu języków programowania (Python, JavaScript, TypeScript, Java, C++, Rust, Go)
+- Analiza AST (Abstract Syntax Tree) z metrykami złożoności
+- Wykrywanie wzorców projektowych i antywzorców
+- Analiza jakości kodu z metrykami maintainability
+- **Kompleksowa analiza repozytoriów**
+- Analiza struktury repozytorium z metrykami
+- Wykrywanie hotspotów i problemów w kodzie
+- Analiza dokumentacji i komentarzy
+- Wykrywanie problemów bezpieczeństwa
+- Analiza pokrycia testów
+- **Optymalizacja kosztów AI/LLM**
+- Middleware do optymalizacji kosztów
+- Cache odpowiedzi LLM
+- Wybór najtańszego modelu do zadania
+- Monitoring kosztów w czasie rzeczywistym
+- **Poprawki formatowania kodu**
+- Automatyczne formatowanie z Black i autopep8
+- Poprawa długich linii (ponad 79 znaków)
+- Usunięcie nieużywanych importów
+- Poprawa obsługi wyjątków z proper re-raising
+- Dodanie komentarzy noqa dla dostępu do protected members
 
 ### Changed
 

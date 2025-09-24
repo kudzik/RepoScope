@@ -36,7 +36,11 @@ class Settings(BaseSettings):
     # LLM Cost Optimization
     use_openrouter: bool = False
     enable_caching: bool = True
-    max_tokens: int = 4000
+    max_tokens: int = 1000
+
+    # Timeout Settings
+    ai_timeout: int = 60  # seconds
+    api_timeout: int = 120  # seconds
 
     @property
     def cors_origins_list(self) -> List[str]:

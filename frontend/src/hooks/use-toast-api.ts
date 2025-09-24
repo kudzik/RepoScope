@@ -8,7 +8,7 @@ import { apiClient, ApiError } from '@/lib/api-client';
 import type { AnalysisResponse } from '@/lib/api-types';
 
 // Generic hook with toast notifications
-export function useAsyncOperationWithToast<T extends any[], R>(
+export function useAsyncOperationWithToast<T extends unknown[], R>(
   operation: (...args: T) => Promise<R>,
   options?: {
     successMessage?: string | ((result: R) => string);
@@ -39,17 +39,16 @@ export function useAsyncOperationWithToast<T extends any[], R>(
 
         // Show success toast
         if (options?.successMessage) {
-          const message = typeof options.successMessage === 'function'
-            ? options.successMessage(result)
-            : options.successMessage;
+          const message =
+            typeof options.successMessage === 'function'
+              ? options.successMessage(result)
+              : options.successMessage;
           toast.success(message);
         }
 
         return result;
       } catch (err) {
-        const errorMessage = err instanceof ApiError
-          ? err.message
-          : 'An unexpected error occurred';
+        const errorMessage = err instanceof ApiError ? err.message : 'An unexpected error occurred';
 
         setError(errorMessage);
 
@@ -74,44 +73,36 @@ export function useAsyncOperationWithToast<T extends any[], R>(
 
 // Enhanced hooks with toast notifications
 export function useAnalyzeRepositoryWithToast() {
-  return useAsyncOperationWithToast(
-    apiClient.analyzeRepository.bind(apiClient),
-    {
-      loadingMessage: 'Starting repository analysis...',
-      successMessage: (result: AnalysisResponse) =>
-        `Analysis started for ${result.repository_url}`,
-      errorMessage: 'Failed to start analysis',
-    }
-  );
+  return useAsyncOperationWithToast(apiClient.analyzeRepository.bind(apiClient), {
+    loadingMessage: 'Starting repository analysis... This may take up to 2 minutes.',
+    successMessage: (result: AnalysisResponse) => `Analysis completed for ${result.repository_url}`,
+    errorMessage: (error: Error) => {
+      if (error.message.includes('timeout')) {
+        return 'Analysis timed out. The repository may be too large or the server is slow. Please try again.';
+      }
+      return 'Failed to analyze repository. Please check the URL and try again.';
+    },
+  });
 }
 
 export function useGetAnalysesWithToast() {
-  return useAsyncOperationWithToast(
-    apiClient.getAnalyses.bind(apiClient),
-    {
-      errorMessage: 'Failed to load analyses',
-    }
-  );
+  return useAsyncOperationWithToast(apiClient.getAnalyses.bind(apiClient), {
+    errorMessage: 'Failed to load analyses',
+  });
 }
 
 export function useDeleteAnalysisWithToast() {
-  return useAsyncOperationWithToast(
-    apiClient.deleteAnalysis.bind(apiClient),
-    {
-      successMessage: 'Analysis deleted successfully',
-      errorMessage: 'Failed to delete analysis',
-    }
-  );
+  return useAsyncOperationWithToast(apiClient.deleteAnalysis.bind(apiClient), {
+    successMessage: 'Analysis deleted successfully',
+    errorMessage: 'Failed to delete analysis',
+  });
 }
 
 export function useHealthCheckWithToast() {
-  return useAsyncOperationWithToast(
-    apiClient.healthCheck.bind(apiClient),
-    {
-      successMessage: 'Backend is healthy',
-      errorMessage: 'Backend health check failed',
-    }
-  );
+  return useAsyncOperationWithToast(apiClient.healthCheck.bind(apiClient), {
+    successMessage: 'Backend is healthy',
+    errorMessage: 'Backend health check failed',
+  });
 }
 
 // Utility functions for manual toast usage
@@ -126,7 +117,7 @@ export const toastUtils = {
     messages: {
       loading: string;
       success: string | ((data: T) => string);
-      error: string | ((error: any) => string);
+      error: string | ((error: unknown) => string);
     }
   ) => toast.promise(promise, messages),
 };

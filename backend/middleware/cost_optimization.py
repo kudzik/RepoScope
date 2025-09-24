@@ -223,7 +223,7 @@ class CostOptimizationMiddleware:
         """
         try:
             # Use the AI client to generate response
-            result = await ai_client.generate_summary(prompt=prompt, model=model, max_tokens=2000)
+            result = await ai_client.generate_summary(prompt=prompt, model=model, max_tokens=1000)
 
             if result.get("error"):
                 # Fallback to basic response if AI call fails

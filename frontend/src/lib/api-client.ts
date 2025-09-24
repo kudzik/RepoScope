@@ -5,7 +5,7 @@
 
 import { env } from './env';
 import type {
-  AnalysisRequest,
+  // AnalysisRequest,
   AnalysisResponse,
   PaginatedResponse,
   HealthResponse,
@@ -22,11 +22,12 @@ export class ApiClient {
   }
 
   /**
-   * Make HTTP request with error handling
+   * Make HTTP request with error handling and retry logic
    */
   private async request<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
+    retries: number = 3
   ): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
 
@@ -61,12 +62,18 @@ export class ApiClient {
       clearTimeout(timeoutId);
 
       if (error instanceof ApiError) {
+        // Retry on server errors (5xx) or timeout (408)
+        if (retries > 0 && (error.status >= 500 || error.status === 408)) {
+          console.log(`Retrying request (${4 - retries}/3)...`);
+          await new Promise(resolve => setTimeout(resolve, 1000 * (4 - retries))); // Exponential backoff
+          return this.request(endpoint, options, retries - 1);
+        }
         throw error;
       }
 
       if (error instanceof Error) {
         if (error.name === 'AbortError') {
-          throw new ApiError(408, 'Request timeout');
+          throw new ApiError(408, 'Request timeout - analysis may take longer than expected');
         }
         throw new ApiError(0, `Network error: ${error.message}`);
       }
@@ -126,7 +133,7 @@ export class ApiError extends Error {
   constructor(
     public status: number,
     message: string,
-    public data?: any
+    public data?: unknown
   ) {
     super(message);
     this.name = 'ApiError';

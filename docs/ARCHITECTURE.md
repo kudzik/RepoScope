@@ -50,19 +50,143 @@ frontend/
 
 ### Backend (FastAPI + LangChain)
 
-<!-- TODO: Opisać API endpoints i logikę biznesową -->
+**Architektura:**
+
+- **Framework**: FastAPI 0.117 z async/await support
+- **Language**: Python 3.13 z type hints
+- **Structure**: Modularna architektura z separation of concerns
+- **API**: RESTful endpoints z automatyczną dokumentacją (Swagger/OpenAPI)
+- **Validation**: Pydantic schemas dla walidacji danych
+- **Testing**: pytest z 94% pokryciem kodu
+
+**Struktura katalogów:**
+
+```
+backend/
+├── api/                    # API endpoints
+│   └── analysis.py         # Endpoints analizy repozytoriów
+├── services/               # Logika biznesowa
+│   ├── analysis_service.py    # Główny serwis analizy
+│   ├── code_analyzer.py       # Analiza kodu z Tree-sitter
+│   ├── ai_client.py          # Klient AI/LLM
+│   └── github_service.py     # Integracja z GitHub API
+├── schemas/               # Pydantic schemas
+│   ├── analysis.py        # Schemas analizy
+│   ├── code_metrics.py   # Metryki kodu
+│   └── github_schemas.py  # GitHub API schemas
+├── middleware/            # Middleware
+│   └── cost_optimization.py  # Optymalizacja kosztów AI
+├── config/               # Konfiguracja
+│   ├── settings.py       # Ustawienia aplikacji
+│   └── llm_optimization.py  # Konfiguracja LLM
+├── tests/                # Testy jednostkowe
+└── main.py              # Entry point aplikacji
+```
+
+**Kluczowe funkcjonalności:**
+
+- ✅ **API Endpoints** - RESTful API z automatyczną dokumentacją
+- ✅ **Analysis Service** - Kompleksowa analiza repozytoriów
+- ✅ **Code Analyzer** - Analiza kodu z Tree-sitter
+- ✅ **AI Integration** - Integracja z OpenAI/OpenRouter
+- ✅ **Cost Optimization** - Middleware optymalizacji kosztów
+- ✅ **GitHub Integration** - Pobieranie i analiza repozytoriów
+- ✅ **Type Safety** - Pełne wsparcie TypeScript-like type hints
 
 ### LLM Layer (OpenRouter/OpenAI)
 
-<!-- TODO: Opisać integrację z modelami AI -->
+**Architektura:**
+
+- **Primary**: OpenAI GPT-3.5-turbo (najtańszy dla prostych zadań)
+- **Fallback**: GPT-4 dla złożonych analiz
+- **Open Source**: Wsparcie dla Llama, Mistral (planowane)
+- **Cost Optimization**: Automatyczny wybór najtańszego modelu
+- **Caching**: LRU cache dla powtarzalnych zapytań
+
+**Implementacja:**
+
+```python
+class LLMClient:
+    def __init__(self):
+        self.cost_optimizer = CostOptimizer()
+        self.cache = ResponseCache()
+
+    async def generate_analysis(self, prompt: str, complexity: TaskComplexity):
+        # 1. Sprawdź cache
+        # 2. Wybierz optymalny model
+        # 3. Wygeneruj odpowiedź
+        # 4. Cache wynik
+        # 5. Zwróć odpowiedź
+```
+
+**Strategie optymalizacji:**
+
+- **Model Selection**: Automatyczny wybór na podstawie złożoności zadania
+- **Prompt Optimization**: Skracanie promptów do minimum
+- **Response Caching**: Cache dla powtarzalnych zapytań
+- **Cost Monitoring**: Real-time tracking kosztów
+- **Fallback Strategy**: Graceful degradation na tańsze modele
 
 ### Baza danych (Supabase)
 
-<!-- TODO: Opisać schemat bazy danych -->
+**Architektura:**
+
+- **Database**: PostgreSQL z Supabase
+- **Auth**: SuperTokens integration (planowane)
+- **Real-time**: Supabase real-time subscriptions
+- **Storage**: Supabase Storage dla plików
+- **Edge Functions**: Supabase Edge Functions dla logiki
+
+**Schemat bazy danych (planowany):**
+
+```sql
+-- Tabela użytkowników
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email VARCHAR(255) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Tabela analiz
+CREATE TABLE analyses (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id),
+    repository_url VARCHAR(500) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    results JSONB,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+```
 
 ### Analiza kodu (Tree-sitter + GitHub API)
 
-<!-- TODO: Opisać proces analizy repozytoriów -->
+**Architektura:**
+
+- **Tree-sitter**: Parsowanie AST dla wielu języków
+- **GitHub API**: Pobieranie metadanych repozytoriów
+- **Code Analysis**: Metryki złożoności, jakości, wzorców
+- **Security Scanning**: Wykrywanie problemów bezpieczeństwa
+- **Documentation Analysis**: Analiza dokumentacji i komentarzy
+
+**Wspierane języki:**
+
+- **Python**: Pełne wsparcie z AST analysis
+- **JavaScript/TypeScript**: ES6+ features, React/Next.js
+- **Java**: Enterprise patterns, Spring framework
+- **C++**: Modern C++ features, templates
+- **Rust**: Ownership, lifetimes, async
+- **Go**: Goroutines, interfaces, modules
+
+**Proces analizy:**
+
+1. **Repository Cloning** - Pobranie repozytorium z GitHub
+2. **Language Detection** - Automatyczne wykrywanie języków
+3. **AST Parsing** - Parsowanie z Tree-sitter
+4. **Metrics Calculation** - Obliczanie metryk jakości
+5. **Pattern Detection** - Wykrywanie wzorców i antywzorców
+6. **Security Analysis** - Skanowanie problemów bezpieczeństwa
+7. **Documentation Analysis** - Analiza dokumentacji
+8. **AI Summary** - Generowanie podsumowania przez LLM
 
 ## 🔄 Przepływ danych
 

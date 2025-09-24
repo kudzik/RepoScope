@@ -80,13 +80,48 @@ class AnalysisService:
             repo_path = self.clone_repository(url)
             if repo_path:
                 # Analyze repository structure
-                structure_analysis = await self.analyze_repository_structure(repo_path)
-
-                # Clean up temporary directory
                 try:
-                    shutil.rmtree(os.path.dirname(repo_path))
+                    structure_analysis = await self.analyze_repository_structure(repo_path)
                 except Exception as e:
-                    print(f"Error cleaning up temp directory: {e}")
+                    print(f"Error analyzing repository structure: {e}")
+                    structure_analysis = {
+                        "error": str(e),
+                        "total_files": 0,
+                        "total_lines": 0,
+                        "languages": {},
+                    }
+
+                # Clean up temporary directory with better error handling
+                try:
+                    import stat
+                    import time
+
+                    # Function to handle read-only files on Windows
+                    def handle_remove_readonly(func, path, exc):  # noqa: ARG001
+                        if os.path.exists(path):
+                            os.chmod(path, stat.S_IWRITE)
+                            func(path)
+
+                    # Try to remove with retry mechanism
+                    for attempt in range(3):
+                        try:
+                            shutil.rmtree(
+                                os.path.dirname(repo_path),
+                                onerror=handle_remove_readonly,
+                            )
+                            break
+                        except PermissionError:
+                            if attempt < 2:
+                                time.sleep(0.5)  # Wait before retry
+                                continue
+                            else:
+                                print(
+                                    f"Warning: Could not fully clean up temp "
+                                    f"directory: {os.path.dirname(repo_path)}"
+                                )
+                                break
+                except Exception as e:
+                    print(f"Warning: Error cleaning up temp directory: {e}")
 
                 # Set analysis results with PRD-compliant structure
                 analysis.code_structure = {
@@ -97,7 +132,11 @@ class AnalysisService:
                     "largest_files": structure_analysis.get("largest_files", [])[:5],
                     # PRD format for frontend
                     "score": min(
-                        95, max(60, int(structure_analysis.get("complexity_score", 0.0) * 10))
+                        95,
+                        max(
+                            60,
+                            int(structure_analysis.get("complexity_score", 0.0) * 10),
+                        ),
                     ),
                     "issues": [
                         "Large files detected (>500 lines)",
@@ -123,10 +162,24 @@ class AnalysisService:
                 }
 
             # Enhanced analysis results with PRD-compliant structure
-            if repo_path:
-                analysis.documentation_quality = await self._analyze_documentation_quality(
-                    repo_path
-                )
+            if repo_path and os.path.exists(repo_path):
+                try:
+                    analysis.documentation_quality = await self._analyze_documentation_quality(
+                        repo_path
+                    )
+                except Exception as e:
+                    print(f"Error analyzing documentation: {e}")
+                    analysis.documentation_quality = {
+                        "has_readme": False,
+                        "has_contributing": False,
+                        "has_license": False,
+                        "has_api_docs": False,
+                        "has_changelog": False,
+                        "documentation_score": 0.0,
+                        "score": 0,
+                        "issues": [f"Documentation analysis failed: {str(e)}"],
+                        "recommendations": ["Check repository access and permissions"],
+                    }
             else:
                 analysis.documentation_quality = {
                     "has_readme": False,
@@ -145,64 +198,76 @@ class AnalysisService:
                 "summary": analysis.ai_summary or "Analysis completed",
                 "code_quality": {
                     "score": (analysis.code_structure or {}).get("score", 0),
-                    "issues": (analysis.code_structure or {}).get("issues", []),
-                    "recommendations": (analysis.code_structure or {}).get("recommendations", []),
+                    "issues": ((analysis.code_structure or {}).get("issues", [])),
+                    "recommendations": ((analysis.code_structure or {}).get("recommendations", [])),
                     "metrics": {
-                        "maintainability_index": (analysis.code_structure or {})
-                        .get("quality_metrics", {})
-                        .get("maintainability_index", 0),
-                        "technical_debt_ratio": (analysis.code_structure or {})
-                        .get("quality_metrics", {})
-                        .get("technical_debt_ratio", 0),
-                        "code_duplication": (analysis.code_structure or {})
-                        .get("quality_metrics", {})
-                        .get("code_duplication", 0),
-                        "architecture_score": (analysis.code_structure or {}).get(
-                            "architecture_score", 0
+                        "maintainability_index": (
+                            (analysis.code_structure or {})
+                            .get("quality_metrics", {})
+                            .get("maintainability_index", 0)
+                        ),
+                        "technical_debt_ratio": (
+                            (analysis.code_structure or {})
+                            .get("quality_metrics", {})
+                            .get("technical_debt_ratio", 0)
+                        ),
+                        "code_duplication": (
+                            (analysis.code_structure or {})
+                            .get("quality_metrics", {})
+                            .get("code_duplication", 0)
+                        ),
+                        "architecture_score": (
+                            (analysis.code_structure or {}).get("architecture_score", 0)
                         ),
                     },
                     "patterns": {
-                        "design_patterns": (analysis.code_structure or {})
-                        .get("code_patterns", {})
-                        .get("design_patterns", []),
-                        "anti_patterns": (analysis.code_structure or {})
-                        .get("code_patterns", {})
-                        .get("anti_patterns", []),
-                        "code_smells": (analysis.code_structure or {})
-                        .get("code_patterns", {})
-                        .get("code_smells", []),
+                        "design_patterns": (
+                            (analysis.code_structure or {})
+                            .get("code_patterns", {})
+                            .get("design_patterns", [])
+                        ),
+                        "anti_patterns": (
+                            (analysis.code_structure or {})
+                            .get("code_patterns", {})
+                            .get("anti_patterns", [])
+                        ),
+                        "code_smells": (
+                            (analysis.code_structure or {})
+                            .get("code_patterns", {})
+                            .get("code_smells", [])
+                        ),
                     },
-                    "hotspots": (analysis.code_structure or {}).get("hotspots", []),
+                    "hotspots": ((analysis.code_structure or {}).get("hotspots", [])),
                 },
                 "documentation": {
-                    "score": (analysis.documentation_quality or {}).get("score", 0),
-                    "issues": (analysis.documentation_quality or {}).get("issues", []),
-                    "recommendations": (analysis.documentation_quality or {}).get(
-                        "recommendations", []
+                    "score": ((analysis.documentation_quality or {}).get("score", 0)),
+                    "issues": ((analysis.documentation_quality or {}).get("issues", [])),
+                    "recommendations": (
+                        (analysis.documentation_quality or {}).get("recommendations", [])
                     ),
                     "details": {
-                        "has_readme": (analysis.documentation_quality or {}).get(
-                            "has_readme", False
+                        "has_readme": (
+                            (analysis.documentation_quality or {}).get("has_readme", False)
                         ),
-                        "has_contributing": (analysis.documentation_quality or {}).get(
-                            "has_contributing", False
+                        "has_contributing": (
+                            (analysis.documentation_quality or {}).get("has_contributing", False)
                         ),
-                        "has_license": (analysis.documentation_quality or {}).get(
-                            "has_license", False
+                        "has_license": (
+                            (analysis.documentation_quality or {}).get("has_license", False)
                         ),
-                        "has_api_docs": (analysis.documentation_quality or {}).get(
-                            "has_api_docs", False
+                        "has_api_docs": (
+                            (analysis.documentation_quality or {}).get("has_api_docs", False)
                         ),
-                        "has_changelog": (analysis.documentation_quality or {}).get(
-                            "has_changelog", False
+                        "has_changelog": (
+                            (analysis.documentation_quality or {}).get("has_changelog", False)
                         ),
-                        "readme_quality": (analysis.documentation_quality or {}).get(
-                            "readme_quality", 0
+                        "readme_quality": (
+                            (analysis.documentation_quality or {}).get("readme_quality", 0)
                         ),
-                        "comment_coverage": (analysis.documentation_quality or {}).get(
-                            "comment_coverage", 0
+                        "comment_coverage": (
+                            (analysis.documentation_quality or {}).get("comment_coverage", 0)
                         ),
-                        "doc_files": (analysis.documentation_quality or {}).get("doc_files", []),
+                        "doc_files": ((analysis.documentation_quality or {}).get("doc_files", [])),
                     },
                 },
                 "security": {
@@ -225,55 +290,70 @@ class AnalysisService:
                         "high_severity": len(
                             [
                                 i
-                                for i in (analysis.security_issues or [])
+                                for i in analysis.security_issues or []
                                 if i.get("severity") == "high"
                             ]
                         ),
                         "medium_severity": len(
                             [
                                 i
-                                for i in (analysis.security_issues or [])
+                                for i in analysis.security_issues or []
                                 if i.get("severity") == "medium"
                             ]
                         ),
                         "low_severity": len(
                             [
                                 i
-                                for i in (analysis.security_issues or [])
+                                for i in analysis.security_issues or []
                                 if i.get("severity") == "low"
                             ]
                         ),
                     },
                 },
                 "test_coverage": {
-                    "has_tests": (analysis.test_coverage or {}).get("has_tests", False),
-                    "coverage_percentage": (analysis.test_coverage or {}).get(
-                        "coverage_percentage", 0
+                    "has_tests": ((analysis.test_coverage or {}).get("has_tests", False)),
+                    "coverage_percentage": (
+                        (analysis.test_coverage or {}).get("coverage_percentage", 0)
                     ),
-                    "test_frameworks": (analysis.test_coverage or {}).get("test_frameworks", []),
-                    "test_files": (analysis.test_coverage or {}).get("test_files", []),
-                    "test_directories": (analysis.test_coverage or {}).get("test_directories", []),
+                    "test_frameworks": ((analysis.test_coverage or {}).get("test_frameworks", [])),
+                    "test_files": ((analysis.test_coverage or {}).get("test_files", [])),
+                    "test_directories": (
+                        (analysis.test_coverage or {}).get("test_directories", [])
+                    ),
                     "issues": (analysis.test_coverage or {}).get("issues", []),
-                    "recommendations": (analysis.test_coverage or {}).get("recommendations", []),
+                    "recommendations": ((analysis.test_coverage or {}).get("recommendations", [])),
                 },
                 "license_info": {
-                    "license_type": (analysis.license_info or {}).get("license_type", "Unknown"),
-                    "is_open_source": (analysis.license_info or {}).get("is_open_source", False),
-                    "license_file": (analysis.license_info or {}).get("license_file"),
-                    "compatibility": (analysis.license_info or {}).get("compatibility", "Unknown"),
+                    "license_type": ((analysis.license_info or {}).get("license_type", "Unknown")),
+                    "is_open_source": ((analysis.license_info or {}).get("is_open_source", False)),
+                    "license_file": ((analysis.license_info or {}).get("license_file")),
+                    "compatibility": (
+                        (analysis.license_info or {}).get("compatibility", "Unknown")
+                    ),
                 },
                 "metrics": {
-                    "lines_of_code": (analysis.code_structure or {}).get("total_lines", 0),
-                    "files_count": (analysis.code_structure or {}).get("total_files", 0),
-                    "complexity": (analysis.code_structure or {}).get("complexity_score", 0),
-                    "languages": (analysis.code_structure or {}).get("languages", {}),
-                    "largest_files": (analysis.code_structure or {}).get("largest_files", [])[:5],
+                    "lines_of_code": ((analysis.code_structure or {}).get("total_lines", 0)),
+                    "files_count": ((analysis.code_structure or {}).get("total_files", 0)),
+                    "complexity": ((analysis.code_structure or {}).get("complexity_score", 0)),
+                    "languages": ((analysis.code_structure or {}).get("languages", {})),
+                    "largest_files": ((analysis.code_structure or {}).get("largest_files", [])[:5]),
                 },
             }
 
             # Real test coverage analysis
-            if repo_path:
-                analysis.test_coverage = await self._analyze_test_coverage(repo_path)
+            if repo_path and os.path.exists(repo_path):
+                try:
+                    analysis.test_coverage = await self._analyze_test_coverage(repo_path)
+                except Exception as e:
+                    print(f"Error analyzing test coverage: {e}")
+                    analysis.test_coverage = {
+                        "has_tests": False,
+                        "test_frameworks": [],
+                        "coverage_percentage": 0.0,
+                        "test_files": [],
+                        "issues": [f"Test analysis failed: {str(e)}"],
+                        "recommendations": ["Check repository access and permissions"],
+                    }
             else:
                 analysis.test_coverage = {
                     "has_tests": False,
@@ -285,22 +365,43 @@ class AnalysisService:
                 }
 
             # Real security analysis
-            if repo_path:
-                analysis.security_issues = await self._analyze_security_issues(repo_path)
+            if repo_path and os.path.exists(repo_path):
+                try:
+                    analysis.security_issues = await self._analyze_security_issues(repo_path)
+                except Exception as e:
+                    print(f"Error analyzing security: {e}")
+                    analysis.security_issues = [
+                        {
+                            "type": "error",
+                            "severity": "high",
+                            "description": (f"Security analysis failed: {str(e)}"),
+                            "file": "N/A",
+                            "line": 0,
+                        }
+                    ]
             else:
                 analysis.security_issues = [
                     {
                         "type": "error",
                         "severity": "high",
-                        "description": "Repository path not available for security analysis",
+                        "description": ("Repository path not available for security analysis"),
                         "file": "N/A",
                         "line": 0,
                     }
                 ]
 
             # Real license analysis
-            if repo_path:
-                analysis.license_info = await self._analyze_license_info(repo_path)
+            if repo_path and os.path.exists(repo_path):
+                try:
+                    analysis.license_info = await self._analyze_license_info(repo_path)
+                except Exception as e:
+                    print(f"Error analyzing license: {e}")
+                    analysis.license_info = {
+                        "license_type": "Unknown",
+                        "is_open_source": False,
+                        "license_file": None,
+                        "compatibility": "Unknown",
+                    }
             else:
                 analysis.license_info = {
                     "license_type": "Unknown",
@@ -309,11 +410,21 @@ class AnalysisService:
                     "compatibility": "Unknown",
                 }
 
-            # Generate AI summary with cost optimization
+            # Generate AI summary with cost optimization and timeout
             if analysis.code_structure.get("total_files", 0) > 0:
-                analysis.ai_summary = await self._generate_ai_summary_optimized(
-                    repo_info, analysis.code_structure
-                )
+                try:
+                    import asyncio
+
+                    # Add timeout for AI summary generation
+                    analysis.ai_summary = await asyncio.wait_for(
+                        self._generate_ai_summary_optimized(repo_info, analysis.code_structure),
+                        timeout=45.0,  # 45 seconds timeout for AI generation
+                    )
+                except asyncio.TimeoutError:
+                    print("Warning: AI summary generation timed out, using basic summary")
+                    analysis.ai_summary = self._generate_basic_summary(
+                        repo_info, analysis.code_structure
+                    )
             else:
                 analysis.ai_summary = self._generate_basic_summary(
                     repo_info, analysis.code_structure
@@ -378,10 +489,37 @@ class AnalysisService:
     async def analyze_repository_structure(self, repo_path: str) -> Dict:
         """Analyze repository structure using Tree-sitter."""
         try:
-            return self.code_analyzer.analyze_repository(repo_path)
+            if not os.path.exists(repo_path):
+                return {
+                    "error": f"Repository path does not exist: {repo_path}",
+                    "total_files": 0,
+                    "total_lines": 0,
+                    "languages": {},
+                    "complexity_score": 0.0,
+                    "largest_files": [],
+                }
+
+            result = self.code_analyzer.analyze_repository(repo_path)
+
+            # Ensure we have required fields
+            if "error" not in result:
+                result.setdefault("total_files", 0)
+                result.setdefault("total_lines", 0)
+                result.setdefault("languages", {})
+                result.setdefault("complexity_score", 0.0)
+                result.setdefault("largest_files", [])
+
+            return result
         except Exception as e:
             print(f"Error analyzing repository structure: {e}")
-            return {"error": str(e)}
+            return {
+                "error": str(e),
+                "total_files": 0,
+                "total_lines": 0,
+                "languages": {},
+                "complexity_score": 0.0,
+                "largest_files": [],
+            }
 
     async def _generate_ai_summary_optimized(
         self, repo_info: RepositoryInfo, code_structure: Dict
@@ -413,30 +551,24 @@ class AnalysisService:
 
     def _create_summary_prompt(self, repo_info: RepositoryInfo, code_structure: Dict) -> str:
         """Create optimized prompt for AI summary generation."""
-        # Keep prompt concise to minimize costs
-        prompt = f"""
-        Analyze this repository and provide a comprehensive summary:
+        # Keep prompt concise to minimize costs and response time
+        prompt = f"""Analyze this repository: {repo_info.name}
 
-        Repository Details:
-        - Name: {repo_info.name}
-        - Language: {repo_info.language}
-        - Stars: {repo_info.stars}
-        - Forks: {repo_info.forks}
-        - Description: {repo_info.description or 'No description'}
-        - Files: {code_structure.get('total_files', 0)}
-        - Lines: {code_structure.get('total_lines', 0)}
-        - Languages: {list(code_structure.get('languages', {}).keys())}
-        - Complexity Score: {code_structure.get('complexity_score', 0)}
+Repository: {repo_info.full_name}
+Language: {repo_info.language or 'Mixed'}
+Stars: {repo_info.stars} | Forks: {repo_info.forks}
+Description: {repo_info.description or 'No description'}
+Files: {code_structure.get('total_files', 0)} | Lines: {code_structure.get('total_lines', 0)}
+Languages: {list(code_structure.get('languages', {}).keys())}
+Complexity: {code_structure.get('complexity_score', 0)}
 
-        Please provide a detailed analysis covering:
-        1. Project purpose and main functionality
-        2. Technology stack and architecture
-        3. Code quality assessment
-        4. Documentation and maintainability
-        5. Potential improvements and recommendations
+Provide a concise analysis covering:
+1. Project purpose and functionality
+2. Technology stack
+3. Code quality assessment
+4. Key recommendations
 
-        Make the summary comprehensive and informative.
-        """
+Keep response under 500 words."""
         return prompt.strip()
 
     def _determine_task_complexity(self, code_structure: Dict) -> TaskComplexity:
@@ -456,10 +588,19 @@ class AnalysisService:
     def _generate_basic_summary(self, repo_info: RepositoryInfo, code_structure: Dict) -> str:
         """Generate basic summary without AI (fallback)."""
         return (
-            f"This is a {repo_info.language or 'multi-language'} repository "
-            f"with {repo_info.stars} stars and {repo_info.forks} forks. "
-            f"The repository contains {code_structure.get('total_files', 0)} files "
-            f"with {code_structure.get('total_lines', 0)} lines of code."
+            f"This is a {
+                repo_info.language or 'multi-language'} repository "
+            f"with {
+                repo_info.stars} stars and {
+                repo_info.forks} forks. "
+            f"The repository contains {
+                    code_structure.get(
+                        'total_files',
+                        0)} files "
+            f"with {
+                            code_structure.get(
+                                'total_lines',
+                                0)} lines of code."
         )
 
     async def get_analysis(self, analysis_id: str) -> Optional[AnalysisResult]:
@@ -526,7 +667,11 @@ class AnalysisService:
                     doc_analysis["has_contributing"] = True
                 elif file_lower in ["license", "license.txt", "license.md"]:
                     doc_analysis["has_license"] = True
-                elif file_lower in ["changelog.md", "changelog.rst", "changelog.txt"]:
+                elif file_lower in [
+                    "changelog.md",
+                    "changelog.rst",
+                    "changelog.txt",
+                ]:
                     doc_analysis["has_changelog"] = True
                 elif file_lower.endswith((".md", ".rst", ".txt")) and "api" in file_lower:
                     doc_analysis["has_api_docs"] = True
@@ -819,7 +964,7 @@ class AnalysisService:
                 {
                     "type": "error",
                     "severity": "high",
-                    "description": "Repository path not available for security analysis",
+                    "description": ("Repository path not available for security analysis"),
                     "file": "N/A",
                     "line": 0,
                 }
@@ -904,7 +1049,7 @@ class AnalysisService:
                             {
                                 "type": "vulnerability",
                                 "severity": "medium",
-                                "description": f"Potentially vulnerable package: {package}",
+                                "description": (f"Potentially vulnerable package: {package}"),
                                 "file": "package.json",
                                 "line": 0,
                             }
@@ -921,8 +1066,14 @@ class AnalysisService:
             (r"eval\s*\(", "Use of eval() function"),
             (r"innerHTML\s*=", "Direct innerHTML assignment"),
             (r"document\.write\s*\(", "Use of document.write()"),
-            (r'setTimeout\s*\(\s*["\'][^"\']+["\']', "String-based setTimeout"),
-            (r'setInterval\s*\(\s*["\'][^"\']+["\']', "String-based setInterval"),
+            (
+                r'setTimeout\s*\(\s*["\'][^"\']+["\']',
+                "String-based setTimeout",
+            ),
+            (
+                r'setInterval\s*\(\s*["\'][^"\']+["\']',
+                "String-based setInterval",
+            ),
         ]
 
         for root, dirs, files in os.walk(repo_path):
@@ -963,7 +1114,12 @@ class AnalysisService:
 
         # This is a simplified check - in a real implementation,
         # you'd check actual file permissions
-        sensitive_files = [".env", "config.json", "secrets.json", "private.key"]
+        sensitive_files = [
+            ".env",
+            "config.json",
+            "secrets.json",
+            "private.key",
+        ]
 
         for root, dirs, files in os.walk(repo_path):
             for file in files:
@@ -999,7 +1155,13 @@ class AnalysisService:
         }
 
         # Common license files
-        license_files = ["LICENSE", "LICENSE.txt", "LICENSE.md", "LICENCE", "COPYING"]
+        license_files = [
+            "LICENSE",
+            "LICENSE.txt",
+            "LICENSE.md",
+            "LICENCE",
+            "COPYING",
+        ]
 
         for root, dirs, files in os.walk(repo_path):
             for file in files:

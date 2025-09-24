@@ -22,7 +22,7 @@ class AIClient:
         if settings.openai_api_key and settings.openai_api_key != "":
             self.openai_client = openai.AsyncOpenAI(
                 api_key=settings.openai_api_key,
-                timeout=30.0,
+                timeout=settings.ai_timeout,
             )
 
         # Initialize OpenRouter client
@@ -30,11 +30,11 @@ class AIClient:
             self.openrouter_client = openai.AsyncOpenAI(
                 api_key=settings.openrouter_api_key,
                 base_url="https://openrouter.ai/api/v1",
-                timeout=30.0,
+                timeout=settings.ai_timeout,
             )
 
     async def generate_summary(
-        self, prompt: str, model: str, max_tokens: int = 2000
+        self, prompt: str, model: str, max_tokens: int = 1000
     ) -> Dict[str, Any]:
         """
         Generate AI summary using the specified model.

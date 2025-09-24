@@ -121,7 +121,7 @@
 
 3. **Konfiguracja linterów i formatowania kodu**
 
-   - [ ] **4.1** Dodaj pliki konfiguracyjne `.flake8`, `pyproject.toml` (black, isort), `mypy.ini`
+   - [x] **4.1** Dodaj pliki konfiguracyjne `.flake8`, `pyproject.toml` (black, isort), `mypy.ini` ✅ **ZAKOŃCZONE**: Wszystkie lintery skonfigurowane i przetestowane
    - [ ] **4.2** Skonfiguruj pre-commit hooki (flake8, black, isort, mypy)
 
 4. **Stworzenie bazowych endpointów REST API**

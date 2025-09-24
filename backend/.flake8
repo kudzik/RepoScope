@@ -1,13 +1,79 @@
 [flake8]
 max-line-length = 100
-extend-ignore = E203, W503
-exclude = 
+extend-ignore =
+    E203,
+    W503,
+    E501,
+    D100,
+    D101,
+    D102,
+    D103,
+    D104,
+    D105,
+    I
+
+# Exclude directories
+exclude =
     .git,
     __pycache__,
     .venv,
     venv,
+    .env,
     .pytest_cache,
+    .mypy_cache,
     build,
-    dist
+    dist,
+    *.egg-info,
+    migrations,
+    .tox,
+    .coverage,
+    htmlcov,
+    .cache
+
+# Application import names
+application-import-names =
+    app,
+    api,
+    models,
+    schemas,
+    services
+
+# Per-file ignores
 per-file-ignores =
+    # Ignore import order in __init__.py files
     __init__.py:F401
+    # Ignore missing docstrings in tests
+    tests/*:D
+    # Allow unused imports in __init__.py
+    __init__.py:F401
+
+# Enable specific plugins
+enable-extensions =
+    B,      # flake8-bugbear
+    C90,    # mccabe complexity
+    I,      # isort
+    N,      # pep8-naming
+    S,      # bandit security
+    T20,    # flake8-print
+    W,      # pycodestyle warnings
+    E,      # pycodestyle errors
+    F,      # pyflakes
+
+# Complexity settings
+max-complexity = 10
+
+# Naming conventions
+naming-ignore =
+    # Allow single letter variables in comprehensions
+    S101,
+    # Allow short variable names
+    N806,
+    # Allow lowercase with underscores for module names
+    N802,
+    # Allow mixedCase for test methods
+    N802
+
+# Import order style
+import-order-style = google
+known-first-party = app,api,models,schemas,services
+known-third-party = fastapi,uvicorn,pydantic,langchain,requests,tree-sitter

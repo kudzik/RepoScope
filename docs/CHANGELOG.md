@@ -22,6 +22,17 @@ a projekt używa [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Focus management i keyboard navigation
 - Screen reader support z ukrytymi etykietami
 - Skip links dla accessibility
+- **Backend FastAPI struktura i konfiguracja**
+- Struktura katalogów backend (app/, tests/, schemas/, services/, api/, models/)
+- FastAPI aplikacja z CORS middleware i endpointami
+- Środowisko Python 3.13 z virtual environment
+- pyproject.toml z kompletna konfiguracja dependencies
+- **Backend lintery i formatowanie**
+- flake8@7.3.0 z pluginami (bugbear, docstrings, comprehensions)
+- black@25.9.0 dla autoformatowania
+- mypy@1.18.2 z strict mode type checking
+- isort@6.0.1 dla sortowania importów
+- pytest@8.4.2 framework testowy
 
 ### Changed
 

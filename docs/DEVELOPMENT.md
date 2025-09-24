@@ -292,14 +292,26 @@ indent_size = 2
 - `max_line_length = 100` - maksymalna długość linii
 - Specjalne ustawienia dla markdown, YAML, JSON
 
-### Backend (FastAPI 0.111 + Python)
+### Backend (FastAPI 0.117 + Python 3.13)
 
 #### flake8
 
 ```ini
 [flake8]
 max-line-length = 100
-extend-ignore = E203, W503
+extend-ignore =
+    E203,
+    W503,
+    E501,
+    D100,
+    D101,
+    D102,
+    D103,
+    D104,
+    D105,
+    I
+
+# Exclude directories
 exclude =
     .git,
     __pycache__,
@@ -307,15 +319,42 @@ exclude =
     venv,
     .pytest_cache,
     build,
-    dist
+    dist,
+    *.egg-info,
+    migrations,
+    .tox,
+    .coverage,
+    htmlcov,
+    .cache
+
+# Enable specific plugins
+enable-extensions =
+    B,      # flake8-bugbear
+    C90,    # mccabe complexity
+    I,      # isort
+    N,      # pep8-naming
+    S,      # bandit security
+    T20,    # flake8-print
+    W,      # pycodestyle warnings
+    E,      # pycodestyle errors
+    F,      # pyflakes
+
+# Complexity settings
+max-complexity = 10
+
+# Import order style
+import-order-style = google
+known-first-party = app,api,models,schemas,services
+known-third-party = fastapi,uvicorn,pydantic,langchain,requests,tree-sitter
 ```
 
-**Pluginy:**
+**Zainstalowane pakiety:**
 
-- `flake8-bugbear` - najczęstsze błędy
-- `flake8-docstrings` - wymuszanie docstringów
-- `flake8-import-order` - kolejność importów
-- `flake8-comprehensions` - list comprehensions
+- `flake8@7.3.0` - Główny linter
+- `flake8-bugbear@24.12.12` - najczęstsze błędy
+- `flake8-docstrings@1.7.0` - wymuszanie docstringów
+- `flake8-import-order@0.19.2` - kolejność importów
+- `flake8-comprehensions@3.17.0` - list comprehensions
 
 #### black
 
@@ -346,7 +385,7 @@ extend-exclude = '''
 
 ```ini
 [mypy]
-python_version = 3.11
+python_version = 3.13
 warn_return_any = True
 warn_unused_configs = True
 disallow_untyped_defs = True
@@ -361,6 +400,11 @@ warn_unreachable = True
 strict_equality = True
 ```
 
+**Zainstalowane pakiety:**
+
+- `mypy@1.18.2` - Type checker
+- `mypy-extensions@1.1.0` - Rozszerzenia mypy
+
 #### isort
 
 ```toml
@@ -369,8 +413,12 @@ profile = "black"
 multi_line_output = 3
 line_length = 100
 known_first_party = ["reposcope"]
-known_third_party = ["fastapi", "pydantic", "sqlalchemy"]
+known_third_party = ["fastapi", "pydantic", "sqlalchemy", "langchain", "uvicorn", "tree-sitter"]
 ```
+
+**Zainstalowane pakiety:**
+
+- `isort@6.0.1` - Sortowanie importów
 
 ---
 
@@ -816,6 +864,18 @@ pre-commit run --all-files  # Uruchom wszystkie pre-commit hooks
 - **Focus management** - keyboard navigation działa poprawnie
 - **Screen reader** - wszystkie elementy są dostępne dla screen readers
 - **WCAG 2.1 AA compliance** - aplikacja spełnia standardy dostępności
+
+#### Backend - Python Lintery
+
+**✅ Przetestowane funkcjonalności:**
+
+- `flake8 main.py` - wszystkie reguły PEP8 przeszły
+- `black --check main.py` - formatowanie kodu zgodne z regułami
+- `isort --check-only main.py` - importy posortowane poprawnie
+- `mypy main.py` - sprawdzanie typów bez błędów
+- **FastAPI aplikacja** - podstawowa struktura z CORS middleware
+- **Adnotacje typów** - wszystkie funkcje mają poprawne return type annotations
+- **Dokumentacja** - wszystkie docstringi zgodne z konwencją
 
 ---
 

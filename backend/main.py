@@ -1,14 +1,15 @@
 """
-RepoScope Backend - FastAPI Application
-Repository Analysis Tool powered by AI
+RepoScope Backend - FastAPI Application.
+
+Repository Analysis Tool powered by AI.
 
 This is the main entry point for the RepoScope backend API.
 """
 
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-import uvicorn
 
 # Initialize FastAPI application
 app = FastAPI(
@@ -30,8 +31,8 @@ app.add_middleware(
 
 
 @app.get("/")
-async def root():
-    """Root endpoint - API health check"""
+async def root() -> JSONResponse:
+    """Root endpoint - API health check."""
     return JSONResponse(
         content={
             "message": "RepoScope API is running!",
@@ -43,8 +44,8 @@ async def root():
 
 
 @app.get("/health")
-async def health_check():
-    """Health check endpoint"""
+async def health_check() -> JSONResponse:
+    """Health check endpoint."""
     return JSONResponse(content={"status": "healthy", "service": "reposcope-api"})
 
 

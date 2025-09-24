@@ -40,6 +40,8 @@ RepoScope to zaawansowane narzędzie do automatycznej analizy repozytoriów GitH
 
 ### Zakończone kroki
 
+#### Frontend
+
 - ✅ **ESLint** - konfiguracja Next.js 15 z ESLint CLI
 - ✅ **Prettier** - formatowanie kodu zgodne z regułami
 - ✅ **EditorConfig** - spójne ustawienia edytora
@@ -48,7 +50,14 @@ RepoScope to zaawansowane narzędzie do automatycznej analizy repozytoriów GitH
 - ✅ **shadcn/ui** - komponenty UI z dark/light mode
 - ✅ **Accessibility** - WCAG 2.1 AA compliance
 - ✅ **VS Code** - automatyczne formatowanie i lintowanie
-- ✅ **Testy** - wszystkie konfiguracje przetestowane
+
+#### Backend
+
+- ✅ **Struktura projektu** - katalogi i pliki konfiguracyjne
+- ✅ **FastAPI aplikacja** - podstawowa struktura z CORS
+- ✅ **Środowisko Python** - venv + pyproject.toml
+- ✅ **Zależności** - FastAPI, Uvicorn, LangChain, Tree-sitter
+- ✅ **Lintery** - flake8, black, isort, mypy (wszystkie przetestowane)
 
 ### W trakcie
 
@@ -67,12 +76,13 @@ RepoScope to zaawansowane narzędzie do automatycznej analizy repozytoriów GitH
 - **Accessibility**: WCAG 2.1 AA compliance
 - **Components**: shadcn/ui (Button, Card, Input, etc.)
 
-### Backend (planowane)
+### Backend
 
-- **Framework**: FastAPI 0.111 + LangChain 0.1.20
-- **Language**: Python 3.11
-- **Linting**: flake8 + black + mypy + isort
-- **AI Integration**: OpenRouter/OpenAI API
+- **Framework**: FastAPI 0.117 + LangChain 0.1.20
+- **Language**: Python 3.13
+- **Linting**: flake8@7.3.0 + black@25.9.0 + mypy@1.18.2 + isort@6.0.1
+- **Testing**: pytest@8.4.2
+- **AI Integration**: OpenRouter/OpenAI API (planowane)
 
 ### Infrastructure (planowane)
 

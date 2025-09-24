@@ -102,23 +102,36 @@ frontend/
 - **Prettier** - automatyczne formatowanie
 - **EditorConfig** - spójne ustawienia edytora
 
-#### Backend (FastAPI + Python)
+#### Backend (FastAPI 0.117 + Python 3.13)
 
-- **flake8** - linting zgodny z PEP8
-- **black** - autoformatowanie kodu Python
-- **mypy** - static type checking
-- **isort** - sortowanie importów
+- **flake8@7.3.0** - linting zgodny z PEP8 + pluginy (bugbear, docstrings, comprehensions)
+- **black@25.9.0** - autoformatowanie kodu Python
+- **mypy@1.18.2** - static type checking z strict mode
+- **isort@6.0.1** - sortowanie importów zgodne z black profile
+- **pytest@8.4.2** - framework testowy
+- **pre-commit@4.3.0** - pre-commit hooks
 
 ### Pliki konfiguracyjne
 
-- `.eslintrc.json` - konfiguracja ESLint
+#### Frontend
+
+- `eslint.config.mjs` - konfiguracja ESLint (flat config)
 - `.prettierrc` - ustawienia Prettier
+- `tailwind.config.js` - konfiguracja Tailwind CSS
+- `components.json` - konfiguracja shadcn/ui
+
+#### Backend
+
+- `.flake8` - konfiguracja flake8 z pluginami
+- `pyproject.toml` - konfiguracja black/isort/pytest
+- `mypy.ini` - konfiguracja mypy z strict mode
+
+#### Ogólne
+
 - `.editorconfig` - ustawienia edytora
-- `.flake8` - konfiguracja flake8
-- `pyproject.toml` - konfiguracja black/isort
-- `mypy.ini` - konfiguracja mypy
 - `.gitignore` - ignorowanie plików
 - `.vscode/settings.json` - ustawienia VS Code
+- `.pre-commit-config.yaml` - pre-commit hooks
 
 ### CI/CD i workflow
 

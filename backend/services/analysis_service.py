@@ -1,12 +1,10 @@
 """Analysis service for repository analysis."""
 
 import os
-import re
-import tempfile
+import shutil
 from datetime import datetime, timezone
 from typing import Dict, List, Optional
 
-import httpx
 from fastapi import HTTPException
 from pydantic import HttpUrl
 
@@ -14,6 +12,7 @@ from config.llm_optimization import TaskComplexity
 from middleware.cost_optimization import cost_optimization_middleware
 from schemas.analysis import AnalysisResult, AnalysisStatus, RepositoryInfo
 from services.code_analyzer import CodeAnalyzer
+from services.github_service import GitHubService
 
 
 class AnalysisService:
@@ -21,70 +20,30 @@ class AnalysisService:
 
     def __init__(self) -> None:
         """Initialize the analysis service."""
-        self.github_api_base = "https://api.github.com"
-        self.client = httpx.AsyncClient(timeout=30.0)
+        self.github_service = GitHubService()
         self.code_analyzer = CodeAnalyzer()
         self.cost_optimizer = cost_optimization_middleware
 
     async def close(self) -> None:
-        """Close the HTTP client."""
-        await self.client.aclose()
-
-    def _extract_repo_info(self, url: str) -> tuple[str, str]:
-        """Extract owner and repo name from GitHub URL."""
-        # Support various GitHub URL formats
-        patterns = [
-            r"github\.com/([^/]+)/([^/]+?)(?:\.git)?/?$",
-            r"github\.com/([^/]+)/([^/]+?)(?:\.git)?/.*$",  # With additional path
-            r"git@github\.com:([^/]+)/([^/]+?)(?:\.git)?$",
-        ]
-
-        for pattern in patterns:
-            match = re.search(pattern, url)
-            if match:
-                return match.group(1), match.group(2)
-
-        raise HTTPException(status_code=400, detail="Invalid GitHub repository URL")
+        """Close the GitHub service."""
+        await self.github_service.close()
 
     async def get_repository_info(self, url: str) -> RepositoryInfo:
         """Get repository information from GitHub API."""
-        try:
-            owner, repo = self._extract_repo_info(url)
+        github_repo = await self.github_service.get_repository_by_url(url)
 
-            # Get repository information from GitHub API
-            response = await self.client.get(
-                f"{self.github_api_base}/repos/{owner}/{repo}",
-                headers={"Accept": "application/vnd.github.v3+json"},
-            )
-
-            if response.status_code == 404:
-                raise HTTPException(status_code=404, detail="Repository not found")
-
-            if response.status_code != 200:
-                raise HTTPException(
-                    status_code=response.status_code,
-                    detail="Failed to fetch repository information",
-                )
-
-            data = response.json()
-
-            return RepositoryInfo(
-                name=data["name"],
-                owner=data["owner"]["login"],
-                full_name=data["full_name"],
-                description=data.get("description"),
-                language=data.get("language"),
-                stars=data["stargazers_count"],
-                forks=data["forks_count"],
-                size=data["size"],
-                created_at=datetime.fromisoformat(data["created_at"].replace("Z", "+00:00")),
-                updated_at=datetime.fromisoformat(data["updated_at"].replace("Z", "+00:00")),
-            )
-
-        except httpx.RequestError as e:
-            raise HTTPException(
-                status_code=500, detail=f"Failed to connect to GitHub API: {str(e)}"
-            )
+        return RepositoryInfo(
+            name=github_repo.name,
+            owner=github_repo.owner.login,
+            full_name=github_repo.full_name,
+            description=github_repo.description,
+            language=github_repo.language,
+            stars=github_repo.stargazers_count,
+            forks=github_repo.forks_count,
+            size=github_repo.size,
+            created_at=github_repo.created_at,
+            updated_at=github_repo.updated_at,
+        )
 
     async def analyze_repository(self, url: str) -> AnalysisResult:
         """Analyze a repository and return results."""
@@ -112,14 +71,12 @@ class AnalysisService:
             )
 
             # Perform real analysis
-            repo_path = await self.clone_repository(url)
+            repo_path = self.clone_repository(url)
             if repo_path:
                 # Analyze repository structure
                 structure_analysis = await self.analyze_repository_structure(repo_path)
 
                 # Clean up temporary directory
-                import shutil
-
                 try:
                     shutil.rmtree(os.path.dirname(repo_path))
                 except Exception as e:
@@ -210,35 +167,15 @@ class AnalysisService:
             )
             return analysis
 
-    async def clone_repository(self, url: str) -> Optional[str]:
+    def clone_repository(self, url: str) -> Optional[str]:
         """Clone repository from GitHub and return local path."""
         try:
-            import subprocess
-
-            # Extract repo info
-            owner, repo = self._extract_repo_info(url)
-            clone_url = f"https://github.com/{owner}/{repo}.git"
-
-            # Create temporary directory
-            temp_dir = tempfile.mkdtemp(prefix="reposcope_")
-            repo_path = os.path.join(temp_dir, repo)
-
-            # Clone repository
-            result = subprocess.run(
-                ["git", "clone", clone_url, repo_path],
-                capture_output=True,
-                text=True,
-                timeout=300,  # 5 minutes timeout
-            )
-
-            if result.returncode != 0:
-                print(f"Git clone failed: {result.stderr}")
-                return None
-
-            return repo_path
-
+            return self.github_service.clone_repository(url)
+        except HTTPException as e:
+            print(f"Error cloning repository: {e.detail}")
+            return None
         except Exception as e:
-            print(f"Error cloning repository: {e}")
+            print(f"Unexpected error cloning repository: {e}")
             return None
 
     async def analyze_repository_structure(self, repo_path: str) -> Dict:

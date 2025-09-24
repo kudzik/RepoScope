@@ -3,9 +3,9 @@
 ## 📊 Status ogólny
 
 - **Łącznie zadań**: 17
-- **Zrealizowane**: 14
+- **Zrealizowane**: 15
 - **W trakcie**: 0
-- **Do wykonania**: 3
+- **Do wykonania**: 2
 
 ---
 
@@ -133,7 +133,7 @@
 
 5. **Implementacja integracji z GitHub API i Tree-sitter**
 
-   - [ ] **6.1** Funkcja pobierania repozytorium po URL
+   - [x] **6.1** Funkcja pobierania repozytorium po URL ✅ **ZAKOŃCZONE**: GitHubService z pełną funkcjonalnością
    - [ ] **6.2** Moduł analizy struktury i statystyk kodu (Tree-sitter)
 
 6. **Integracja warstwy LLM z LangChain/OpenRouter**

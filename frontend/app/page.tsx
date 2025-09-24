@@ -1,8 +1,7 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { Card, CardContent } from '@/components/ui/card';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { ResponsiveTest } from '@/components/responsive-test';
+import { AnalysisForm } from '@/components/analysis-form';
 
 export default function Home() {
   return (
@@ -44,46 +43,9 @@ export default function Home() {
               </p>
             </section>
 
-            {/* Main card */}
+            {/* Analysis Form */}
             <section aria-labelledby="analyze-title">
-              <Card className="max-w-sm mx-auto sm:max-w-md md:max-w-lg lg:max-w-xl">
-                <CardHeader className="space-y-2">
-                  <CardTitle id="analyze-title" className="text-xl sm:text-2xl">
-                    Analyze Repository
-                  </CardTitle>
-                  <CardDescription className="text-sm sm:text-base">
-                    Enter a GitHub repository URL to get AI-powered insights about code quality,
-                    documentation, and more.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <form className="space-y-2" aria-label="Repository analysis form">
-                    <div className="space-y-2">
-                      <label htmlFor="repository-url" className="sr-only">
-                        GitHub Repository URL
-                      </label>
-                      <Input
-                        id="repository-url"
-                        type="url"
-                        placeholder="https://github.com/username/repository"
-                        className="text-sm sm:text-base"
-                        aria-describedby="repository-help"
-                        required
-                      />
-                      <div id="repository-help" className="sr-only">
-                        Enter a valid GitHub repository URL starting with https://github.com/
-                      </div>
-                      <Button
-                        type="submit"
-                        className="w-full text-sm sm:text-base"
-                        aria-describedby="analyze-description"
-                      >
-                        Analyze Repository
-                      </Button>
-                    </div>
-                  </form>
-                </CardContent>
-              </Card>
+              <AnalysisForm />
             </section>
 
             {/* Features section */}

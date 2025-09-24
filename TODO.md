@@ -20,7 +20,9 @@
 
 ### 1.2 Integracja Frontend-Backend
 - [x] **API-1** Utworzyć `lib/api-client.ts` w frontend ✅
-- [ ] **API-2** Podłączyć formularz do POST /analysis/
+- [x] **API-1.1** Dodać React hooks dla API operacji ✅
+- [x] **API-1.2** Dodać TypeScript typy dla API ✅
+- [x] **API-2** Podłączyć formularz do POST /analysis/ ✅
 - [ ] **API-3** Utworzyć komponenty wyświetlania wyników
 - [ ] **API-4** Dodać obsługę błędów i loading states
 

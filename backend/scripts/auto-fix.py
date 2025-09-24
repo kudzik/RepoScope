@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 Automatic fix script that runs before every commit.
+
 This script is designed to be run by pre-commit hooks or manually.
 """
 

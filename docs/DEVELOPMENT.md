@@ -1026,6 +1026,35 @@ python scripts/auto-fix.py
 - **flake8** - sprawdza styl
 - **mypy** - sprawdza typy
 
+### 🤖 Optymalizacja kosztów AI/LLM
+
+**Zasada:** Użyj najtańszego dostępnego modelu do zadania
+
+**Strategie optymalizacji:**
+
+- **Modele open-source** - Llama, Mistral gdy to możliwe
+- **GPT-3.5-turbo** zamiast GPT-4 dla prostych zadań
+- **Caching odpowiedzi** LLM dla powtarzalnych zapytań
+- **Ograniczanie kontekstu** do minimum wymaganego
+- **Streaming API** dla długich odpowiedzi
+- **Monitoring kosztów** w czasie rzeczywistym
+- **Fallback na tańsze modele** w przypadku błędów
+
+**Implementacja w RepoScope:**
+
+```python
+# Przykład implementacji w AnalysisService
+class AnalysisService:
+    def __init__(self):
+        self.llm_client = self._get_cheapest_available_model()
+
+    def _get_cheapest_available_model(self):
+        # Preferuj modele open-source, fallback na GPT-3.5-turbo
+        if self._is_open_source_available():
+            return self._get_open_source_model()
+        return self._get_gpt35_turbo()
+```
+
 ### CI/CD Pipeline
 
 **Planowane GitHub Actions:**

@@ -67,6 +67,11 @@ a projekt używa [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Pydantic schemas dla walidacji danych
 - Analysis service z integracją GitHub API
 - Kompletne testy jednostkowe (22 testy, 94% pokrycie)
+- **Zasady optymalizacji kosztów AI/LLM**
+- Zasada "Użyj najtańszego dostępnego modelu do zadania"
+- Dokumentacja strategii optymalizacji kosztów
+- Wsparcie dla modeli open-source (Llama, Mistral)
+- Implementacja fallback na tańsze modele
 
 ### Changed
 

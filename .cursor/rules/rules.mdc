@@ -23,6 +23,7 @@ alwaysApply: true
 - Zespół powinien korzystać z dobrze udokumentowanych technologii z aktywną społecznością
 - Sprawdzaj roadmapy i wsparcie projektów (np. LangChain, Supabase, SuperTokens)
 - Stawiaj na elastyczność i skalowalność (np. Next.js, FastAPI, Vercel, Render)
+- **Użyj najtańszego dostępnego modelu do zadania** - optymalizuj koszty AI/LLM
 
 ---
 
@@ -89,6 +90,17 @@ alwaysApply: true
 
 ---
 
+## 🤖 Optymalizacja kosztów AI/LLM
+
+- **Użyj najtańszego dostępnego modelu do zadania** - optymalizuj koszty AI/LLM
+- Preferuj modele open-source (Llama, Mistral) gdy to możliwe
+- Używaj modeli GPT-3.5-turbo zamiast GPT-4 dla prostych zadań
+- Implementuj caching odpowiedzi LLM dla powtarzalnych zapytań
+- Ograniczaj długość promptów i kontekstu do minimum wymaganego
+- Używaj streaming dla długich odpowiedzi (OpenAI streaming API)
+- Monitoruj usage i koszty w czasie rzeczywistym
+- Implementuj fallback na tańsze modele w przypadku błędów
+
 ## 💡 Propozycje uzupełniające dla RepoScope
 
 - Wprowadź API Contract Testing, aby zapewnić spójność frontend/backend/LLM
@@ -98,7 +110,7 @@ alwaysApply: true
 
 ---
 
- ✅ Proponowany commit message
+✅ Proponowany commit message
 
 ```text
 feat(setup): dodanie kompletnego zestawu zasad kodowania, dokumentacji i bezpieczeństwa dla RepoScope zgodnie z VibeCoding

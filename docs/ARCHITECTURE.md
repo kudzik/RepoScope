@@ -139,6 +139,20 @@ frontend/
 - **Pre-commit hooks** - sprawdzanie przed commitami
 - **Automatyczne formatowanie** przy zapisie plików
 
+### 🤖 Optymalizacja kosztów AI/LLM
+
+**Zasada:** Użyj najtańszego dostępnego modelu do zadania
+
+**Strategie optymalizacji:**
+
+- **Modele open-source** - Llama, Mistral gdy to możliwe
+- **GPT-3.5-turbo** zamiast GPT-4 dla prostych zadań
+- **Caching odpowiedzi** LLM dla powtarzalnych zapytań
+- **Ograniczanie kontekstu** do minimum wymaganego
+- **Streaming API** dla długich odpowiedzi
+- **Monitoring kosztów** w czasie rzeczywistym
+- **Fallback na tańsze modele** w przypadku błędów
+
 #### GitHub Actions Pipeline (.github/workflows/ci.yml)
 
 **Frontend Job:**

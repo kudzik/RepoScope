@@ -10,6 +10,8 @@ import httpx
 from fastapi import HTTPException
 from pydantic import HttpUrl
 
+from config.llm_optimization import TaskComplexity
+from middleware.cost_optimization import cost_optimization_middleware
 from schemas.analysis import AnalysisResult, AnalysisStatus, RepositoryInfo
 from services.code_analyzer import CodeAnalyzer
 
@@ -22,6 +24,7 @@ class AnalysisService:
         self.github_api_base = "https://api.github.com"
         self.client = httpx.AsyncClient(timeout=30.0)
         self.code_analyzer = CodeAnalyzer()
+        self.cost_optimizer = cost_optimization_middleware
 
     async def close(self) -> None:
         """Close the HTTP client."""
@@ -160,20 +163,14 @@ class AnalysisService:
                 "is_open_source": True,
             }
 
-            # Generate AI summary based on real analysis
+            # Generate AI summary with cost optimization
             if analysis.code_structure.get("total_files", 0) > 0:
-                analysis.ai_summary = (
-                    f"This is a {repo_info.language or 'multi-language'} repository "
-                    f"with {repo_info.stars} stars and {repo_info.forks} forks. "
-                    f"The repository contains {analysis.code_structure['total_files']} files "
-                    f"with {analysis.code_structure['total_lines']} lines of code. "
-                    f"Complexity score: {analysis.code_structure.get('complexity_score', 0):.2f}."
+                analysis.ai_summary = await self._generate_ai_summary_optimized(
+                    repo_info, analysis.code_structure
                 )
             else:
-                analysis.ai_summary = (
-                    f"This is a {repo_info.language or 'multi-language'} repository "
-                    f"with {repo_info.stars} stars and {repo_info.forks} forks. "
-                    f"Repository analysis was limited due to access restrictions."
+                analysis.ai_summary = self._generate_basic_summary(
+                    repo_info, analysis.code_structure
                 )
 
             # Mark as completed
@@ -251,6 +248,74 @@ class AnalysisService:
         except Exception as e:
             print(f"Error analyzing repository structure: {e}")
             return {"error": str(e)}
+
+    async def _generate_ai_summary_optimized(
+        self, repo_info: RepositoryInfo, code_structure: Dict
+    ) -> str:
+        """
+        Generate AI summary with cost optimization.
+
+        Args:
+            repo_info: Repository information
+            code_structure: Code structure analysis results
+
+        Returns:
+            str: Generated AI summary
+        """
+        # Create prompt for AI summary
+        prompt = self._create_summary_prompt(repo_info, code_structure)
+
+        # Determine task complexity based on repository size
+        task_complexity = self._determine_task_complexity(code_structure)
+
+        # Use cost optimization middleware
+        result = await self.cost_optimizer.process_request(prompt, task_complexity)
+
+        if "error" in result:
+            # Fallback to basic summary if cost optimization fails
+            return self._generate_basic_summary(repo_info, code_structure)
+
+        return result["response"]
+
+    def _create_summary_prompt(self, repo_info: RepositoryInfo, code_structure: Dict) -> str:
+        """Create optimized prompt for AI summary generation."""
+        # Keep prompt concise to minimize costs
+        prompt = f"""
+        Analyze this repository:
+        - Name: {repo_info.name}
+        - Language: {repo_info.language}
+        - Stars: {repo_info.stars}
+        - Files: {code_structure.get('total_files', 0)}
+        - Lines: {code_structure.get('total_lines', 0)}
+        - Languages: {list(code_structure.get('languages', {}).keys())}
+        Provide a brief 2-sentence summary focusing on:
+        1. Main purpose and technology stack
+        2. Code complexity and size assessment
+        """
+        return prompt.strip()
+
+    def _determine_task_complexity(self, code_structure: Dict) -> TaskComplexity:
+        """Determine task complexity based on code structure."""
+        total_files = code_structure.get("total_files", 0)
+        total_lines = code_structure.get("total_lines", 0)
+        languages_count = len(code_structure.get("languages", {}))
+
+        # Simple heuristics for complexity
+        if total_files < 10 and total_lines < 1000 and languages_count <= 2:
+            return TaskComplexity.SIMPLE
+        elif total_files < 100 and total_lines < 10000 and languages_count <= 5:
+            return TaskComplexity.MEDIUM
+        else:
+            return TaskComplexity.COMPLEX
+
+    def _generate_basic_summary(self, repo_info: RepositoryInfo, code_structure: Dict) -> str:
+        """Generate basic summary without AI (fallback)."""
+        return (
+            f"This is a {repo_info.language or 'multi-language'} repository "
+            f"with {repo_info.stars} stars and {repo_info.forks} forks. "
+            f"The repository contains {code_structure.get('total_files', 0)} files "
+            f"with {code_structure.get('total_lines', 0)} lines of code."
+        )
 
     async def get_analysis(self, analysis_id: str) -> Optional[AnalysisResult]:
         """Get analysis by ID (placeholder implementation)."""

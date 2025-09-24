@@ -158,6 +158,14 @@ npm test
 - **Narzędzia**: fix-code-quality.py, quick-fix scripts, auto-fix.py
 - **Spójność**: Identyczne parametry w lokalnym i CI/CD środowisku
 
+### 🤖 Optymalizacja kosztów AI/LLM
+
+- **Zasada**: Użyj najtańszego dostępnego modelu do zadania
+- **Modele open-source**: Llama, Mistral gdy to możliwe
+- **GPT-3.5-turbo**: Zamiast GPT-4 dla prostych zadań
+- **Caching**: Odpowiedzi LLM dla powtarzalnych zapytań
+- **Monitoring**: Koszty w czasie rzeczywistym
+
 ## 🤝 Współpraca
 
 <!-- TODO: Dodać informacje o współpracy -->

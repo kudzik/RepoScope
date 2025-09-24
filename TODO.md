@@ -2,10 +2,10 @@
 
 ## 📊 Status ogólny
 
-- **Łącznie zadań**: 15
-- **Zrealizowane**: 8
+- **Łącznie zadań**: 17
+- **Zrealizowane**: 14
 - **W trakcie**: 0
-- **Do wykonania**: 7
+- **Do wykonania**: 3
 
 ---
 
@@ -205,6 +205,37 @@
 - [ ] **5.2** Dokumentacja:
   - Zaktualizować `README.md` o instrukcje korzystania z linterów i formatowania, workflow lokalny i CI
   - **Test**: Dokumentacja jest kompletna i zrozumiała dla nowych deweloperów
+
+---
+
+## 🤖 6. Optymalizacja kosztów AI/LLM
+
+- [x] **6.1** Konfiguracja agentów (.agentic-cursorrules):
+
+  - Utworzyć plik `.agentic-cursorrules` z zasadami optymalizacji kosztów
+  - Zdefiniować strategie wyboru modeli na podstawie złożoności zadania
+  - Implementować caching i monitoring kosztów
+  - **Test**: Zasady są jasno zdefiniowane i implementowalne
+
+- [x] **6.2** Implementacja optymalizacji kosztów:
+
+  - Utworzyć `backend/config/llm_optimization.py` z konfiguracją modeli
+  - Implementować `backend/middleware/cost_optimization.py` z middleware
+  - Zintegrować optymalizację z `AnalysisService`
+  - **Test**: Optymalizacja działa poprawnie i redukuje koszty
+
+- [x] **6.3** Testy optymalizacji kosztów:
+
+  - Utworzyć `backend/tests/test_cost_optimization.py` z testami
+  - Przetestować wybór modeli, caching, monitoring
+  - Zweryfikować fallback strategies
+  - **Test**: Wszystkie testy przechodzą (100% coverage)
+
+- [x] **6.4** Dokumentacja optymalizacji:
+  - Utworzyć `docs/COST_OPTIMIZATION.md` z kompletną dokumentacją
+  - Zaktualizować `README.md` o sekcję optymalizacji kosztów
+  - Dodać przykłady użycia i best practices
+  - **Test**: Dokumentacja jest kompletna i zrozumiała
 
 ---
 

@@ -579,13 +579,34 @@ Lines of code: {code_structure.get('total_lines', 0)}
 Languages used: {list(code_structure.get('languages', {}).keys())}
 Complexity score: {code_structure.get('complexity_score', 0)}
 
-Provide a concise analysis covering:
-1. Project purpose and functionality
-2. Technology stack
-3. Code quality assessment
-4. Key recommendations
+Provide a well-formatted analysis with emojis and clear structure:
 
-Keep response under 500 words."""
+📋 **Project Overview**
+- Purpose and functionality
+- Main features and capabilities
+
+🛠️ **Technology Stack**
+- Primary technologies used
+- Framework and library choices
+- Development tools
+
+📊 **Code Quality Assessment**
+- Overall code quality score
+- Strengths and weaknesses
+- Architecture evaluation
+
+💡 **Key Recommendations**
+- Priority improvements
+- Best practices to implement
+- Future considerations
+
+Format the response with:
+- Clear section headers with emojis
+- Bullet points for easy reading
+- Bold text for emphasis
+- Concise but informative content
+
+Keep response under 500 words and make it visually appealing and easy to scan."""
         return prompt.strip()
 
     def _determine_task_complexity(self, code_structure: Dict) -> TaskComplexity:

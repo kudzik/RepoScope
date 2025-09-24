@@ -5,7 +5,15 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import type { AnalysisResponse } from '@/lib/api-types';
-import { getSeverityColor } from '@/lib/utils';
+import {
+  getCoverageColor,
+  getDocumentationColor,
+  getQualityColor,
+  getScoreBgColor,
+  getScoreColor,
+  getScoreLevel,
+  getSeverityColor,
+} from '@/lib/utils';
 import {
   AlertCircle,
   AlertTriangle,
@@ -58,11 +66,7 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
     }
   };
 
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-600';
-    if (score >= 60) return 'text-yellow-600';
-    return 'text-red-600';
-  };
+  // Usunięto lokalną funkcję getScoreColor - używamy importowanej z utils
 
   // Safe number formatting
   const safeNumber = (value: unknown, defaultValue: number = 0): number => {
@@ -178,14 +182,18 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
           </div>
 
           {/* AI Summary */}
-          <div className="space-y-2">
+          <div className="space-y-3">
             <h4 className="font-medium text-sm flex items-center gap-2">
               <Zap className="h-4 w-4 text-blue-500" />
               AI Analysis Summary
             </h4>
-            <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-              {analysis.ai_summary || 'No AI summary available'}
-            </p>
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+              <div className="prose prose-sm max-w-none dark:prose-invert">
+                <div className="text-sm leading-relaxed whitespace-pre-wrap">
+                  {analysis.ai_summary || 'No AI summary available'}
+                </div>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -215,7 +223,39 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                   /100
                 </span>
               </div>
-              <Progress value={safeNumber(result.code_quality?.score, 0)} className="h-2" />
+              <Progress
+                value={safeNumber(result.code_quality?.score, 0)}
+                className="h-2"
+                style={
+                  {
+                    '--progress-background': getScoreBgColor(
+                      safeNumber(result.code_quality?.score, 0)
+                    ),
+                  } as React.CSSProperties
+                }
+              />
+              {(() => {
+                const qualityLevel = getScoreLevel(
+                  safeNumber(result.code_quality?.score, 0),
+                  'quality'
+                );
+                const qualityColors = getQualityColor(qualityLevel);
+                return (
+                  <div
+                    className={`text-xs p-2 rounded ${qualityColors.bg} ${qualityColors.border} border`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className={`font-medium ${qualityColors.text}`}>
+                        {qualityColors.title}
+                      </span>
+                      <Badge className={qualityColors.badge}>{qualityLevel}</Badge>
+                    </div>
+                    <p className={`text-xs mt-1 ${qualityColors.text}`}>
+                      {qualityColors.description}
+                    </p>
+                  </div>
+                );
+              })()}
               {result.code_quality?.metrics && (
                 <div className="text-xs text-muted-foreground space-y-1">
                   <div
@@ -261,7 +301,33 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                   /100
                 </span>
               </div>
-              <Progress value={safeNumber(result.documentation?.score, 0)} className="h-2" />
+              <Progress
+                value={safeNumber(result.documentation?.score, 0)}
+                className="h-2"
+                style={
+                  {
+                    '--progress-background': getScoreBgColor(
+                      safeNumber(result.documentation?.score, 0)
+                    ),
+                  } as React.CSSProperties
+                }
+              />
+              {(() => {
+                const docLevel = getScoreLevel(
+                  safeNumber(result.documentation?.score, 0),
+                  'documentation'
+                );
+                const docColors = getDocumentationColor(docLevel);
+                return (
+                  <div className={`text-xs p-2 rounded ${docColors.bg} ${docColors.border} border`}>
+                    <div className="flex items-center gap-2">
+                      <span className={`font-medium ${docColors.text}`}>{docColors.title}</span>
+                      <Badge className={docColors.badge}>{docLevel}</Badge>
+                    </div>
+                    <p className={`text-xs mt-1 ${docColors.text}`}>{docColors.description}</p>
+                  </div>
+                );
+              })()}
               {result.documentation?.details && (
                 <div className="text-xs text-muted-foreground space-y-1">
                   <div
@@ -326,7 +392,37 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                   /100
                 </span>
               </div>
-              <Progress value={safeNumber(result.security?.score, 0)} className="h-2" />
+              <Progress
+                value={safeNumber(result.security?.score, 0)}
+                className="h-2"
+                style={
+                  {
+                    '--progress-background': getScoreBgColor(safeNumber(result.security?.score, 0)),
+                  } as React.CSSProperties
+                }
+              />
+              {(() => {
+                const securityLevel = getScoreLevel(
+                  safeNumber(result.security?.score, 0),
+                  'security'
+                );
+                const securityColors = getSeverityColor(securityLevel);
+                return (
+                  <div
+                    className={`text-xs p-2 rounded ${securityColors.bg} ${securityColors.border} border`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className={`font-medium ${securityColors.text}`}>
+                        {securityColors.title}
+                      </span>
+                      <Badge className={securityColors.badge}>{securityLevel}</Badge>
+                    </div>
+                    <p className={`text-xs mt-1 ${securityColors.text}`}>
+                      {securityColors.description}
+                    </p>
+                  </div>
+                );
+              })()}
               <div className="text-xs text-muted-foreground space-y-1">
                 <div
                   className="cursor-help flex items-center gap-1"
@@ -376,6 +472,9 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <TestTube className="h-4 w-4" />
               <CardTitle className="text-sm">Test Coverage</CardTitle>
             </div>
+            <CardDescription className="text-xs">
+              Test coverage percentage, frameworks used, and testing quality metrics
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
@@ -392,11 +491,66 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <Progress
                 value={safeNumber(result.test_coverage?.coverage_percentage, 0)}
                 className="h-2"
+                style={
+                  {
+                    '--progress-background': getScoreBgColor(
+                      safeNumber(result.test_coverage?.coverage_percentage, 0)
+                    ),
+                  } as React.CSSProperties
+                }
               />
+              {(() => {
+                const coverageLevel = getScoreLevel(
+                  safeNumber(result.test_coverage?.coverage_percentage, 0),
+                  'coverage'
+                );
+                const coverageColors = getCoverageColor(coverageLevel);
+                return (
+                  <div
+                    className={`text-xs p-2 rounded ${coverageColors.bg} ${coverageColors.border} border`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className={`font-medium ${coverageColors.text}`}>
+                        {coverageColors.title}
+                      </span>
+                      <Badge className={coverageColors.badge}>{coverageLevel}</Badge>
+                    </div>
+                    <p className={`text-xs mt-1 ${coverageColors.text}`}>
+                      {coverageColors.description}
+                    </p>
+                  </div>
+                );
+              })()}
               <div className="text-xs text-muted-foreground space-y-1">
-                <div>Has Tests: {result.test_coverage?.has_tests ? '✓' : '✗'}</div>
-                <div>Frameworks: {safeArray(result.test_coverage?.test_frameworks).length}</div>
-                <div>Files: {safeArray(result.test_coverage?.test_files).length}</div>
+                <div
+                  className="cursor-help flex items-center gap-1"
+                  title="Whether the project has any test files. Tests are essential for code quality and reliability."
+                >
+                  <span>Has Tests:</span>
+                  <span
+                    className={result.test_coverage?.has_tests ? 'text-green-600' : 'text-red-600'}
+                  >
+                    {result.test_coverage?.has_tests ? '✓' : '✗'}
+                  </span>
+                </div>
+                <div
+                  className="cursor-help flex items-center gap-1"
+                  title="Number of testing frameworks detected in the project (e.g., Jest, Mocha, Pytest, etc.). More frameworks may indicate better testing coverage."
+                >
+                  <span>Frameworks:</span>
+                  <span className="font-mono">
+                    {safeArray(result.test_coverage?.test_frameworks).length}
+                  </span>
+                </div>
+                <div
+                  className="cursor-help flex items-center gap-1"
+                  title="Total number of test files found in the project. More test files generally indicate better test coverage."
+                >
+                  <span>Files:</span>
+                  <span className="font-mono">
+                    {safeArray(result.test_coverage?.test_files).length}
+                  </span>
+                </div>
               </div>
             </div>
           </CardContent>

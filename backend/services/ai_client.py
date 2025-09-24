@@ -64,8 +64,10 @@ class AIClient:
                     {
                         "role": "system",
                         "content": (
-                            "You are an expert code analyst. "
-                            "Provide comprehensive, actionable analysis of repositories."
+                            "You are an expert code analyst specializing in repository analysis. "
+                            "Provide comprehensive, actionable analysis with clear formatting, emojis, and structured content. "
+                            "Use markdown formatting, bullet points, and visual elements to make responses easy to read and scan. "
+                            "Focus on practical insights and actionable recommendations."
                         ),
                     },
                     {"role": "user", "content": prompt},

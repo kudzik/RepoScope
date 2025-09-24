@@ -30,7 +30,7 @@ app.add_middleware(
 )
 
 
-@app.get("/")  # type: ignore[misc]
+@app.get("/")
 async def root() -> JSONResponse:
     """Root endpoint - API health check."""
     return JSONResponse(
@@ -43,7 +43,7 @@ async def root() -> JSONResponse:
     )
 
 
-@app.get("/health")  # type: ignore[misc]
+@app.get("/health")
 async def health_check() -> JSONResponse:
     """Health check endpoint."""
     return JSONResponse(content={"status": "healthy", "service": "reposcope-api"})

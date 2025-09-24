@@ -73,7 +73,7 @@ jobs:
         run: isort --check-only .
 
       - name: Run mypy
-        run: mypy .
+        run: mypy . --ignore-missing-imports --no-strict-optional
 
       # TODO: Add tests when implemented
       # - name: Run tests

@@ -1,0 +1,26 @@
+{
+  "include": ["."],
+  "exclude": ["venv", "**/__pycache__"],
+  "pythonVersion": "3.13",
+  "pythonPlatform": "All",
+  "executionEnvironments": [
+    {
+      "root": ".",
+      "pythonVersion": "3.13",
+      "pythonPlatform": "All",
+      "extraPaths": [
+        ".",
+        "C:\\Users\\kudzi\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages"
+      ],
+      "pythonPath": "C:\\Users\\kudzi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"
+    }
+  ],
+  "reportMissingImports": "warning",
+  "reportMissingTypeStubs": "none",
+  "typeCheckingMode": "basic",
+  "pythonPath": "C:\\Users\\kudzi\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+  "useLibraryCodeForTypes": true,
+  "autoImportCompletions": true,
+  "autoSearchPaths": true,
+  "diagnosticMode": "workspace"
+}

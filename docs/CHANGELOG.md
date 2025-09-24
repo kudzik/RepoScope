@@ -40,6 +40,21 @@ a projekt używa [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - mypy: `--ignore-missing-imports --no-strict-optional` w obu środowiskach
 - flake8: używa .flake8 config file (max-line-length=100)
 - black/isort: identyczne ustawienia (line-length=100, profile=black)
+- **Testy jednostkowe backend**
+- pytest z 93% pokryciem kodu
+- Testy endpointów API (`/`, `/health`, `/docs`, `/redoc`)
+- Testy konfiguracji CORS i middleware
+- Testy metadanych aplikacji
+- pytest-cov dla raportów pokrycia kodu
+- **Konfiguracja edytora**
+- pyrightconfig.json z prawidłowymi ścieżkami Python
+- .vscode/settings.json dla VS Code
+- .python-version dla pyenv
+- **Dokumentacja testów**
+- Kompletna strategia testowania w docs/TESTS.md
+- Instrukcje uruchamiania testów
+- Metryki jakości i cele
+- Roadmap testów (Faza 1-3)
 
 ### Changed
 
@@ -58,7 +73,17 @@ a projekt używa [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
-<!-- TODO: Dodać poprawki błędów -->
+- **Problemy z importami w edytorze**
+- Naprawiono konfigurację pyright dla prawidłowego rozpoznawania pakietów Python
+- Dodano .vscode/settings.json z konfiguracją interpretera Python
+- Zaktualizowano pyrightconfig.json z prawidłowymi ścieżkami
+- **Problemy z lintingiem**
+- Naprawiono błędy formatowania w plikach testowych
+- Usunięto nieużywane importy (pytest w test_config.py)
+- Zastosowano black do formatowania kodu
+- **Problemy z testami**
+- Naprawiono test CORS middleware (FastAPI zwraca "Middleware" zamiast "CORSMiddleware")
+- Zoptymalizowano konfigurację pytest
 
 ### Security
 

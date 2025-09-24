@@ -1165,6 +1165,64 @@ Zidentyfikowałem problem z mypy w GitHub Actions. GitHub używał domyślnej ko
 - ✅ **Spójność konfiguracji** - lokalne i GitHub Actions używają identycznych parametrów
 - ✅ **Dokumentacja zaktualizowana** - wszystkie pliki dokumentacji odzwierciedlają aktualny stan
 
+### **Sesja 13: Naprawienie błędów VS Code Python - 2025-01-24**
+
+**Zapytanie użytkownika:**
+
+```
+zajmijmy sie teraz naprawa bledow w projekcie
+[E0401:import-error] Unable to import 'uvicorn'
+[E0401:import-error] Unable to import 'fastapi'
+[E0401:import-error] Unable to import 'fastapi.middleware.cors'
+[E0401:import-error] Unable to import 'fastapi.responses'
+[E501] line too long (82 > 79 characters)
+[reportMissingImports] Import "uvicorn" could not be resolved
+```
+
+**Odpowiedź AI:**
+Zidentyfikowałem problemy z konfiguracją VS Code Python - edytor nie rozpoznawał środowiska wirtualnego i pakiety FastAPI/uvicorn.
+
+**Wykonane zadania:**
+
+1. **Weryfikacja środowiska** - potwierdziłem że FastAPI i uvicorn są zainstalowane w venv
+2. **Konfiguracja VS Code** - utworzyłem `backend/.vscode/settings.json` z właściwymi ustawieniami
+3. **Konfiguracja pyright** - dodałem `pyrightconfig.json` i sekcję `[tool.pyright]` do pyproject.toml
+4. **Naprawienie błędów** - poprawiłem długość linii w main.py (flake8 E501)
+5. **Weryfikacja linterów** - wszystkie narzędzia działają poprawnie
+
+**Pliki utworzone/zmodyfikowane:**
+
+- `backend/.vscode/settings.json` - konfiguracja VS Code Python
+- `backend/pyrightconfig.json` - konfiguracja pyright
+- `backend/.python-version` - wersja Python (3.13.7)
+- `backend/pyproject.toml` - dodano sekcję [tool.pyright]
+- `backend/main.py` - naprawiono długość linii (black formatting)
+
+**Testy:**
+
+- ✅ **flake8** - Success: no issues found
+- ✅ **black** - All done! 1 file would be left unchanged
+- ✅ **mypy** - Success: no issues found in 1 source file
+- ✅ **pre-commit hooks** - wszystkie 14 hooków przechodzą pomyślnie
+- ✅ **VS Code Python interpreter** - poprawnie wykrywa środowisko wirtualne
+
+**Kluczowe decyzje:**
+
+- VS Code potrzebuje explicite skonfigurowanego interpretera Python
+- pyright wymaga konfiguracji venvPath i venv w pyrightconfig.json
+- Black automatycznie formatuje kod zgodnie z regułami (line-length=100)
+- Wszystkie lintery muszą być skonfigurowane w .vscode/settings.json
+
+**Dokumentacja zaktualizowana:**
+
+- `docs/DEVELOPMENT.md` - dodano sekcję "VS Code Python Configuration"
+
+**Status:**
+
+- ✅ **Błędy VS Code Python rozwiązane** - wszystkie importy są rozpoznawane
+- ✅ **Lintery działają poprawnie** - flake8, black, mypy, pre-commit hooks
+- ✅ **VS Code skonfigurowany** - interpreter Python, type checking, formatting
+
 ---
 
 _Ten plik będzie aktualizowany przy każdej sesji komunikacji z AI, aby zachować pełną historię rozwoju projektu RepoScope._

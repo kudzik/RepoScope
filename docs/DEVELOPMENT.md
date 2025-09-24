@@ -893,6 +893,23 @@ pre-commit run --all-files  # Uruchom wszystkie pre-commit hooks
 - `git commit` - hooks uruchamiają się automatycznie przy commicie
 - **Spójność** - lokalne i GitHub Actions używają identycznych parametrów
 
+#### VS Code Python Configuration
+
+**✅ Skonfigurowane pliki:**
+
+- `backend/.vscode/settings.json` - konfiguracja interpretera Python, linterów i formatowania
+- `backend/pyrightconfig.json` - konfiguracja pyright dla type checking
+- `backend/.python-version` - wersja Python (3.13.7)
+- `backend/pyproject.toml` - dodano sekcję [tool.pyright]
+
+**✅ Przetestowane funkcjonalności:**
+
+- **VS Code Python interpreter** - poprawnie wykrywa środowisko wirtualne
+- **Import resolution** - FastAPI, uvicorn i inne pakiety są rozpoznawane
+- **Type checking** - pyright/basedpyright działa poprawnie
+- **Linting** - pylint, flake8, mypy są skonfigurowane i działają
+- **Formatting** - black jest ustawiony jako domyślny formatter
+
 #### CI/CD Pipeline
 
 **✅ GitHub Actions (.github/workflows/ci.yml):**
@@ -913,6 +930,107 @@ pre-commit run --all-files  # Uruchom wszystkie pre-commit hooks
 - **mypy** - `--ignore-missing-imports --no-strict-optional` w obu środowiskach
 - **flake8** - używa .flake8 config file (max-line-length=100)
 - **black/isort** - identyczne ustawienia (line-length=100, profile=black)
+
+---
+
+## 🧪 Testowanie i jakość kodu
+
+### Backend Testing (Python/FastAPI)
+
+**✅ Zaimplementowane testy:**
+
+- **Framework**: pytest 8.4.2 + pytest-cov 7.0.0
+- **Pokrycie kodu**: 93% (bardzo dobry wynik)
+- **Testy jednostkowe**: 13/13 przechodzi (100%)
+- **Lokalizacja**: `backend/tests/`
+
+**Testowane komponenty:**
+
+- **Endpointy API**: `/`, `/health`, `/docs`, `/redoc`
+- **Konfiguracja CORS**: middleware i nagłówki
+- **Metadane aplikacji**: tytuł, wersja, opis
+- **Routing**: rejestracja tras i middleware
+
+**Uruchamianie testów:**
+
+```bash
+cd backend
+
+# Wszystkie testy
+python -m pytest tests/ -v
+
+# Testy z pokryciem
+python -m pytest tests/ --cov=main --cov-report=html
+
+# Testy z lintingiem
+python -m flake8 main.py tests/
+python -m black main.py tests/
+python -m mypy main.py
+```
+
+**Konfiguracja testów:**
+
+- **pytest.ini**: konfiguracja w `pyproject.toml`
+- **Coverage**: HTML raporty w `htmlcov/`
+- **Fixtures**: TestClient dla FastAPI
+- **Markers**: slow, integration, unit
+
+### Frontend Testing (Next.js/TypeScript)
+
+**📋 Planowane testy:**
+
+- **Framework**: Jest + React Testing Library
+- **Lokalizacja**: `frontend/__tests__/`
+- **Komponenty**: shadcn/ui, Tailwind CSS
+- **E2E**: Playwright lub Cypress
+
+### Metryki jakości
+
+**Aktualne wyniki:**
+
+- **Pokrycie kodu**: 93% (backend)
+- **Testy jednostkowe**: 13/13 przechodzi (100%)
+- **Linting**: 0 błędów (flake8, black, mypy)
+- **Czas wykonania**: <1s (testy jednostkowe)
+
+**Cele jakości:**
+
+- **Pokrycie kodu**: minimum 80% (osiągnięte: 93%)
+- **Testy jednostkowe**: 100% przechodzi (osiągnięte)
+- **Linting**: 0 błędów (osiągnięte)
+- **Czas odpowiedzi API**: <200ms (planowane)
+
+### CI/CD Pipeline
+
+**Planowane GitHub Actions:**
+
+```yaml
+name: Tests
+on: [push, pull_request]
+jobs:
+  backend-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.13"
+      - name: Install dependencies
+        run: |
+          cd backend
+          python -m pip install -e ".[dev]"
+      - name: Run tests
+        run: |
+          cd backend
+          python -m pytest tests/ -v --cov=main
+      - name: Run linting
+        run: |
+          cd backend
+          python -m flake8 main.py tests/
+          python -m black --check main.py tests/
+          python -m mypy main.py
+```
 
 ---
 

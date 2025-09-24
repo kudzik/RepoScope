@@ -3,9 +3,9 @@
 ## 📊 Status ogólny
 
 - **Łącznie zadań**: 15
-- **Zrealizowane**: 0
+- **Zrealizowane**: 8
 - **W trakcie**: 0
-- **Do wykonania**: 15
+- **Do wykonania**: 7
 
 ---
 
@@ -126,9 +126,10 @@
 
 4. **Stworzenie bazowych endpointów REST API**
 
-   - [ ] **5.1** POST `/analyze/` — przyjmuje URL repozytorium do analizy
-   - [ ] **5.2** GET `/analyses/` — zwraca listę analiz użytkownika
-   - [ ] **5.3** GET `/analyses/{id}/` — szczegóły pojedynczego raportu
+   - [x] **5.1** POST `/analysis/` — przyjmuje URL repozytorium do analizy ✅ **ZAKOŃCZONE**: Endpoint zaimplementowany z walidacją Pydantic
+   - [x] **5.2** GET `/analysis/` — zwraca listę analiz użytkownika ✅ **ZAKOŃCZONE**: Endpoint z paginacją zaimplementowany
+   - [x] **5.3** GET `/analysis/{id}/` — szczegóły pojedynczego raportu ✅ **ZAKOŃCZONE**: Endpoint z UUID walidacją zaimplementowany
+   - [x] **5.4** DELETE `/analysis/{id}/` — usuwa analizę ✅ **ZAKOŃCZONE**: Endpoint do usuwania analiz zaimplementowany
 
 5. **Implementacja integracji z GitHub API i Tree-sitter**
 

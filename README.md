@@ -23,7 +23,63 @@ RepoScope to zaawansowane narzędzie do automatycznej analizy repozytoriów GitH
 
 ## 🚀 Szybki start
 
-<!-- TODO: Dodać instrukcje instalacji i uruchomienia -->
+### Wymagania
+
+- **Node.js** 18+ (dla frontend)
+- **Python** 3.11+ (dla backend)
+- **Git** (dla klonowania repozytorium)
+
+### Instalacja i uruchomienie
+
+#### 1. Klonowanie repozytorium
+
+```bash
+git clone https://github.com/your-username/RepoScope.git
+cd RepoScope
+```
+
+#### 2. Backend (FastAPI)
+
+```bash
+cd backend
+
+# Instalacja zależności
+python -m pip install -e ".[dev]"
+
+# Uruchomienie serwera deweloperskiego
+python main.py
+```
+
+Backend będzie dostępny pod adresem: `http://localhost:8000`
+
+- API Documentation: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
+
+#### 3. Frontend (Next.js)
+
+```bash
+cd frontend
+
+# Instalacja zależności
+npm install
+
+# Uruchomienie serwera deweloperskiego
+npm run dev
+```
+
+Frontend będzie dostępny pod adresem: `http://localhost:3000`
+
+#### 4. Uruchomienie testów
+
+```bash
+# Backend testy
+cd backend
+python -m pytest tests/ -v --cov=main
+
+# Frontend testy (planowane)
+cd frontend
+npm test
+```
 
 ## 📖 Dokumentacja
 
@@ -58,12 +114,14 @@ RepoScope to zaawansowane narzędzie do automatycznej analizy repozytoriów GitH
 - ✅ **Środowisko Python** - venv + pyproject.toml
 - ✅ **Zależności** - FastAPI, Uvicorn, LangChain, Tree-sitter
 - ✅ **Lintery** - flake8, black, isort, mypy (wszystkie przetestowane)
+- ✅ **Testy jednostkowe** - pytest z 93% pokryciem kodu
+- ✅ **Konfiguracja edytora** - pyright, VS Code settings
+- ✅ **Dokumentacja** - zaktualizowana dokumentacja deweloperska
 
 ### W trakcie
 
 - 🔄 **Pre-commit hooks** - automatyzacja sprawdzania
-- 🔄 **Testy lokalne** - weryfikacja funkcjonalności
-- 🔄 **Aktualizacja README** - instrukcje korzystania
+- 🔄 **Dodatkowe testy** - testy integracyjne i E2E
 
 ## 🛠️ Stos technologiczny
 

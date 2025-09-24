@@ -11,6 +11,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from api.analysis import router as analysis_router
+
 # Initialize FastAPI application
 app = FastAPI(
     title="RepoScope API",
@@ -28,6 +30,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include API routers
+app.include_router(analysis_router)
 
 
 @app.get("/")

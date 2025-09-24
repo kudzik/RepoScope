@@ -91,37 +91,8 @@ class AnalysisService:
                         "languages": {},
                     }
 
-                # Clean up temporary directory with better error handling
-                try:
-                    import stat
-                    import time
-
-                    # Function to handle read-only files on Windows
-                    def handle_remove_readonly(func, path, exc):  # noqa: ARG001
-                        if os.path.exists(path):
-                            os.chmod(path, stat.S_IWRITE)
-                            func(path)
-
-                    # Try to remove with retry mechanism
-                    for attempt in range(3):
-                        try:
-                            shutil.rmtree(
-                                os.path.dirname(repo_path),
-                                onerror=handle_remove_readonly,
-                            )
-                            break
-                        except PermissionError:
-                            if attempt < 2:
-                                time.sleep(0.5)  # Wait before retry
-                                continue
-                            else:
-                                print(
-                                    f"Warning: Could not fully clean up temp "
-                                    f"directory: {os.path.dirname(repo_path)}"
-                                )
-                                break
-                except Exception as e:
-                    print(f"Warning: Error cleaning up temp directory: {e}")
+                # Store repo_path for later cleanup
+                temp_dir_to_cleanup = repo_path
 
                 # Set analysis results with PRD-compliant structure
                 analysis.code_structure = {
@@ -130,26 +101,21 @@ class AnalysisService:
                     "languages": structure_analysis.get("languages", {}),
                     "complexity_score": structure_analysis.get("complexity_score", 0.0),
                     "largest_files": structure_analysis.get("largest_files", [])[:5],
-                    # PRD format for frontend
-                    "score": min(
-                        95,
-                        max(
-                            60,
-                            int(structure_analysis.get("complexity_score", 0.0) * 10),
-                        ),
+                    "quality_metrics": structure_analysis.get("quality_metrics", {}),
+                    "architecture_score": structure_analysis.get("architecture_score", 0.0),
+                    "code_patterns": structure_analysis.get("code_patterns", {}),
+                    "hotspots": structure_analysis.get("hotspots", []),
+                    # PRD format for frontend - use proper calculation
+                    "score": self._calculate_code_quality_score(structure_analysis),
+                    "issues": self._generate_code_quality_issues(structure_analysis),
+                    "recommendations": self._generate_code_quality_recommendations(
+                        structure_analysis
                     ),
-                    "issues": [
-                        "Large files detected (>500 lines)",
-                        "High cyclomatic complexity in some functions",
-                        "Missing type annotations",
-                    ],
-                    "recommendations": [
-                        "Split large files into smaller modules",
-                        "Add unit tests for complex functions",
-                        "Implement proper error handling",
-                    ],
                 }
             else:
+                # No repo_path for cleanup
+                temp_dir_to_cleanup = None
+
                 # Fallback to basic analysis if cloning fails
                 analysis.code_structure = {
                     "total_files": 0,
@@ -210,11 +176,13 @@ class AnalysisService:
                             (analysis.code_structure or {})
                             .get("quality_metrics", {})
                             .get("technical_debt_ratio", 0)
+                            * 100  # Convert to percentage
                         ),
                         "code_duplication": (
                             (analysis.code_structure or {})
                             .get("quality_metrics", {})
                             .get("code_duplication", 0)
+                            * 100  # Convert to percentage
                         ),
                         "architecture_score": (
                             (analysis.code_structure or {}).get("architecture_score", 0)
@@ -434,6 +402,39 @@ class AnalysisService:
             analysis.status = AnalysisStatus.COMPLETED
             analysis.completed_at = datetime.now(timezone.utc)
             analysis.analysis_duration = (analysis.completed_at - start_time).total_seconds()
+
+            # Clean up temporary directory after all analysis is done
+            if "temp_dir_to_cleanup" in locals() and temp_dir_to_cleanup:
+                try:
+                    import stat
+                    import time
+
+                    # Function to handle read-only files on Windows
+                    def handle_remove_readonly(func, path, exc):  # noqa: ARG001
+                        if os.path.exists(path):
+                            os.chmod(path, stat.S_IWRITE)
+                            func(path)
+
+                    # Try to remove with retry mechanism
+                    for attempt in range(3):
+                        try:
+                            shutil.rmtree(
+                                os.path.dirname(temp_dir_to_cleanup),
+                                onerror=handle_remove_readonly,
+                            )
+                            break
+                        except PermissionError:
+                            if attempt < 2:
+                                time.sleep(0.5)  # Wait before retry
+                                continue
+                            else:
+                                print(
+                                    f"Warning: Could not fully clean up temp "
+                                    f"directory: {os.path.dirname(temp_dir_to_cleanup)}"
+                                )
+                                break
+                except Exception as e:
+                    print(f"Warning: Error cleaning up temp directory: {e}")
 
             # Store in memory
             AnalysisService._analyses[str(analysis.id)] = analysis
@@ -1277,3 +1278,133 @@ Keep response under 500 words."""
         recommendations.append("Implement rate limiting")
 
         return recommendations[:5]  # Return top 5 recommendations
+
+    def _calculate_code_quality_score(self, structure_analysis: Dict) -> int:
+        """Calculate proper code quality score based on multiple factors."""
+        if not structure_analysis or structure_analysis.get("total_files", 0) == 0:
+            return 0
+
+        # Get quality metrics
+        quality_metrics = structure_analysis.get("quality_metrics", {})
+        maintainability = quality_metrics.get("maintainability_index", 50.0)
+        technical_debt = quality_metrics.get("technical_debt_ratio", 0.5)
+        architecture = structure_analysis.get("architecture_score", 50.0)
+
+        # Calculate base score from maintainability (0-100)
+        base_score = maintainability
+
+        # Apply penalties
+        debt_penalty = technical_debt * 20  # Max 20 point penalty
+        architecture_penalty = max(0, (50 - architecture) * 0.5)
+
+        # Apply bonuses for good practices
+        patterns = structure_analysis.get("code_patterns", {})
+        design_patterns = len(patterns.get("design_patterns", []))
+        anti_patterns = len(patterns.get("anti_patterns", []))
+
+        pattern_bonus = min(design_patterns * 2, 10)  # Max 10 point bonus
+        pattern_penalty = min(anti_patterns * 3, 15)  # Max 15 point penalty
+
+        # Calculate final score
+        final_score = (
+            base_score - debt_penalty - architecture_penalty + pattern_bonus - pattern_penalty
+        )
+
+        return max(0, min(100, int(final_score)))
+
+    def _generate_code_quality_issues(self, structure_analysis: Dict) -> List[str]:
+        """Generate dynamic issues based on actual analysis."""
+        issues = []
+
+        # Check for large files
+        largest_files = structure_analysis.get("largest_files", [])
+        for file_info in largest_files[:3]:  # Check top 3 largest files
+            if file_info.get("lines", 0) > 500:
+                file_path = file_info.get("path", "Unknown")
+                file_name = file_path.split("/")[-1] if "/" in file_path else file_path
+                issues.append(
+                    f"Large file detected: {file_name} " f"({file_info.get('lines', 0)} lines)"
+                )
+
+        # Check maintainability
+        quality_metrics = structure_analysis.get("quality_metrics", {})
+        maintainability = quality_metrics.get("maintainability_index", 50.0)
+        if maintainability < 40:
+            issues.append("Low maintainability index - code is difficult " "to maintain")
+        elif maintainability < 60:
+            issues.append("Moderate maintainability - some refactoring " "recommended")
+
+        # Check technical debt
+        technical_debt = quality_metrics.get("technical_debt_ratio", 0.5)
+        if technical_debt > 0.7:
+            issues.append("High technical debt ratio - significant " "refactoring needed")
+        elif technical_debt > 0.5:
+            issues.append("Moderate technical debt - consider refactoring")
+
+        # Check for anti-patterns
+        patterns = structure_analysis.get("code_patterns", {})
+        anti_patterns = patterns.get("anti_patterns", [])
+        if anti_patterns:
+            issues.append(f"Anti-patterns detected: {len(anti_patterns)} " "issues found")
+
+        # Check architecture score
+        architecture_score = structure_analysis.get("architecture_score", 50.0)
+        if architecture_score < 40:
+            issues.append("Poor architecture - consider restructuring")
+
+        # Check for hotspots
+        hotspots = structure_analysis.get("hotspots", [])
+        if hotspots:
+            issues.append(f"Code hotspots identified: {len(hotspots)} " "areas need attention")
+
+        return issues[:5]  # Return max 5 issues
+
+    def _generate_code_quality_recommendations(self, structure_analysis: Dict) -> List[str]:
+        """Generate dynamic recommendations based on actual analysis."""
+        recommendations = []
+
+        # Get quality metrics
+        quality_metrics = structure_analysis.get("quality_metrics", {})
+        maintainability = quality_metrics.get("maintainability_index", 50.0)
+        technical_debt = quality_metrics.get("technical_debt_ratio", 0.5)
+        architecture_score = structure_analysis.get("architecture_score", 50.0)
+
+        # Maintainability recommendations
+        if maintainability < 60:
+            recommendations.append("Improve code maintainability by reducing " "complexity")
+            recommendations.append("Add more inline documentation and comments")
+
+        # Technical debt recommendations
+        if technical_debt > 0.5:
+            recommendations.append("Address technical debt through systematic " "refactoring")
+            recommendations.append("Prioritize refactoring of most complex " "modules")
+
+        # Architecture recommendations
+        if architecture_score < 50:
+            recommendations.append("Improve code architecture and organization")
+            recommendations.append("Consider breaking down large modules into " "smaller ones")
+
+        # Pattern-based recommendations
+        patterns = structure_analysis.get("code_patterns", {})
+        anti_patterns = patterns.get("anti_patterns", [])
+        design_patterns = patterns.get("design_patterns", [])
+
+        if anti_patterns:
+            recommendations.append("Refactor anti-patterns to improve code quality")
+
+        if not design_patterns and len(patterns.get("design_patterns", [])) == 0:
+            recommendations.append(
+                "Consider implementing design patterns for " "better code structure"
+            )
+
+        # Hotspot recommendations
+        hotspots = structure_analysis.get("hotspots", [])
+        if hotspots:
+            recommendations.append("Focus on identified hotspots for maximum " "impact")
+
+        # General recommendations
+        if not recommendations:
+            recommendations.append("Code quality is good - maintain current " "practices")
+            recommendations.append("Continue with regular code reviews and " "testing")
+
+        return recommendations[:5]  # Return max 5 recommendations

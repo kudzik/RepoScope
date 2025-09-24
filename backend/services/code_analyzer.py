@@ -819,17 +819,28 @@ class CodeAnalyzer:
         return hotspots[:10]  # Return top 10 hotspots
 
     def _calculate_complexity_score(self, stats: Dict) -> float:
-        """Calculate a simple complexity score."""
+        """Calculate actual complexity score based on code analysis."""
         if stats["total_files"] == 0:
             return 0.0
 
-        # Simple complexity score based on file count, lines, and language
-        # diversity
-        file_score = min(stats["total_files"] / 100, 1.0)  # Normalize to 0-1
-        line_score = min(stats["total_lines"] / 10000, 1.0)  # Normalize to 0-1
-        diversity_score = min(len(stats["languages"]) / 5, 1.0)  # Normalize to 0-1
+        # Use actual complexity metrics instead of just size
+        total_lines = stats.get("total_lines", 0)
+        total_files = stats.get("total_files", 0)
 
-        return (file_score + line_score + diversity_score) / 3.0
+        # Calculate average file size
+        avg_file_size = total_lines / max(total_files, 1)
+
+        # Calculate complexity based on:
+        # 1. Average file size (larger files = more complex)
+        # 2. Language diversity (more languages = more complex)
+        # 3. Total lines (more code = potentially more complex)
+
+        file_complexity = min(avg_file_size / 200, 1.0)  # Normalize around 200 lines per file
+        language_complexity = min(len(stats["languages"]) / 3, 1.0)  # Normalize around 3 languages
+        size_complexity = min(total_lines / 5000, 1.0)  # Normalize around 5000 lines
+
+        # Weighted average with emphasis on file complexity
+        return file_complexity * 0.5 + language_complexity * 0.3 + size_complexity * 0.2
 
     def calculate_cyclomatic_complexity(self, tree: tree_sitter.Tree, language: str) -> int:
         """Calculate cyclomatic complexity."""

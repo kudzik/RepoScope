@@ -1,30 +1,30 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import type { AnalysisResponse } from '@/lib/api-types';
 import {
+  AlertCircle,
+  AlertTriangle,
+  BarChart3,
+  Calendar,
   CheckCircle,
   Clock,
-  AlertTriangle,
-  XCircle,
   Code,
-  FileText,
-  Shield,
-  BarChart3,
-  TestTube,
   FileCheck,
-  Star,
-  GitFork,
-  Calendar,
   FileCode,
-  Zap,
-  Target,
-  AlertCircle,
+  FileText,
+  GitFork,
   Info,
+  Shield,
+  Star,
+  Target,
+  TestTube,
+  XCircle,
+  Zap,
 } from 'lucide-react';
-import type { AnalysisResponse } from '@/lib/api-types';
 
 interface AnalysisResultsProps {
   analysis: AnalysisResponse;
@@ -63,6 +63,30 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
     return 'text-red-600';
   };
 
+  // Safe number formatting
+  const safeNumber = (value: unknown, defaultValue: number = 0): number => {
+    if (typeof value === 'number' && !isNaN(value)) return value;
+    return defaultValue;
+  };
+
+  // Safe string formatting
+  const safeString = (value: unknown, defaultValue: string = 'N/A'): string => {
+    if (typeof value === 'string') return value;
+    return defaultValue;
+  };
+
+  // Safe array check
+  const safeArray = (value: unknown): unknown[] => {
+    return Array.isArray(value) ? value : [];
+  };
+
+  // Safe object check
+  const safeObject = (value: unknown): Record<string, unknown> => {
+    return value && typeof value === 'object' && !Array.isArray(value)
+      ? (value as Record<string, unknown>)
+      : {};
+  };
+
   if (analysis.status === 'failed') {
     return (
       <Alert variant="destructive">
@@ -99,7 +123,15 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
     );
   }
 
-  const result = analysis.result!;
+  const result = analysis.result;
+  if (!result) {
+    return (
+      <Alert variant="destructive">
+        <XCircle className="h-4 w-4" />
+        <AlertDescription>No analysis results available</AlertDescription>
+      </Alert>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -166,18 +198,39 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <Code className="h-4 w-4" />
               <CardTitle className="text-sm">Code Quality</CardTitle>
             </div>
+            <CardDescription className="text-xs">
+              Overall code maintainability, complexity, and technical debt assessment
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold">{result.code_quality.score}</span>
-                <span className={`text-sm ${getScoreColor(result.code_quality.score)}`}>/100</span>
+                <span className="text-2xl font-bold">
+                  {safeNumber(result.code_quality?.score, 0)}
+                </span>
+                <span
+                  className={`text-sm ${getScoreColor(safeNumber(result.code_quality?.score, 0))}`}
+                >
+                  /100
+                </span>
               </div>
-              <Progress value={result.code_quality.score} className="h-2" />
-              {result.code_quality.metrics && (
+              <Progress value={safeNumber(result.code_quality?.score, 0)} className="h-2" />
+              {result.code_quality?.metrics && (
                 <div className="text-xs text-muted-foreground space-y-1">
-                  <div>Maintainability: {result.code_quality.metrics.maintainability_index}</div>
-                  <div>Technical Debt: {result.code_quality.metrics.technical_debt_ratio}%</div>
+                  <div
+                    className="cursor-help"
+                    title="Maintainability Index: Measures how easy the code is to understand and modify. Higher values (80+) indicate excellent maintainability, while lower values (below 40) suggest significant maintenance challenges."
+                  >
+                    Maintainability:{' '}
+                    {safeNumber(result.code_quality.metrics.maintainability_index, 0).toFixed(2)}
+                  </div>
+                  <div
+                    className="cursor-help"
+                    title="Technical Debt Ratio: Percentage of code that needs refactoring or improvement. Lower values (below 30%) are better, while higher values (above 70%) indicate significant technical debt."
+                  >
+                    Technical Debt:{' '}
+                    {safeNumber(result.code_quality.metrics.technical_debt_ratio, 0).toFixed(2)}%
+                  </div>
                 </div>
               )}
             </div>
@@ -191,19 +244,62 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <FileText className="h-4 w-4" />
               <CardTitle className="text-sm">Documentation</CardTitle>
             </div>
+            <CardDescription className="text-xs">
+              Quality and completeness of project documentation and code comments
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold">{result.documentation.score}</span>
-                <span className={`text-sm ${getScoreColor(result.documentation.score)}`}>/100</span>
+                <span className="text-2xl font-bold">
+                  {safeNumber(result.documentation?.score, 0)}
+                </span>
+                <span
+                  className={`text-sm ${getScoreColor(safeNumber(result.documentation?.score, 0))}`}
+                >
+                  /100
+                </span>
               </div>
-              <Progress value={result.documentation.score} className="h-2" />
-              {result.documentation.details && (
+              <Progress value={safeNumber(result.documentation?.score, 0)} className="h-2" />
+              {result.documentation?.details && (
                 <div className="text-xs text-muted-foreground space-y-1">
-                  <div>README: {result.documentation.details.has_readme ? '✓' : '✗'}</div>
-                  <div>API Docs: {result.documentation.details.has_api_docs ? '✓' : '✗'}</div>
-                  <div>Comments: {result.documentation.details.comment_coverage}%</div>
+                  <div
+                    className="cursor-help flex items-center gap-1"
+                    title="README file: Essential project documentation that explains what the project does, how to install and use it."
+                  >
+                    <span>README:</span>
+                    <span
+                      className={
+                        result.documentation.details.has_readme ? 'text-green-600' : 'text-red-600'
+                      }
+                    >
+                      {result.documentation.details.has_readme ? '✓' : '✗'}
+                    </span>
+                  </div>
+                  <div
+                    className="cursor-help flex items-center gap-1"
+                    title="API Documentation: Documentation for application programming interfaces and endpoints."
+                  >
+                    <span>API Docs:</span>
+                    <span
+                      className={
+                        result.documentation.details.has_api_docs
+                          ? 'text-green-600'
+                          : 'text-red-600'
+                      }
+                    >
+                      {result.documentation.details.has_api_docs ? '✓' : '✗'}
+                    </span>
+                  </div>
+                  <div
+                    className="cursor-help flex items-center gap-1"
+                    title="Comment Coverage: Percentage of code lines that contain comments. Higher values indicate better code documentation."
+                  >
+                    <span>Comments:</span>
+                    <span className="font-mono">
+                      {safeNumber(result.documentation.details.comment_coverage, 0).toFixed(1)}%
+                    </span>
+                  </div>
                 </div>
               )}
             </div>
@@ -221,15 +317,17 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
           <CardContent>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold">{result.security.score}</span>
-                <span className={`text-sm ${getScoreColor(result.security.score)}`}>/100</span>
+                <span className="text-2xl font-bold">{safeNumber(result.security?.score, 0)}</span>
+                <span className={`text-sm ${getScoreColor(safeNumber(result.security?.score, 0))}`}>
+                  /100
+                </span>
               </div>
-              <Progress value={result.security.score} className="h-2" />
-              {result.security.summary && (
+              <Progress value={safeNumber(result.security?.score, 0)} className="h-2" />
+              {result.security?.summary && (
                 <div className="text-xs text-muted-foreground space-y-1">
-                  <div>Issues: {result.security.summary.total_issues}</div>
-                  <div>High: {result.security.summary.high_severity}</div>
-                  <div>Medium: {result.security.summary.medium_severity}</div>
+                  <div>Issues: {safeNumber(result.security.summary.total_issues, 0)}</div>
+                  <div>High: {safeNumber(result.security.summary.high_severity, 0)}</div>
+                  <div>Medium: {safeNumber(result.security.summary.medium_severity, 0)}</div>
                 </div>
               )}
             </div>
@@ -248,29 +346,22 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-2xl font-bold">
-                  {result.test_coverage.coverage_percentage}%
+                  {safeNumber(result.test_coverage?.coverage_percentage, 0)}%
                 </span>
                 <span
-                  className={`text-sm ${getScoreColor(result.test_coverage.coverage_percentage)}`}
+                  className={`text-sm ${getScoreColor(safeNumber(result.test_coverage?.coverage_percentage, 0))}`}
                 >
                   coverage
                 </span>
               </div>
-              <Progress value={result.test_coverage.coverage_percentage} className="h-2" />
+              <Progress
+                value={safeNumber(result.test_coverage?.coverage_percentage, 0)}
+                className="h-2"
+              />
               <div className="text-xs text-muted-foreground space-y-1">
-                <div>Has Tests: {result.test_coverage.has_tests ? '✓' : '✗'}</div>
-                <div>
-                  Frameworks:{' '}
-                  {Array.isArray(result.test_coverage.test_frameworks)
-                    ? result.test_coverage.test_frameworks.length
-                    : 0}
-                </div>
-                <div>
-                  Files:{' '}
-                  {Array.isArray(result.test_coverage.test_files)
-                    ? result.test_coverage.test_files.length
-                    : 0}
-                </div>
+                <div>Has Tests: {result.test_coverage?.has_tests ? '✓' : '✗'}</div>
+                <div>Frameworks: {safeArray(result.test_coverage?.test_frameworks).length}</div>
+                <div>Files: {safeArray(result.test_coverage?.test_files).length}</div>
               </div>
             </div>
           </CardContent>
@@ -292,15 +383,17 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span>Lines of Code:</span>
-                  <span className="font-mono">{result.metrics.lines_of_code.toLocaleString()}</span>
+                  <span className="font-mono">
+                    {safeNumber(result.metrics?.lines_of_code, 0).toLocaleString()}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Files:</span>
-                  <span className="font-mono">{result.metrics.files_count}</span>
+                  <span className="font-mono">{safeNumber(result.metrics?.files_count, 0)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Complexity:</span>
-                  <span className="font-mono">{result.metrics.complexity}</span>
+                  <span className="font-mono">{safeNumber(result.metrics?.complexity, 0)}</span>
                 </div>
               </div>
             </div>
@@ -308,16 +401,13 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
             <div className="space-y-4">
               <h4 className="font-medium text-sm">Languages</h4>
               <div className="space-y-2">
-                {Object.entries(result.metrics.languages).map(([lang, percentage]) => (
+                {Object.entries(safeObject(result.metrics?.languages)).map(([lang, percentage]) => (
                   <div key={lang} className="space-y-1">
                     <div className="flex justify-between text-sm">
-                      <span>{lang}</span>
-                      <span>{typeof percentage === 'number' ? percentage : 0}%</span>
+                      <span>{safeString(lang)}</span>
+                      <span>{safeNumber(percentage, 0)}%</span>
                     </div>
-                    <Progress
-                      value={typeof percentage === 'number' ? percentage : 0}
-                      className="h-1"
-                    />
+                    <Progress value={safeNumber(percentage, 0)} className="h-1" />
                   </div>
                 ))}
               </div>
@@ -326,12 +416,17 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
             <div className="space-y-4">
               <h4 className="font-medium text-sm">Largest Files</h4>
               <div className="space-y-1 text-sm">
-                {result.metrics.largest_files.map((file, index: number) => (
-                  <div key={index} className="flex justify-between">
-                    <span className="truncate">{file?.name || 'Unknown'}</span>
-                    <span className="text-muted-foreground">{file?.lines || 0} lines</span>
-                  </div>
-                ))}
+                {safeArray(result.metrics?.largest_files).map((file, index: number) => {
+                  const fileObj = file as Record<string, unknown>;
+                  return (
+                    <div key={index} className="flex justify-between">
+                      <span className="truncate">{safeString(fileObj?.name, 'Unknown')}</span>
+                      <span className="text-muted-foreground">
+                        {safeNumber(fileObj?.lines, 0)} lines
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -464,7 +559,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <div>
                 <h4 className="font-medium text-sm mb-2">Documentation Details</h4>
                 <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div className="flex items-center gap-2">
+                  <div
+                    className="flex items-center gap-2 cursor-help"
+                    title="README file: Essential project documentation that explains what the project does, how to install and use it."
+                  >
                     <span>README:</span>
                     <span
                       className={
@@ -474,7 +572,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       {result.documentation.details.has_readme ? '✓' : '✗'}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div
+                    className="flex items-center gap-2 cursor-help"
+                    title="API Documentation: Documentation for application programming interfaces and endpoints."
+                  >
                     <span>API Docs:</span>
                     <span
                       className={
@@ -486,7 +587,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       {result.documentation.details.has_api_docs ? '✓' : '✗'}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div
+                    className="flex items-center gap-2 cursor-help"
+                    title="License file: Legal document that specifies the terms under which the software can be used."
+                  >
                     <span>License:</span>
                     <span
                       className={
@@ -496,7 +600,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       {result.documentation.details.has_license ? '✓' : '✗'}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div
+                    className="flex items-center gap-2 cursor-help"
+                    title="Contributing guidelines: Instructions for developers on how to contribute to the project."
+                  >
                     <span>Contributing:</span>
                     <span
                       className={
@@ -509,6 +616,23 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                     </span>
                   </div>
                 </div>
+                {result.documentation.details.comment_coverage !== undefined && (
+                  <div className="mt-3">
+                    <div
+                      className="flex items-center justify-between text-sm cursor-help"
+                      title="Comment Coverage: Percentage of code lines that contain comments. Higher values indicate better code documentation."
+                    >
+                      <span>Comment Coverage:</span>
+                      <span className="font-mono">
+                        {result.documentation.details.comment_coverage.toFixed(1)}%
+                      </span>
+                    </div>
+                    <Progress
+                      value={result.documentation.details.comment_coverage}
+                      className="h-1 mt-1"
+                    />
+                  </div>
+                )}
               </div>
             )}
           </CardContent>

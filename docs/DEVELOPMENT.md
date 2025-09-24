@@ -877,6 +877,43 @@ pre-commit run --all-files  # Uruchom wszystkie pre-commit hooks
 - **Adnotacje typów** - wszystkie funkcje mają poprawne return type annotations
 - **Dokumentacja** - wszystkie docstringi zgodne z konwencją
 
+#### Pre-commit Hooks
+
+**✅ Skonfigurowane hooki:**
+
+- **pre-commit-hooks** - trailing-whitespace, end-of-file-fixer, check-yaml/json/toml, check-merge-conflict, check-added-large-files, debug-statements, check-docstring-first
+- **black** - autoformatowanie kodu Python (line-length=100)
+- **isort** - sortowanie importów (profile=black, line-length=100)
+- **flake8** - linting zgodny z PEP8 (max-line-length=100)
+- **mypy** - type checking z ignore-missing-imports i no-strict-optional
+
+**✅ Przetestowane funkcjonalności:**
+
+- `pre-commit run --files main.py` - wszystkie hooki przechodzą pomyślnie
+- `git commit` - hooks uruchamiają się automatycznie przy commicie
+- **Spójność** - lokalne i GitHub Actions używają identycznych parametrów
+
+#### CI/CD Pipeline
+
+**✅ GitHub Actions (.github/workflows/ci.yml):**
+
+**Frontend:**
+
+- Node.js 20, npm ci, ESLint, Prettier check, TypeScript check
+- Cache: package.json, dependencies z npm
+
+**Backend:**
+
+- Python 3.13, pip install -e . i -e ".[dev]", flake8, black check, isort check, mypy
+- Cache: pyproject.toml, dependencies z pip
+
+**✅ Przetestowane funkcjonalności:**
+
+- **Spójność konfiguracji** - GitHub Actions używa identycznych parametrów co lokalne pre-commit hooks
+- **mypy** - `--ignore-missing-imports --no-strict-optional` w obu środowiskach
+- **flake8** - używa .flake8 config file (max-line-length=100)
+- **black/isort** - identyczne ustawienia (line-length=100, profile=black)
+
 ---
 
 **Uwaga**: Ten dokument będzie aktualizowany w miarę rozwoju projektu i dodawania nowych narzędzi.

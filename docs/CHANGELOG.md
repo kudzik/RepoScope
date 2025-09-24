@@ -33,6 +33,13 @@ a projekt używa [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - mypy@1.18.2 z strict mode type checking
 - isort@6.0.1 dla sortowania importów
 - pytest@8.4.2 framework testowy
+- **Pre-commit hooks i CI/CD pipeline**
+- Pre-commit hooks: trailing-whitespace, end-of-file-fixer, check-yaml/json/toml, check-merge-conflict, check-added-large-files, debug-statements, check-docstring-first
+- GitHub Actions CI/CD pipeline (.github/workflows/ci.yml)
+- Spójność konfiguracji: lokalne i GitHub Actions używają identycznych parametrów
+- mypy: `--ignore-missing-imports --no-strict-optional` w obu środowiskach
+- flake8: używa .flake8 config file (max-line-length=100)
+- black/isort: identyczne ustawienia (line-length=100, profile=black)
 
 ### Changed
 

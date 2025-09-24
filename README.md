@@ -91,6 +91,13 @@ RepoScope to zaawansowane narzędzie do automatycznej analizy repozytoriów GitH
 - **Hosting**: Vercel (frontend) + Render (backend)
 - **Monitoring**: Highlight.io + Sentry
 
+### CI/CD & Development
+
+- **GitHub Actions**: Automatyczne linting, testy, security scanning
+- **Pre-commit hooks**: Sprawdzanie jakości kodu przed commitami
+- **Code Quality**: ESLint, Prettier, flake8, black, mypy, isort
+- **Spójność**: Identyczne parametry w lokalnym i CI/CD środowisku
+
 ## 🤝 Współpraca
 
 <!-- TODO: Dodać informacje o współpracy -->

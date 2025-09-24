@@ -138,3 +138,22 @@ frontend/
 - **GitHub Actions** - automatyzacja linterów, testów, security scanning
 - **Pre-commit hooks** - sprawdzanie przed commitami
 - **Automatyczne formatowanie** przy zapisie plików
+
+#### GitHub Actions Pipeline (.github/workflows/ci.yml)
+
+**Frontend Job:**
+
+- Node.js 20, npm ci, ESLint, Prettier check, TypeScript check
+- Cache: package.json, dependencies z npm
+
+**Backend Job:**
+
+- Python 3.13, pip install -e . i -e ".[dev]", flake8, black check, isort check, mypy
+- Cache: pyproject.toml, dependencies z pip
+
+**✅ Spójność konfiguracji:**
+
+- GitHub Actions używa identycznych parametrów co lokalne pre-commit hooks
+- mypy: `--ignore-missing-imports --no-strict-optional` w obu środowiskach
+- flake8: używa .flake8 config file (max-line-length=100)
+- black/isort: identyczne ustawienia (line-length=100, profile=black)

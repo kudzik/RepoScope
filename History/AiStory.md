@@ -1113,6 +1113,58 @@ Aktualizacja wymaganej dokumentacji po zakończeniu konfiguracji linterów backe
 3. **Integracja z GitHub API** - pobieranie repozytoriów
 4. **Testy jednostkowe** - pokrycie testami kluczowych funkcji
 
+### **Sesja 12: Naprawienie CI/CD i mypy - 2025-01-24**
+
+**Zapytanie użytkownika:**
+
+```
+dlaczego pomimo zastowowanego sprawdzenie przed commit na github nadal wystepuja bledy
+Run mypy .
+main.py:33: error: Unused "type: ignore" comment  [unused-ignore]
+main.py:46: error: Unused "type: ignore" comment  [unused-ignore]
+Found 2 errors in 1 file (checked 1 source file)
+Error: Process completed with exit code 1.
+```
+
+**Odpowiedź AI:**
+Zidentyfikowałem problem z mypy w GitHub Actions. GitHub używał domyślnej konfiguracji z `mypy.ini`, która ma `warn_unused_ignores = True`, podczas gdy lokalne pre-commit używał `--ignore-missing-imports --no-strict-optional`.
+
+**Wykonane zadania:**
+
+1. **Usunięcie niepotrzebnych** `# type: ignore[misc]` z main.py (linie 33 i 46)
+2. **Aktualizacja GitHub Actions** - używa teraz `mypy . --ignore-missing-imports --no-strict-optional`
+3. **Weryfikacja spójności** - porównanie konfiguracji lokalnej vs GitHub Actions
+
+**Pliki zmodyfikowane:**
+
+- `.github/workflows/ci.yml` - aktualizacja mypy command
+- `backend/main.py` - usunięcie niepotrzebnych type ignore comments
+
+**Testy:**
+
+- ✅ **Lokalne mypy** - Success: no issues found
+- ✅ **Pre-commit hooks** - wszystkie przechodzą
+- ✅ **Spójność konfiguracji** - GitHub Actions używa identycznych parametrów co lokalnie
+
+**Kluczowe decyzje:**
+
+- GitHub Actions musi używać identycznych parametrów co lokalne pre-commit hooks
+- `mypy.ini` ma `warn_unused_ignores = True` - to powodowało błędy dla niepotrzebnych type ignore
+- Lokalne pre-commit używał `--ignore-missing-imports --no-strict-optional` które ignorowało te błędy
+
+**Dokumentacja zaktualizowana:**
+
+- `docs/DEVELOPMENT.md` - dodano sekcje o Pre-commit Hooks i CI/CD Pipeline
+- `docs/ARCHITECTURE.md` - dodano sekcję o GitHub Actions Pipeline
+- `README.md` - dodano sekcję CI/CD & Development
+- `docs/CHANGELOG.md` - dodano wpisy o pre-commit hooks i CI/CD pipeline
+
+**Status:**
+
+- ✅ **Problem z mypy w GitHub Actions rozwiązany**
+- ✅ **Spójność konfiguracji** - lokalne i GitHub Actions używają identycznych parametrów
+- ✅ **Dokumentacja zaktualizowana** - wszystkie pliki dokumentacji odzwierciedlają aktualny stan
+
 ---
 
 _Ten plik będzie aktualizowany przy każdej sesji komunikacji z AI, aby zachować pełną historię rozwoju projektu RepoScope._

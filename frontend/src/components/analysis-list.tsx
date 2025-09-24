@@ -29,8 +29,10 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
 
   const loadAnalyses = async () => {
     const result = await fetchAnalyses(page, 10);
-    if (result) {
-      setAnalyses(result.items);
+    if (result && result.analyses) {
+      setAnalyses(result.analyses);
+    } else {
+      setAnalyses([]);
     }
   };
 
@@ -185,25 +187,33 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
                 </CardContent>
               )}
 
-              {analysis.result && (
+              {analysis.ai_summary && (
+                <CardContent className="pt-0">
+                  <div className="text-sm text-muted-foreground">
+                    <strong>Summary:</strong> {analysis.ai_summary.substring(0, 150)}...
+                  </div>
+                </CardContent>
+              )}
+
+              {analysis.status === 'completed' && analysis.repository_info && (
                 <CardContent className="pt-0">
                   <div className="grid grid-cols-3 gap-4 text-sm">
                     <div className="text-center">
-                      <div className="font-medium">Code Quality</div>
+                      <div className="font-medium">Stars</div>
                       <div className="text-2xl font-bold">
-                        {analysis.result.code_quality.score}
+                        {analysis.repository_info.stars}
                       </div>
                     </div>
                     <div className="text-center">
-                      <div className="font-medium">Documentation</div>
+                      <div className="font-medium">Forks</div>
                       <div className="text-2xl font-bold">
-                        {analysis.result.documentation.score}
+                        {analysis.repository_info.forks}
                       </div>
                     </div>
                     <div className="text-center">
-                      <div className="font-medium">Security</div>
-                      <div className="text-2xl font-bold">
-                        {analysis.result.security.score}
+                      <div className="font-medium">Language</div>
+                      <div className="text-sm font-bold">
+                        {analysis.repository_info.language || 'N/A'}
                       </div>
                     </div>
                   </div>

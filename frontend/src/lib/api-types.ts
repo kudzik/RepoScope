@@ -15,13 +15,34 @@ export interface AnalysisRequest {
 export interface AnalysisResponse {
   id: string;
   repository_url: string;
+  repository_info: RepositoryInfo;
   status: AnalysisStatus;
   created_at: string;
   completed_at?: string;
-  result?: AnalysisResult;
+  code_structure?: any;
+  documentation_quality?: any;
+  test_coverage?: any;
+  security_issues?: any[];
+  license_info?: any;
+  ai_summary?: string;
+  analysis_duration?: number;
   error_message?: string;
 }
 
+export interface RepositoryInfo {
+  name: string;
+  owner: string;
+  full_name: string;
+  description?: string;
+  language?: string;
+  stars: number;
+  forks: number;
+  size: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+// Legacy types for backward compatibility
 export interface AnalysisResult {
   summary: string;
   code_quality: CodeQualityMetrics;
@@ -58,11 +79,10 @@ export interface CodeMetrics {
 
 // Pagination
 export interface PaginatedResponse<T> {
-  items: T[];
+  analyses: T[];
   total: number;
   page: number;
-  size: number;
-  pages: number;
+  page_size: number;
 }
 
 // Error types

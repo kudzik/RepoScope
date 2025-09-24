@@ -318,6 +318,15 @@ class CodeAnalyzer:
             "file_types": {},
             "largest_files": [],
             "complexity_score": 0,
+            "quality_metrics": {
+                "maintainability_index": 0.0,
+                "technical_debt_ratio": 0.0,
+                "code_duplication": 0.0,
+                "test_coverage": 0.0,
+            },
+            "code_patterns": {"design_patterns": [], "anti_patterns": [], "code_smells": []},
+            "architecture_score": 0.0,
+            "hotspots": [],
         }
 
         # Walk through repository
@@ -372,6 +381,12 @@ class CodeAnalyzer:
 
         # Calculate complexity score (simple heuristic)
         stats["complexity_score"] = self._calculate_complexity_score(stats)
+
+        # Enhanced quality analysis
+        stats["quality_metrics"] = self._calculate_quality_metrics(stats)
+        stats["code_patterns"] = self._detect_code_patterns_repository(repo_path)
+        stats["architecture_score"] = self._calculate_architecture_score_simple(stats)
+        stats["hotspots"] = self._identify_hotspots(stats)
 
         return stats
 
@@ -503,6 +518,224 @@ class CodeAnalyzer:
         pattern_bonus = min(design_pattern_count * 1, 10)  # Max 10 point bonus
 
         return max(0, min(100, base_score - pattern_penalty + pattern_bonus))
+
+    def _calculate_quality_metrics(self, stats: Dict) -> Dict:
+        """Calculate quality metrics for the repository."""
+        total_files = stats.get("total_files", 0)
+        total_lines = stats.get("total_lines", 0)
+
+        if total_files == 0:
+            return {
+                "maintainability_index": 0.0,
+                "technical_debt_ratio": 1.0,
+                "code_duplication": 0.0,
+                "test_coverage": 0.0,
+            }
+
+        # Calculate maintainability index based on complexity and size
+        complexity = stats.get("complexity_score", 0.0)
+        maintainability = max(0, 100 - (complexity * 20) - (total_lines / 1000))
+
+        # Estimate technical debt ratio
+        debt_ratio = min(1.0, complexity * 0.1 + (total_lines / 10000))
+
+        # Estimate code duplication (simplified)
+        duplication = min(0.5, total_files / 1000) if total_files > 0 else 0.0
+
+        # Estimate test coverage (simplified)
+        test_coverage = min(0.9, total_files / 100) if total_files > 0 else 0.0
+
+        return {
+            "maintainability_index": maintainability,
+            "technical_debt_ratio": debt_ratio,
+            "code_duplication": duplication,
+            "test_coverage": test_coverage,
+        }
+
+    def _detect_code_patterns_repository(self, repo_path: str) -> Dict:
+        """Detect code patterns across the entire repository."""
+        patterns: Dict[str, list] = {"design_patterns": [], "anti_patterns": [], "code_smells": []}
+
+        # Walk through repository and analyze files
+        for root, dirs, files in os.walk(repo_path):
+            dirs[:] = [d for d in dirs if not d.startswith(".")]
+
+            for file in files:
+                if not self._is_code_file(file):
+                    continue
+
+                file_path = os.path.join(root, file)
+                try:
+                    with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                        content = f.read()
+
+                    # Detect patterns in this file
+                    file_patterns = self._detect_file_patterns(content, file)
+
+                    # Merge patterns
+                    for pattern_type, pattern_list in file_patterns.items():
+                        patterns[pattern_type].extend(pattern_list)
+
+                except Exception:
+                    continue
+
+        return patterns
+
+    def _detect_file_patterns(self, content: str, filename: str) -> Dict:
+        """Detect patterns in a single file."""
+        patterns: Dict[str, list] = {"design_patterns": [], "anti_patterns": [], "code_smells": []}
+
+        lines = content.splitlines()
+
+        # Detect design patterns
+        for i, line in enumerate(lines):
+            line_lower = line.lower().strip()
+
+            # Singleton pattern
+            if "singleton" in line_lower or "__new__" in line_lower:
+                patterns["design_patterns"].append(
+                    {"pattern": "Singleton", "file": filename, "line": i + 1, "confidence": 0.7}
+                )
+
+            # Factory pattern
+            if "factory" in line_lower and "create" in line_lower:
+                patterns["design_patterns"].append(
+                    {"pattern": "Factory", "file": filename, "line": i + 1, "confidence": 0.6}
+                )
+
+            # Observer pattern
+            if "observer" in line_lower or "subscribe" in line_lower:
+                patterns["design_patterns"].append(
+                    {"pattern": "Observer", "file": filename, "line": i + 1, "confidence": 0.6}
+                )
+
+        # Detect anti-patterns
+        for i, line in enumerate(lines):
+            line_lower = line.lower().strip()
+
+            # God class (too many methods)
+            method_count = len([line for line in lines if "def " in line])
+            if "class" in line_lower and method_count > 20:
+                patterns["anti_patterns"].append(
+                    {"pattern": "God Class", "file": filename, "line": i + 1, "confidence": 0.8}
+                )
+
+            # Long method
+            if "def " in line_lower:
+                method_lines = self._count_method_lines(lines, i)
+                if method_lines > 50:
+                    patterns["anti_patterns"].append(
+                        {
+                            "pattern": "Long Method",
+                            "file": filename,
+                            "line": i + 1,
+                            "confidence": 0.7,
+                        }
+                    )
+
+            # Dead code
+            if "unused" in line_lower or "deprecated" in line_lower:
+                patterns["code_smells"].append(
+                    {"pattern": "Dead Code", "file": filename, "line": i + 1, "confidence": 0.6}
+                )
+
+        return patterns
+
+    def _count_method_lines(self, lines: List[str], start_line: int) -> int:
+        """Count lines in a method starting from start_line."""
+        count = 0
+        indent_level = len(lines[start_line]) - len(lines[start_line].lstrip())
+
+        for i in range(start_line + 1, len(lines)):
+            line = lines[i]
+            if not line.strip():  # Empty line
+                count += 1
+                continue
+
+            current_indent = len(line) - len(line.lstrip())
+            if current_indent <= indent_level and line.strip():
+                break
+
+            count += 1
+
+        return count
+
+    def _calculate_architecture_score_simple(self, stats: Dict) -> float:
+        """Calculate architecture quality score."""
+        total_files = stats.get("total_files", 0)
+        languages = stats.get("languages", {})
+
+        if total_files == 0:
+            return 0.0
+
+        # Base score from file organization
+        file_score = min(100, total_files * 2)
+
+        # Language diversity penalty
+        lang_count = len(languages)
+        if lang_count > 5:
+            file_score *= 0.8  # Penalty for too many languages
+
+        # Size penalty for very large files
+        largest_files = stats.get("largest_files", [])
+        if largest_files:
+            max_file_size = largest_files[0].get("lines", 0)
+            if max_file_size > 1000:
+                file_score *= 0.7  # Penalty for very large files
+
+        # Complexity penalty
+        complexity = stats.get("complexity_score", 0.0)
+        if complexity > 0.7:
+            file_score *= 0.6  # Penalty for high complexity
+
+        return min(100.0, file_score)
+
+    def _identify_hotspots(self, stats: Dict) -> List[Dict]:
+        """Identify code hotspots that need attention."""
+        hotspots = []
+
+        # Large files
+        largest_files = stats.get("largest_files", [])
+        for file_info in largest_files[:5]:  # Top 5 largest files
+            if file_info.get("lines", 0) > 500:
+                hotspots.append(
+                    {
+                        "type": "large_file",
+                        "file": file_info.get("path", ""),
+                        "lines": file_info.get("lines", 0),
+                        "severity": "high" if file_info.get("lines", 0) > 1000 else "medium",
+                        "description": f"Large file with {file_info.get('lines', 0)} lines",
+                    }
+                )
+
+        # High complexity files
+        complexity = stats.get("complexity_score", 0.0)
+        if complexity > 0.8:
+            hotspots.append(
+                {
+                    "type": "high_complexity",
+                    "file": "repository",
+                    "lines": 0,
+                    "severity": "high",
+                    "description": f"High overall complexity: {complexity:.2f}",
+                }
+            )
+
+        # Many files in single language (potential monolith)
+        languages = stats.get("languages", {})
+        for lang, info in languages.items():
+            if info.get("files", 0) > 100:
+                hotspots.append(
+                    {
+                        "type": "monolith",
+                        "file": f"{lang} files",
+                        "lines": info.get("lines", 0),
+                        "severity": "medium",
+                        "description": f"Many {lang} files: {info.get('files', 0)} files",
+                    }
+                )
+
+        return hotspots[:10]  # Return top 10 hotspots
 
     def _calculate_complexity_score(self, stats: Dict) -> float:
         """Calculate a simple complexity score."""

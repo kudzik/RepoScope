@@ -63,6 +63,7 @@ class AnalysisResult(BaseModel):
     )
     license_info: Optional[Dict[str, Any]] = Field(None, description="License information")
     ai_summary: Optional[str] = Field(None, description="AI-generated summary")
+    result: Optional[Dict[str, Any]] = Field(None, description="PRD-compliant result structure")
 
     # Metadata
     analysis_duration: Optional[float] = Field(None, description="Analysis duration in seconds")

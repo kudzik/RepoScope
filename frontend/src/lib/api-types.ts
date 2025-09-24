@@ -19,14 +19,15 @@ export interface AnalysisResponse {
   status: AnalysisStatus;
   created_at: string;
   completed_at?: string;
-  code_structure?: any;
-  documentation_quality?: any;
-  test_coverage?: any;
-  security_issues?: any[];
-  license_info?: any;
+  code_structure?: Record<string, unknown>;
+  documentation_quality?: Record<string, unknown>;
+  test_coverage?: Record<string, unknown>;
+  security_issues?: Array<Record<string, unknown>>;
+  license_info?: Record<string, unknown>;
   ai_summary?: string;
   analysis_duration?: number;
   error_message?: string;
+  result?: AnalysisResult;
 }
 
 export interface RepositoryInfo {
@@ -48,6 +49,8 @@ export interface AnalysisResult {
   code_quality: CodeQualityMetrics;
   documentation: DocumentationMetrics;
   security: SecurityMetrics;
+  test_coverage: TestCoverageMetrics;
+  license_info: LicenseInfo;
   metrics: CodeMetrics;
 }
 
@@ -55,19 +58,69 @@ export interface CodeQualityMetrics {
   score: number;
   issues: string[];
   recommendations: string[];
+  metrics?: {
+    maintainability_index: number;
+    technical_debt_ratio: number;
+    code_duplication: number;
+    architecture_score: number;
+  };
+  patterns?: {
+    design_patterns: string[];
+    anti_patterns: string[];
+    code_smells: string[];
+  };
+  hotspots?: Array<Record<string, unknown>>;
 }
 
 export interface DocumentationMetrics {
   score: number;
-  has_readme: boolean;
-  has_api_docs: boolean;
-  coverage: number;
+  issues: string[];
+  recommendations: string[];
+  details?: {
+    has_readme: boolean;
+    has_contributing: boolean;
+    has_license: boolean;
+    has_api_docs: boolean;
+    has_changelog: boolean;
+    readme_quality: number;
+    comment_coverage: number;
+    doc_files: string[];
+  };
 }
 
 export interface SecurityMetrics {
   score: number;
-  vulnerabilities: string[];
+  vulnerabilities: Array<{
+    type: string;
+    severity: string;
+    description: string;
+    file: string;
+    line: number;
+  }>;
   recommendations: string[];
+  summary?: {
+    total_issues: number;
+    high_severity: number;
+    medium_severity: number;
+    low_severity: number;
+  };
+}
+
+export interface TestCoverageMetrics {
+  has_tests: boolean;
+  coverage_percentage: number;
+  test_frameworks: string[];
+  test_files: string[];
+  test_directories: string[];
+  issues: string[];
+  recommendations: string[];
+}
+
+export interface LicenseInfo {
+  license_type: string;
+  is_open_source: boolean;
+  license_file?: string;
+  compatibility: string;
 }
 
 export interface CodeMetrics {
@@ -75,6 +128,10 @@ export interface CodeMetrics {
   files_count: number;
   languages: Record<string, number>;
   complexity: number;
+  largest_files: Array<{
+    name: string;
+    lines: number;
+  }>;
 }
 
 // Pagination

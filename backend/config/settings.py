@@ -36,7 +36,7 @@ class Settings(BaseSettings):
     # LLM Cost Optimization
     use_openrouter: bool = False
     enable_caching: bool = True
-    max_tokens: int = 2000
+    max_tokens: int = 4000
 
     @property
     def cors_origins_list(self) -> List[str]:

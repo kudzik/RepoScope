@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import Any, Dict, Optional
 
 from config.llm_optimization import TaskComplexity, llm_config
+from services.ai_client import ai_client
 
 
 class CostMonitor:
@@ -211,12 +212,28 @@ class CostOptimizationMiddleware:
 
     async def _process_with_llm(self, prompt: str, model: str) -> str:
         """
-        Process prompt with LLM (placeholder implementation).
+        Process prompt with LLM using real AI API.
 
-        In real implementation, this would call the actual LLM API.
+        Args:
+            prompt: The prompt to process
+            model: The model to use
+
+        Returns:
+            str: AI-generated response
         """
-        # Placeholder implementation
-        return f"Response from {model}: {prompt[:50]}..."
+        try:
+            # Use the AI client to generate response
+            result = await ai_client.generate_summary(prompt=prompt, model=model, max_tokens=2000)
+
+            if result.get("error"):
+                # Fallback to basic response if AI call fails
+                return f"AI analysis unavailable: {result['error']}"
+
+            return result.get("response", "No response generated")
+
+        except Exception as e:
+            # Fallback to basic response on any error
+            return f"AI analysis failed: {str(e)}"
 
     def get_optimization_stats(self) -> Dict[str, Any]:
         """Get optimization statistics."""

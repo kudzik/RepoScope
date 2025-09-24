@@ -12,7 +12,7 @@ import {
   Trash2,
   ExternalLink,
   RefreshCw,
-  AlertCircle
+  AlertCircle,
 } from 'lucide-react';
 import { useGetAnalysesWithToast, useDeleteAnalysisWithToast } from '@/hooks/use-toast-api';
 import type { AnalysisResponse } from '@/lib/api-types';
@@ -95,9 +95,7 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
     return (
       <Alert variant="destructive">
         <AlertCircle className="h-4 w-4" />
-        <AlertDescription>
-          Failed to load analyses: {error}
-        </AlertDescription>
+        <AlertDescription>Failed to load analyses: {error}</AlertDescription>
       </Alert>
     );
   }
@@ -106,12 +104,7 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">Recent Analyses</h2>
-        <Button
-          onClick={loadAnalyses}
-          disabled={loading}
-          variant="outline"
-          size="sm"
-        >
+        <Button onClick={loadAnalyses} disabled={loading} variant="outline" size="sm">
           <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
           Refresh
         </Button>
@@ -132,7 +125,7 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
         </Card>
       ) : (
         <div className="grid gap-4">
-          {analyses.map((analysis) => (
+          {analyses.map(analysis => (
             <Card key={analysis.id} className="hover:shadow-md transition-shadow">
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
@@ -142,9 +135,7 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
                       <CardTitle className="text-lg">
                         {getRepoName(analysis.repository_url)}
                       </CardTitle>
-                      <Badge className={getStatusColor(analysis.status)}>
-                        {analysis.status}
-                      </Badge>
+                      <Badge className={getStatusColor(analysis.status)}>{analysis.status}</Badge>
                     </div>
                     <CardDescription>
                       Created: {formatDate(analysis.created_at)}
@@ -180,17 +171,18 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
                 <CardContent className="pt-0">
                   <Alert variant="destructive">
                     <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>
-                      {analysis.error_message}
-                    </AlertDescription>
+                    <AlertDescription>{analysis.error_message}</AlertDescription>
                   </Alert>
                 </CardContent>
               )}
 
               {analysis.ai_summary && (
                 <CardContent className="pt-0">
-                  <div className="text-sm text-muted-foreground">
-                    <strong>Summary:</strong> {analysis.ai_summary.substring(0, 150)}...
+                  <div className="space-y-2">
+                    <h4 className="font-medium text-sm">AI Analysis Summary</h4>
+                    <div className="text-sm text-muted-foreground max-h-32 overflow-y-auto bg-gray-50 dark:bg-gray-800 p-3 rounded-md">
+                      {analysis.ai_summary}
+                    </div>
                   </div>
                 </CardContent>
               )}
@@ -200,15 +192,11 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
                   <div className="grid grid-cols-3 gap-4 text-sm">
                     <div className="text-center">
                       <div className="font-medium">Stars</div>
-                      <div className="text-2xl font-bold">
-                        {analysis.repository_info.stars}
-                      </div>
+                      <div className="text-2xl font-bold">{analysis.repository_info.stars}</div>
                     </div>
                     <div className="text-center">
                       <div className="font-medium">Forks</div>
-                      <div className="text-2xl font-bold">
-                        {analysis.repository_info.forks}
-                      </div>
+                      <div className="text-2xl font-bold">{analysis.repository_info.forks}</div>
                     </div>
                     <div className="text-center">
                       <div className="font-medium">Language</div>
@@ -217,6 +205,166 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
                       </div>
                     </div>
                   </div>
+
+                  {/* Show detailed metrics if result is available */}
+                  {analysis.result && (
+                    <div className="mt-4 pt-4 border-t space-y-4">
+                      {/* Main Metrics */}
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div className="text-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                          <div className="font-medium text-green-600">Code Quality</div>
+                          <div className="text-2xl font-bold text-green-700">
+                            {analysis.result.code_quality.score}/100
+                          </div>
+                        </div>
+                        <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                          <div className="font-medium text-blue-600">Documentation</div>
+                          <div className="text-2xl font-bold text-blue-700">
+                            {analysis.result.documentation.score}/100
+                          </div>
+                        </div>
+                        <div className="text-center p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                          <div className="font-medium text-red-600">Security</div>
+                          <div className="text-2xl font-bold text-red-700">
+                            {analysis.result.security.score}/100
+                          </div>
+                        </div>
+                        <div className="text-center p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                          <div className="font-medium text-purple-600">Test Coverage</div>
+                          <div className="text-2xl font-bold text-purple-700">
+                            {analysis.result.test_coverage.coverage_percentage}%
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Additional Details */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        {/* Code Quality Details */}
+                        {analysis.result.code_quality.issues.length > 0 && (
+                          <div className="space-y-2">
+                            <h5 className="font-medium text-yellow-600">
+                              Code Issues ({analysis.result.code_quality.issues.length})
+                            </h5>
+                            <div className="max-h-20 overflow-y-auto space-y-1">
+                              {analysis.result.code_quality.issues
+                                .slice(0, 3)
+                                .map((issue: string, index: number) => (
+                                  <div key={index} className="text-xs text-muted-foreground">
+                                    • {issue}
+                                  </div>
+                                ))}
+                              {analysis.result.code_quality.issues.length > 3 && (
+                                <div className="text-xs text-muted-foreground">
+                                  ... i {analysis.result.code_quality.issues.length - 3} więcej
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Security Details */}
+                        {analysis.result.security.vulnerabilities.length > 0 && (
+                          <div className="space-y-2">
+                            <h5 className="font-medium text-red-600">
+                              Security Issues ({analysis.result.security.vulnerabilities.length})
+                            </h5>
+                            <div className="max-h-20 overflow-y-auto space-y-1">
+                              {analysis.result.security.vulnerabilities
+                                .slice(0, 3)
+                                .map((vuln: any, index: number) => (
+                                  <div key={index} className="text-xs text-muted-foreground">
+                                    • {vuln.type} ({vuln.severity})
+                                  </div>
+                                ))}
+                              {analysis.result.security.vulnerabilities.length > 3 && (
+                                <div className="text-xs text-muted-foreground">
+                                  ... i {analysis.result.security.vulnerabilities.length - 3} więcej
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Test Coverage Details */}
+                        {analysis.result.test_coverage.test_frameworks.length > 0 && (
+                          <div className="space-y-2">
+                            <h5 className="font-medium text-purple-600">Test Frameworks</h5>
+                            <div className="flex flex-wrap gap-1">
+                              {analysis.result.test_coverage.test_frameworks.map(
+                                (framework: string, index: number) => (
+                                  <span
+                                    key={index}
+                                    className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-700 px-2 py-1 rounded"
+                                  >
+                                    {framework}
+                                  </span>
+                                )
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Documentation Details */}
+                        {analysis.result.documentation.details && (
+                          <div className="space-y-2">
+                            <h5 className="font-medium text-blue-600">Documentation Status</h5>
+                            <div className="grid grid-cols-2 gap-2 text-xs">
+                              <div className="flex items-center gap-1">
+                                <span>README:</span>
+                                <span
+                                  className={
+                                    analysis.result.documentation.details.has_readme
+                                      ? 'text-green-600'
+                                      : 'text-red-600'
+                                  }
+                                >
+                                  {analysis.result.documentation.details.has_readme ? '✓' : '✗'}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <span>API Docs:</span>
+                                <span
+                                  className={
+                                    analysis.result.documentation.details.has_api_docs
+                                      ? 'text-green-600'
+                                      : 'text-red-600'
+                                  }
+                                >
+                                  {analysis.result.documentation.details.has_api_docs ? '✓' : '✗'}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <span>License:</span>
+                                <span
+                                  className={
+                                    analysis.result.documentation.details.has_license
+                                      ? 'text-green-600'
+                                      : 'text-red-600'
+                                  }
+                                >
+                                  {analysis.result.documentation.details.has_license ? '✓' : '✗'}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <span>Contributing:</span>
+                                <span
+                                  className={
+                                    analysis.result.documentation.details.has_contributing
+                                      ? 'text-green-600'
+                                      : 'text-red-600'
+                                  }
+                                >
+                                  {analysis.result.documentation.details.has_contributing
+                                    ? '✓'
+                                    : '✗'}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               )}
             </Card>

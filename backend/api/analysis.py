@@ -26,11 +26,11 @@ async def get_analysis_service() -> AsyncGenerator[AnalysisService, None]:
         await service.close()
 
 
-@router.post("/", response_model=AnalysisCreateResponse)
+@router.post("/", response_model=AnalysisResult)
 async def create_analysis(
     request: AnalysisRequest,
     service: AnalysisService = Depends(get_analysis_service),  # noqa: B008
-) -> AnalysisCreateResponse:
+) -> AnalysisResult:
     """
     Create a new repository analysis.
 
@@ -42,12 +42,8 @@ async def create_analysis(
         # Start analysis (this would typically be done asynchronously)
         analysis = await service.analyze_repository(str(request.repository_url))
 
-        return AnalysisCreateResponse(
-            analysis_id=analysis.id,
-            status=analysis.status,
-            message="Analysis started successfully",
-            estimated_completion_time=30,  # Placeholder
-        )
+        # Return the full analysis result instead of just create response
+        return analysis
 
     except HTTPException:
         raise

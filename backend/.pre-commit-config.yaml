@@ -18,7 +18,6 @@ repos:
         args: [--maxkb=1000]
       - id: debug-statements
       - id: check-docstring-first
-      - id: requirements-txt-fixer
 
   # Black code formatter
   - repo: https://github.com/psf/black

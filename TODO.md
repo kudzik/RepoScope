@@ -13,7 +13,7 @@
 ## 🎯 PRIORYTET 1: MVP - Działająca aplikacja (KRYTYCZNE)
 
 ### 1.1 Konfiguracja środowiska
-- [ ] **ENV-1** Utworzyć `.env` w backend/ z kluczami API
+- [x] **ENV-1** Utworzyć `.env` w backend/ z kluczami API ✅
 - [ ] **ENV-2** Utworzyć `.env.local` w frontend/ z URL backendu
 - [ ] **ENV-3** Skonfigurować OpenAI/OpenRouter API key
 - [ ] **ENV-4** Dodać GitHub API token (opcjonalnie)

@@ -1018,6 +1018,7 @@ python scripts/auto-fix.py
 ```
 
 **Pre-commit hooks:**
+
 - **trailing-whitespace** - usuwa białe znaki
 - **end-of-file-fixer** - dodaje nowe linie
 - **black** - formatuje kod

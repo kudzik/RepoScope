@@ -13,6 +13,7 @@ from middleware.cost_optimization import cost_optimization_middleware
 from schemas.analysis import AnalysisResult, AnalysisStatus, RepositoryInfo
 from services.code_analyzer import CodeAnalyzer
 from services.github_service import GitHubService
+from services.llm_service import LLMService
 
 
 class AnalysisService:
@@ -22,6 +23,7 @@ class AnalysisService:
         """Initialize the analysis service."""
         self.github_service = GitHubService()
         self.code_analyzer = CodeAnalyzer()
+        self.llm_service = LLMService()
         self.cost_optimizer = cost_optimization_middleware
 
     async def close(self) -> None:

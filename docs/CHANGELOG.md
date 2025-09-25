@@ -9,6 +9,24 @@ a projekt używa [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- **Ulepszone formatowanie AI Analysis Summary**
+  - Rozszerzony prompt w `backend/services/analysis_service.py` z emoji i strukturą
+  - Ulepszony system prompt w `backend/services/ai_client.py` dla lepszego formatowania
+  - Dodana funkcja `formatAISummary` w `frontend/src/lib/utils.ts` dla formatowania markdown
+  - Lepsze style wizualne z gradientami i ikonami w `analysis-results.tsx`
+  - Obsługa HTML rendering dla sformatowanych podsumowań
+
+- **Tooltips dla Test Coverage**
+  - Dodane tooltips z opisami dla wszystkich metryk Test Coverage
+  - Kolorowanie statusu testów (zielone ✓ dla obecności, czerwone ✗ dla braku)
+  - Spójne opisy w języku angielskim dla wszystkich tooltips
+
+- **System kolorów dla poziomów bezpieczeństwa**
+  - Funkcja `getSeverityColor` w `utils.ts` dla mapowania poziomów na kolory
+  - Kolory: High (czerwony), Medium (pomarańczowy), Low (żółty), Issues (biały/szary)
+  - Obsługa trybu ciemnego dla wszystkich poziomów bezpieczeństwa
+  - Zaktualizowane komponenty `analysis-results.tsx` i `analysis-list.tsx`
+  - Dokumentacja systemu kolorów w `docs/SECURITY_COLORS.md`
 - Podstawowa struktura projektu RepoScope
 - Konfiguracja linterów i formatowania (ESLint, Prettier, EditorConfig)
 - Next.js 15 z App Router i Turbopack
@@ -72,6 +90,28 @@ a projekt używa [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Dokumentacja strategii optymalizacji kosztów
 - Wsparcie dla modeli open-source (Llama, Mistral)
 - Implementacja fallback na tańsze modele
+- **Zaawansowana analiza kodu z Tree-sitter**
+- Wsparcie dla wielu języków programowania (Python, JavaScript, TypeScript, Java, C++, Rust, Go)
+- Analiza AST (Abstract Syntax Tree) z metrykami złożoności
+- Wykrywanie wzorców projektowych i antywzorców
+- Analiza jakości kodu z metrykami maintainability
+- **Kompleksowa analiza repozytoriów**
+- Analiza struktury repozytorium z metrykami
+- Wykrywanie hotspotów i problemów w kodzie
+- Analiza dokumentacji i komentarzy
+- Wykrywanie problemów bezpieczeństwa
+- Analiza pokrycia testów
+- **Optymalizacja kosztów AI/LLM**
+- Middleware do optymalizacji kosztów
+- Cache odpowiedzi LLM
+- Wybór najtańszego modelu do zadania
+- Monitoring kosztów w czasie rzeczywistym
+- **Poprawki formatowania kodu**
+- Automatyczne formatowanie z Black i autopep8
+- Poprawa długich linii (ponad 79 znaków)
+- Usunięcie nieużywanych importów
+- Poprawa obsługi wyjątków z proper re-raising
+- Dodanie komentarzy noqa dla dostępu do protected members
 
 ### Changed
 
@@ -110,7 +150,7 @@ a projekt używa [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.1.0] - YYYY-MM-DD
 
-### Added
+### Dodano
 
 - Szkielet dokumentacji projektu
 - Podstawowa struktura katalogów

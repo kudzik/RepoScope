@@ -34,7 +34,9 @@ export function ThemeToggle() {
         className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
         aria-hidden="true"
       />
-      <span className="sr-only">Przełącz na {theme === 'light' ? 'ciemny' : 'jasny'} motyw</span>
+      <span className="sr-only">
+        Przełącz na {theme === 'light' ? 'ciemny' : 'jasny'} motyw
+      </span>
     </Button>
   );
 }

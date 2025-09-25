@@ -14,7 +14,7 @@ Ten dokument zawiera szczegółową konfigurację środowiska deweloperskiego dl
 - Obsługuje JavaScript/TypeScript i Python natywnie (frontend & backend)
 - Bezpłatny i open source
 
-### VS Code - rekomendowane rozszerzenia:
+### VS Code - rekomendowane rozszerzenia
 
 #### Podstawowe
 
@@ -55,9 +55,9 @@ Ten dokument zawiera szczegółową konfigurację środowiska deweloperskiego dl
 const nextConfig = {
   turbopack: {
     rules: {
-      "*.svg": {
-        loaders: ["@svgr/webpack"],
-        as: "*.js",
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
       },
     },
   },
@@ -74,33 +74,33 @@ module.exports = nextConfig;
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './lib/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
         },
         // ... więcej kolorów dla shadcn/ui
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
     },
   },
@@ -163,9 +163,9 @@ module.exports = {
 **Konfiguracja (`frontend/eslint.config.mjs`):**
 
 ```javascript
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { FlatCompat } from '@eslint/eslintrc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -176,12 +176,24 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   {
-    ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"],
+    ignores: [
+      'node_modules/**',
+      '.next/**',
+      'out/**',
+      'build/**',
+      'next-env.d.ts',
+    ],
   },
-  ...compat.extends("next/core-web-vitals", "next/typescript", "prettier"),
-  ...compat.extends("plugin:jsx-a11y/recommended"),
+  ...compat.extends('next/core-web-vitals', 'next/typescript', 'prettier'),
+  ...compat.extends('plugin:jsx-a11y/recommended'),
   {
-    ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"],
+    ignores: [
+      'node_modules/**',
+      '.next/**',
+      'out/**',
+      'build/**',
+      'next-env.d.ts',
+    ],
   },
 ];
 
@@ -424,9 +436,9 @@ known_third_party = ["fastapi", "pydantic", "sqlalchemy", "langchain", "uvicorn"
 
 ## 3. ⚙️ Pliki konfiguracyjne do repozytorium
 
-### Struktura plików konfiguracyjnych:
+### Struktura plików konfiguracyjnych
 
-```
+```text
 RepoScope/
 ├── .editorconfig           # ✅ Spójne ustawienia edytora
 ├── .gitignore              # ✅ Ignorowanie plików tymczasowych
@@ -471,7 +483,7 @@ RepoScope/
 - ✅ **Zakończone** - plik utworzony i przetestowany
 - 🔄 **Do zrobienia** - plik wymagany w kolejnych krokach
 
-### Przykładowe pliki:
+### Przykładowe pliki
 
 #### `.vscode/settings.json`
 
@@ -650,7 +662,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: '18'
       - run: npm ci
       - run: npm run lint
       - run: npm run type-check
@@ -662,7 +674,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: '3.11'
       - run: pip install -r requirements.txt
       - run: flake8 .
       - run: black --check .
@@ -677,7 +689,7 @@ name: Security Scanning
 
 on:
   schedule:
-    - cron: "0 2 * * 1" # Weekly on Monday
+    - cron: '0 2 * * 1' # Weekly on Monday
   push:
     branches: [main]
 
@@ -734,7 +746,7 @@ repos:
 
 ## 5. 🔧 Struktura katalogów projektu
 
-```
+```text
 RepoScope/
 ├── frontend/                 # Next.js aplikacja
 │   ├── src/
@@ -1055,7 +1067,7 @@ class AnalysisService:
         return self._get_gpt35_turbo()
 ```
 
-### CI/CD Pipeline
+### CI/CD Pipeline 2
 
 **Planowane GitHub Actions:**
 
@@ -1070,7 +1082,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.13"
+          python-version: '3.13'
       - name: Install dependencies
         run: |
           cd backend

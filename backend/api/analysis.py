@@ -6,12 +6,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import JSONResponse
 
-from schemas.analysis import (
-    AnalysisCreateResponse,
-    AnalysisListResponse,
-    AnalysisRequest,
-    AnalysisResult,
-)
+from schemas.analysis import AnalysisListResponse, AnalysisRequest, AnalysisResult
 from services.analysis_service import AnalysisService
 
 router = APIRouter(prefix="/analysis", tags=["analysis"])
@@ -26,11 +21,11 @@ async def get_analysis_service() -> AsyncGenerator[AnalysisService, None]:
         await service.close()
 
 
-@router.post("/", response_model=AnalysisCreateResponse)
+@router.post("/", response_model=AnalysisResult)
 async def create_analysis(
     request: AnalysisRequest,
     service: AnalysisService = Depends(get_analysis_service),  # noqa: B008
-) -> AnalysisCreateResponse:
+) -> AnalysisResult:
     """
     Create a new repository analysis.
 
@@ -39,20 +34,34 @@ async def create_analysis(
     security issues, and AI-generated summary.
     """
     try:
-        # Start analysis (this would typically be done asynchronously)
-        analysis = await service.analyze_repository(str(request.repository_url))
+        import asyncio
 
-        return AnalysisCreateResponse(
-            analysis_id=analysis.id,
-            status=analysis.status,
-            message="Analysis started successfully",
-            estimated_completion_time=30,  # Placeholder
+        # Start analysis with overall timeout handling
+        analysis = await asyncio.wait_for(
+            service.analyze_repository(str(request.repository_url)),
+            timeout=120.0,  # 2 minutes total timeout
         )
+
+        # Return the full analysis result instead of just create response
+        return analysis
 
     except HTTPException:
         raise
+    except asyncio.TimeoutError:
+        raise HTTPException(
+            status_code=408,
+            detail=(
+                "Analysis timeout - repository may be too large or AI service is slow. "
+                "Try with a smaller repository."
+            ),
+        )
+    except TimeoutError:
+        raise HTTPException(
+            status_code=408,
+            detail=("Analysis timeout - repository may be too large or AI service is slow"),
+        )
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to start analysis: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to start analysis: {str(e)}") from e
 
 
 @router.get("/", response_model=AnalysisListResponse)
@@ -69,15 +78,18 @@ async def list_analyses(
     try:
         analyses = await service.list_analyses(page=page, page_size=page_size)
 
+        # Get total count for pagination
+        total_count = len(list(service._analyses.values()))  # noqa: SLF001
+
         return AnalysisListResponse(
             analyses=analyses,
-            total=len(analyses),
+            total=total_count,
             page=page,
             page_size=page_size,
         )
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to list analyses: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to list analyses: {str(e)}") from e
 
 
 @router.get("/{analysis_id}", response_model=AnalysisResult)
@@ -102,7 +114,7 @@ async def get_analysis(
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to get analysis: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to get analysis: {str(e)}") from e
 
 
 @router.delete("/{analysis_id}")
@@ -116,8 +128,10 @@ async def delete_analysis(
     Removes the analysis and all associated data from the system.
     """
     try:
-        # This would typically delete from database
-        # For now, just return success
+        success = await service.delete_analysis(str(analysis_id))
+
+        if not success:
+            raise HTTPException(status_code=404, detail="Analysis not found")
 
         return JSONResponse(
             content={
@@ -126,5 +140,7 @@ async def delete_analysis(
             }
         )
 
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to delete analysis: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to delete analysis: {str(e)}") from e

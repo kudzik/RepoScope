@@ -12,6 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from api.analysis import router as analysis_router
+from config.settings import settings
 
 # Initialize FastAPI application
 app = FastAPI(
@@ -20,12 +21,13 @@ app = FastAPI(
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
+    debug=settings.debug,
 )
 
 # Configure CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Frontend URL
+    allow_origins=settings.cors_origins_list,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -62,6 +64,8 @@ if __name__ == "__main__":
         port=8000,
         reload=True,
         log_level="info",
+        timeout_keep_alive=120,  # Increased timeout for long AI operations
+        timeout_graceful_shutdown=30,
     )
 # Test hot-reload - Thu Sep 25 11:33:45 CEST 2025
 

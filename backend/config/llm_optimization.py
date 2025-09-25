@@ -44,9 +44,9 @@ class LLMOptimizationConfig:
         }
 
         self.task_model_mapping = {
-            TaskComplexity.SIMPLE: ["gpt-3.5-turbo", "claude-3-haiku"],
-            TaskComplexity.MEDIUM: ["gpt-3.5-turbo", "gpt-4-turbo", "claude-3-sonnet"],
-            TaskComplexity.COMPLEX: ["gpt-4", "claude-3-opus"],
+            TaskComplexity.SIMPLE: ["anthropic/claude-3-haiku", "gpt-3.5-turbo"],
+            TaskComplexity.MEDIUM: ["anthropic/claude-3-sonnet", "gpt-3.5-turbo", "gpt-4-turbo"],
+            TaskComplexity.COMPLEX: ["anthropic/claude-3-opus", "gpt-4"],
         }
 
         self.cache_config = {

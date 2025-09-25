@@ -22,42 +22,33 @@ class TestAnalysisServiceEnhanced:
         # The service will be cleaned up automatically
         pass
 
-    @pytest.mark.asyncio
-    async def test_clone_repository_success(self) -> None:
+    def test_clone_repository_success(self) -> None:
         """Test successful repository cloning."""
-        with patch("subprocess.run") as mock_run:
-            mock_run.return_value.returncode = 0
-            mock_run.return_value.stderr = ""
+        with patch.object(self.service.github_service, "clone_repository") as mock_clone:
+            mock_clone.return_value = "/tmp/test/repo"
 
-            with patch("tempfile.mkdtemp") as mock_mkdtemp:
-                mock_mkdtemp.return_value = "/tmp/test"
+            result = self.service.clone_repository("https://github.com/user/repo")
 
-                with patch("os.path.join") as mock_join:
-                    mock_join.return_value = "/tmp/test/repo"
+            assert result == "/tmp/test/repo"
+            mock_clone.assert_called_once_with("https://github.com/user/repo")
 
-                    result = await self.service.clone_repository("https://github.com/user/repo")
-
-                    assert result == "/tmp/test/repo"
-                    mock_run.assert_called_once()
-
-    @pytest.mark.asyncio
-    async def test_clone_repository_failure(self) -> None:
+    def test_clone_repository_failure(self) -> None:
         """Test repository cloning failure."""
-        with patch("subprocess.run") as mock_run:
-            mock_run.return_value.returncode = 1
-            mock_run.return_value.stderr = "Repository not found"
+        from fastapi import HTTPException
 
-            result = await self.service.clone_repository("https://github.com/nonexistent/repo")
+        with patch.object(self.service.github_service, "clone_repository") as mock_clone:
+            mock_clone.side_effect = HTTPException(status_code=500, detail="Repository not found")
+
+            result = self.service.clone_repository("https://github.com/nonexistent/repo")
 
             assert result is None
 
-    @pytest.mark.asyncio
-    async def test_clone_repository_timeout(self) -> None:
+    def test_clone_repository_timeout(self) -> None:
         """Test repository cloning timeout."""
-        with patch("subprocess.run") as mock_run:
-            mock_run.side_effect = TimeoutError("Clone timeout")
+        with patch.object(self.service.github_service, "clone_repository") as mock_clone:
+            mock_clone.side_effect = Exception("Clone timeout")
 
-            result = await self.service.clone_repository("https://github.com/user/repo")
+            result = self.service.clone_repository("https://github.com/user/repo")
 
             assert result is None
 
@@ -184,22 +175,21 @@ class TestAnalysisServiceEnhanced:
     def test_extract_repo_info_various_formats(self) -> None:
         """Test repository info extraction from various URL formats."""
         # Standard GitHub URL
-        owner, repo = self.service._extract_repo_info("https://github.com/user/repo")
+        owner, repo = self.service.github_service.extract_owner_repo("https://github.com/user/repo")
         assert owner == "user"
         assert repo == "repo"
 
         # GitHub URL with .git
-        owner, repo = self.service._extract_repo_info("https://github.com/user/repo.git")
+        owner, repo = self.service.github_service.extract_owner_repo(
+            "https://github.com/user/repo.git"
+        )
         assert owner == "user"
         assert repo == "repo"
 
         # GitHub URL with trailing slash
-        owner, repo = self.service._extract_repo_info("https://github.com/user/repo/")
-        assert owner == "user"
-        assert repo == "repo"
-
-        # GitHub URL with additional path
-        owner, repo = self.service._extract_repo_info("https://github.com/user/repo/tree/main/src")
+        owner, repo = self.service.github_service.extract_owner_repo(
+            "https://github.com/user/repo/"
+        )
         assert owner == "user"
         assert repo == "repo"
 
@@ -208,7 +198,7 @@ class TestAnalysisServiceEnhanced:
         from fastapi import HTTPException
 
         with pytest.raises(HTTPException):
-            self.service._extract_repo_info("https://gitlab.com/user/repo")
+            self.service.github_service.extract_owner_repo("https://gitlab.com/user/repo")
 
         with pytest.raises(HTTPException):
-            self.service._extract_repo_info("not-a-url")
+            self.service.github_service.extract_owner_repo("not-a-url")

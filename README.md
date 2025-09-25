@@ -12,14 +12,14 @@ RepoScope to zaawansowane narzędzie do automatycznej analizy repozytoriów GitH
 
 ## ✨ Kluczowe funkcjonalności
 
-<!-- TODO: Dodać szczegółowy opis funkcjonalności -->
-
-- 🧩 Analiza struktury kodu i technologii
-- 📚 Ocena jakości dokumentacji
-- 🧪 Wykrywanie i analiza testów
-- ⚖️ Sprawdzanie licencji i ryzyk prawnych
-- 🤖 Generowanie raportów przez AI
-- 🔐 Bezpieczne zarządzanie użytkownikami
+- 🧩 **Analiza struktury kodu** - Tree-sitter parsing i analiza technologii
+- 📚 **Ocena dokumentacji** - Sprawdzanie README, komentarzy i jakości
+- 🧪 **Wykrywanie testów** - Identyfikacja testów jednostkowych i integracyjnych
+- ⚖️ **Sprawdzanie licencji** - Analiza licencji i potencjalnych konfliktów
+- 🤖 **AI-powered raporty** - Inteligentne podsumowania z emoji i formatowaniem
+- 🎨 **Nowoczesny UI** - Responsywny design z trybem ciemnym
+- 💡 **Inteligentne tooltips** - Opisowe podpowiedzi dla wszystkich metryk
+- 🎯 **System kolorów** - Spójne kolory dla poziomów bezpieczeństwa i jakości
 
 ## 🚀 Szybki start
 
@@ -45,6 +45,12 @@ cd backend
 
 # Instalacja zależności
 python -m pip install -e ".[dev]"
+
+# Konfiguracja kluczy API (wymagane)
+python setup_api_keys.py
+
+# Test konfiguracji
+python test_api_connection.py
 
 # Uruchomienie serwera deweloperskiego
 python main.py
@@ -83,6 +89,7 @@ npm test
 
 ## 📖 Dokumentacja
 
+- [🔑 API Keys Setup Guide](docs/API_KEYS_SETUP.md) ✅
 - [Product Requirements Document](docs/PRD.md)
 - [Architektura systemu](docs/ARCHITECTURE.md)
 - [Środowisko deweloperskie](docs/DEVELOPMENT.md) ✅
@@ -107,7 +114,7 @@ npm test
 - ✅ **Accessibility** - WCAG 2.1 AA compliance
 - ✅ **VS Code** - automatyczne formatowanie i lintowanie
 
-#### Backend
+#### Backend Struktura
 
 - ✅ **Struktura projektu** - katalogi i pliki konfiguracyjne
 - ✅ **FastAPI aplikacja** - podstawowa struktura z CORS
@@ -125,7 +132,7 @@ npm test
 
 ## 🛠️ Stos technologiczny
 
-### Frontend
+### Frontend Stos
 
 - **Framework**: Next.js 15 (App Router + Turbopack)
 - **Styling**: Tailwind CSS 3.4 + shadcn/ui

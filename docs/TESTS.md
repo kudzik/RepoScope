@@ -8,7 +8,7 @@ RepoScope wykorzystuje kompleksowe podejście do testowania, obejmujące testy j
 
 ### ✅ Testy jednostkowe (Unit Tests) - ZAIMPLEMENTOWANE
 
-**Backend (Python/FastAPI)**
+### Backend (Python/FastAPI)
 
 - **Pokrycie**: 94% kodu (bardzo dobry wynik)
 - **Narzędzia**: pytest 8.4.2, pytest-cov 7.0.0
@@ -22,7 +22,7 @@ RepoScope wykorzystuje kompleksowe podejście do testowania, obejmujące testy j
   - Pydantic schemas i walidacja
   - Analysis service z GitHub API
 
-**Frontend (Next.js/TypeScript)**
+### Frontend (Next.js/TypeScript)
 
 - **Status**: Planowane
 - **Narzędzia**: Jest + React Testing Library
@@ -114,7 +114,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.13"
+          python-version: '3.13'
       - name: Install dependencies
         run: |
           cd backend

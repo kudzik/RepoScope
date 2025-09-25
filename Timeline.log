@@ -29,6 +29,36 @@ YYYY-MM-DD HH:MM - [TYP] Tytuł wydarzenia
 
 ## 📅 Historia projektu
 
+### 2024-09-24
+```
+2024-09-24 22:30 - [FEAT] Ulepszenie formatowania AI Analysis Summary
+- Rozszerzono prompt w backend/services/analysis_service.py z emoji i lepszą strukturą
+- Ulepszono system prompt w backend/services/ai_client.py dla lepszego formatowania
+- Dodano funkcję formatAISummary w frontend/src/lib/utils.ts dla formatowania markdown
+- Lepsze style wizualne z gradientami i ikonami w analysis-results.tsx
+- Obsługa HTML rendering dla sformatowanych podsumowań
+- Commit: 17d6d3f
+```
+
+```
+2024-09-24 22:25 - [FEAT] Dodanie tooltips dla Test Coverage
+- Dodano tooltips z opisami dla wszystkich metryk Test Coverage
+- Kolorowanie statusu testów (zielone ✓ dla obecności, czerwone ✗ dla braku)
+- Spójne opisy w języku angielskim dla wszystkich tooltips
+- Poprawiono wyświetlanie w analysis-results.tsx
+- Commit: 17d6d3f
+```
+
+```
+2024-09-24 22:20 - [FEAT] System kolorów dla poziomów bezpieczeństwa
+- Zaimplementowano spójny system kolorów dla poziomów bezpieczeństwa
+- Dodano funkcje getSeverityColor, getQualityColor, getCoverageColor, getDocumentationColor
+- Obsługa trybu ciemnego dla wszystkich poziomów
+- Zaktualizowano komponenty analysis-results.tsx i analysis-list.tsx
+- Dokumentacja systemu kolorów w docs/SECURITY_COLORS.md
+- Commit: 17d6d3f
+```
+
 ### 2024-01-XX
 ```
 2024-01-XX XX:XX - [INIT] Inicjalizacja projektu RepoScope
@@ -37,8 +67,6 @@ YYYY-MM-DD HH:MM - [TYP] Tytuł wydarzenia
 - Ustanowienie zasad programowania zgodnych z VibeCoding
 - Komit: [link do commita]
 ```
-
-<!-- TODO: Dodać więcej wpisów w miarę rozwoju projektu -->
 
 ## 📊 Statystyki rozwoju
 

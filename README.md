@@ -114,7 +114,7 @@ npm test
 - ✅ **Accessibility** - WCAG 2.1 AA compliance
 - ✅ **VS Code** - automatyczne formatowanie i lintowanie
 
-#### Backend
+#### Backend Struktura
 
 - ✅ **Struktura projektu** - katalogi i pliki konfiguracyjne
 - ✅ **FastAPI aplikacja** - podstawowa struktura z CORS
@@ -132,7 +132,7 @@ npm test
 
 ## 🛠️ Stos technologiczny
 
-### Frontend
+### Frontend Stos
 
 - **Framework**: Next.js 15 (App Router + Turbopack)
 - **Styling**: Tailwind CSS 3.4 + shadcn/ui

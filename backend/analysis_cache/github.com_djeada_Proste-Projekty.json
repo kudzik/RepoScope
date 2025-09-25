@@ -1,0 +1,869 @@
+{
+  "repository_url": "https://github.com/djeada/Proste-Projekty",
+  "cached_at": "2025-09-25T16:52:42.503077",
+  "analysis_data": {
+    "id": "e285c507-e7bc-4cba-a330-6f6bd2de56d4",
+    "repository_url": "https://github.com/djeada/Proste-Projekty",
+    "repository_info": {
+      "name": "Proste-Projekty",
+      "owner": "djeada",
+      "full_name": "djeada/Proste-Projekty",
+      "description": "Zbiór porad i zasobów dla początkujących programistów, zawierający szczegółowe wytyczne oraz przykłady realizacji projektów.",
+      "language": "Python",
+      "stars": 5,
+      "forks": 3,
+      "size": 666,
+      "created_at": "2021-10-11T21:13:19+00:00",
+      "updated_at": "2025-09-18T09:59:50+00:00"
+    },
+    "status": "completed",
+    "created_at": "2025-09-25T14:52:41.470473+00:00",
+    "completed_at": "2025-09-25T14:52:42.496906+00:00",
+    "code_structure": {
+      "total_files": 193,
+      "total_lines": 6991,
+      "languages": {
+        "unknown": {
+          "files": 2,
+          "lines": 27
+        },
+        "python": {
+          "files": 92,
+          "lines": 3238
+        },
+        "dockerfile": {
+          "files": 21,
+          "lines": 127
+        },
+        "c": {
+          "files": 47,
+          "lines": 2727
+        },
+        "cpp": {
+          "files": 16,
+          "lines": 349
+        },
+        "shell": {
+          "files": 4,
+          "lines": 94
+        },
+        "javascript": {
+          "files": 7,
+          "lines": 328
+        },
+        "html": {
+          "files": 4,
+          "lines": 101
+        }
+      },
+      "complexity_score": "0.5905569948186529",
+      "largest_files": [
+        {
+          "path": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/minesweeper/src/gui/gui.py",
+          "lines": 278,
+          "language": "python"
+        },
+        {
+          "path": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/zombie_apocalypse/src/zombie_apocalypse.c",
+          "lines": 241,
+          "language": "c"
+        },
+        {
+          "path": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/calculator/src/gui/gui.py",
+          "lines": 239,
+          "language": "python"
+        },
+        {
+          "path": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/battleship/src/battleship.c",
+          "lines": 239,
+          "language": "c"
+        },
+        {
+          "path": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/yahtzee/src/main.c",
+          "lines": 205,
+          "language": "c"
+        }
+      ],
+      "quality_metrics": {
+        "maintainability_index": "81.19786010362695",
+        "technical_debt_ratio": "0.7581556994818653",
+        "code_duplication": "0.193",
+        "test_coverage": "0.9"
+      },
+      "architecture_score": "80.0",
+      "code_patterns": {
+        "design_patterns": [],
+        "anti_patterns": [
+          {
+            "pattern": "Long Method",
+            "file": "gui.py",
+            "line": 23,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "gui.py",
+            "line": 15,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "player.py",
+            "line": 21,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "dice_to_rule_mapper.py",
+            "line": 16,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "gui.py",
+            "line": 45,
+            "confidence": "0.7"
+          }
+        ],
+        "code_smells": []
+      },
+      "hotspots": [],
+      "score": 51,
+      "issues": [
+        "High technical debt ratio - significant refactoring needed",
+        "Anti-patterns detected: 5 issues found"
+      ],
+      "recommendations": [
+        "Address technical debt through systematic refactoring",
+        "Prioritize refactoring of most complex modules",
+        "Refactor anti-patterns to improve code quality",
+        "Consider implementing design patterns for better code structure"
+      ]
+    },
+    "documentation_quality": {
+      "has_readme": true,
+      "has_contributing": false,
+      "has_license": true,
+      "has_api_docs": false,
+      "has_changelog": false,
+      "readme_quality": 10,
+      "comment_coverage": "0.02175438596491228",
+      "doc_files": [],
+      "issues": [
+        "Missing contributing guidelines",
+        "Missing API documentation",
+        "Low code comment coverage"
+      ],
+      "recommendations": [
+        "Add CONTRIBUTING.md file",
+        "Document API endpoints",
+        "Add more inline documentation"
+      ],
+      "documentation_score": "0.40217543859649124",
+      "score": 40
+    },
+    "test_coverage": {
+      "has_tests": true,
+      "test_frameworks": [
+        "Jest"
+      ],
+      "coverage_percentage": "85.0",
+      "test_files": [
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/caesar_cipher/tests/test_caesar_cipher.py",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/fifteen_puzzle/tests/test_puzzle_board.py",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/hangman/tests/test_hangman.py",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/zombie_apocalypse/tests/test_player.py",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/zombie_apocalypse/tests/test_game.py",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/zombie_apocalypse/tests/test_zombie_apocalypse.py",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/yahtzee/tests/test_dice_to_rules_mapper.py",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/yahtzee/tests/test_table.py",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/minesweeper/tests/test_board.py",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/calculator/tests/test_calculator.py",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/caesar_cipher/tests/test_caesar.c",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/fifteen_puzzle/tests/test_fifteen.c",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/hangman/tests/test_hangman.c",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/zombie_apocalypse/tests/test_zombie_apocalypse.c",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/battleship/tests/test_battleship.c",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/yahtzee/tests/test_yahtzee.c",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/shooting_ducks/tests/test_shooting_ducks.c",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/snake/tests/test_snake.c",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/todo/tests/test_todo.c",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/2048/tests/test_game_2048.c",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/timer/tests/test_timer.c",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/minesweeper/tests/test_minesweeper.c",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/http_server/tests/test_http_server.sh",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/weather/tests/test_weather.c",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablon_specyfikacji.md",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablony_projektow/vanilla_javascript/jest.config.js",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablony_projektow/vanilla_javascript/tests/example.test.js",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablony_projektow/c_cmake/tests/test_hello.c",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablony_projektow/python_setup_py/tests/test_example_module.py",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/scripts/test-all-c-projects.sh",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/scripts/test-all-python-projects.sh",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/scripts/test-all-js-projects.sh"
+      ],
+      "test_directories": [
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/caesar_cipher/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/fifteen_puzzle/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/hangman/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/zombie_apocalypse/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/yahtzee/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/minesweeper/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/calculator/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/caesar_cipher/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/fifteen_puzzle/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/hangman/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/zombie_apocalypse/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/battleship/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/yahtzee/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/shooting_ducks/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/snake/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/todo/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/2048/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/timer/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/minesweeper/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/http_server/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/weather/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablony_projektow/vanilla_javascript/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablony_projektow/c_cmake/tests",
+        "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablony_projektow/python_setup_py/tests"
+      ],
+      "issues": [],
+      "recommendations": []
+    },
+    "security_issues": [
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/calculator/src/logic/calculator.py",
+        "line": 22
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/calculator/src/logic/calculator.py",
+        "line": 49
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 8
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 13
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 18
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 23
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 24
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 31
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 37
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 38
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 39
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 40
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 41
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 46
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 47
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 48
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 53
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 54
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 59
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 61
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+        "line": 63
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/src/parser.c",
+        "line": 19
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/src/repl.c",
+        "line": 32
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/src/parser.h",
+        "line": 4
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/vanilla_js/calculator/src/app.js",
+        "line": 28
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Direct innerHTML assignment",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/vanilla_js/todo_list/src/app.js",
+        "line": 46
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Direct innerHTML assignment",
+        "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/vanilla_js/todo_list/src/app.js",
+        "line": 49
+      }
+    ],
+    "license_info": {
+      "license_type": "MIT",
+      "is_open_source": true,
+      "license_file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/LICENSE",
+      "compatibility": "High"
+    },
+    "ai_summary": "This is a Python repository with 5 stars and 3 forks. The repository contains 193 files with 6991 lines of code.",
+    "result": {
+      "summary": "Analysis completed",
+      "code_quality": {
+        "score": 51,
+        "issues": [
+          "High technical debt ratio - significant refactoring needed",
+          "Anti-patterns detected: 5 issues found"
+        ],
+        "recommendations": [
+          "Address technical debt through systematic refactoring",
+          "Prioritize refactoring of most complex modules",
+          "Refactor anti-patterns to improve code quality",
+          "Consider implementing design patterns for better code structure"
+        ],
+        "metrics": {
+          "maintainability_index": "81.19786010362695",
+          "technical_debt_ratio": "75.81556994818654",
+          "code_duplication": "19.3",
+          "architecture_score": "80.0"
+        },
+        "patterns": {
+          "design_patterns": [],
+          "anti_patterns": [
+            {
+              "pattern": "Long Method",
+              "file": "gui.py",
+              "line": 23,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "gui.py",
+              "line": 15,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "player.py",
+              "line": 21,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "dice_to_rule_mapper.py",
+              "line": 16,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "gui.py",
+              "line": 45,
+              "confidence": "0.7"
+            }
+          ],
+          "code_smells": []
+        },
+        "hotspots": []
+      },
+      "documentation": {
+        "score": 40,
+        "issues": [
+          "Missing contributing guidelines",
+          "Missing API documentation",
+          "Low code comment coverage"
+        ],
+        "recommendations": [
+          "Add CONTRIBUTING.md file",
+          "Document API endpoints",
+          "Add more inline documentation"
+        ],
+        "details": {
+          "has_readme": true,
+          "has_contributing": false,
+          "has_license": true,
+          "has_api_docs": false,
+          "has_changelog": false,
+          "readme_quality": 10,
+          "comment_coverage": "0.02175438596491228",
+          "doc_files": []
+        }
+      },
+      "security": {
+        "score": 0,
+        "vulnerabilities": [
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/calculator/src/logic/calculator.py",
+            "line": 22
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/calculator/src/logic/calculator.py",
+            "line": 49
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 8
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 13
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 18
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 23
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 24
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 31
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 37
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 38
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 39
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 40
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 41
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 46
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 47
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 48
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 53
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 54
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 59
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 61
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+            "line": 63
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/src/parser.c",
+            "line": 19
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/src/repl.c",
+            "line": 32
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/src/parser.h",
+            "line": 4
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/vanilla_js/calculator/src/app.js",
+            "line": 28
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Direct innerHTML assignment",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/vanilla_js/todo_list/src/app.js",
+            "line": 46
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Direct innerHTML assignment",
+            "file": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/vanilla_js/todo_list/src/app.js",
+            "line": 49
+          }
+        ],
+        "recommendations": [
+          "Review and remove hardcoded secrets",
+          "Use environment variables for sensitive data",
+          "Avoid using eval() function",
+          "Use safer alternatives for dynamic code execution",
+          "Implement proper input validation"
+        ],
+        "summary": {
+          "total_issues": 27,
+          "high_severity": 0,
+          "medium_severity": 27,
+          "low_severity": 0
+        }
+      },
+      "test_coverage": {
+        "has_tests": true,
+        "coverage_percentage": "85.0",
+        "test_frameworks": [
+          "Jest"
+        ],
+        "test_files": [
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/caesar_cipher/tests/test_caesar_cipher.py",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/fifteen_puzzle/tests/test_puzzle_board.py",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/hangman/tests/test_hangman.py",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/zombie_apocalypse/tests/test_player.py",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/zombie_apocalypse/tests/test_game.py",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/zombie_apocalypse/tests/test_zombie_apocalypse.py",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/yahtzee/tests/test_dice_to_rules_mapper.py",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/yahtzee/tests/test_table.py",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/minesweeper/tests/test_board.py",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/calculator/tests/test_calculator.py",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/caesar_cipher/tests/test_caesar.c",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/fifteen_puzzle/tests/test_fifteen.c",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/hangman/tests/test_hangman.c",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/zombie_apocalypse/tests/test_zombie_apocalypse.c",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/battleship/tests/test_battleship.c",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/yahtzee/tests/test_yahtzee.c",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/shooting_ducks/tests/test_shooting_ducks.c",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/snake/tests/test_snake.c",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/todo/tests/test_todo.c",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/2048/tests/test_game_2048.c",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/timer/tests/test_timer.c",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/minesweeper/tests/test_minesweeper.c",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/http_server/tests/test_http_server.sh",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/weather/tests/test_weather.c",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests/test_calculator.c",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablon_specyfikacji.md",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablony_projektow/vanilla_javascript/jest.config.js",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablony_projektow/vanilla_javascript/tests/example.test.js",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablony_projektow/c_cmake/tests/test_hello.c",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablony_projektow/python_setup_py/tests/test_example_module.py",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/scripts/test-all-c-projects.sh",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/scripts/test-all-python-projects.sh",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/scripts/test-all-js-projects.sh"
+        ],
+        "test_directories": [
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/caesar_cipher/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/fifteen_puzzle/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/hangman/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/zombie_apocalypse/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/yahtzee/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/minesweeper/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/calculator/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/caesar_cipher/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/fifteen_puzzle/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/hangman/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/zombie_apocalypse/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/battleship/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/yahtzee/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/shooting_ducks/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/snake/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/todo/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/2048/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/timer/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/minesweeper/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/http_server/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/weather/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/calculator/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablony_projektow/vanilla_javascript/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablony_projektow/c_cmake/tests",
+          "/tmp/reposcope_yc2p1__4/Proste-Projekty/dodatkowe_materialy/szablony_projektow/python_setup_py/tests"
+        ],
+        "issues": [],
+        "recommendations": []
+      },
+      "license_info": {
+        "license_type": "Unknown",
+        "is_open_source": false,
+        "license_file": null,
+        "compatibility": "Unknown"
+      },
+      "metrics": {
+        "lines_of_code": 6991,
+        "files_count": 193,
+        "complexity": "0.5905569948186529",
+        "languages": {
+          "unknown": {
+            "files": 2,
+            "lines": 27
+          },
+          "python": {
+            "files": 92,
+            "lines": 3238
+          },
+          "dockerfile": {
+            "files": 21,
+            "lines": 127
+          },
+          "c": {
+            "files": 47,
+            "lines": 2727
+          },
+          "cpp": {
+            "files": 16,
+            "lines": 349
+          },
+          "shell": {
+            "files": 4,
+            "lines": 94
+          },
+          "javascript": {
+            "files": 7,
+            "lines": 328
+          },
+          "html": {
+            "files": 4,
+            "lines": 101
+          }
+        },
+        "largest_files": [
+          {
+            "path": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/minesweeper/src/gui/gui.py",
+            "lines": 278,
+            "language": "python"
+          },
+          {
+            "path": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/zombie_apocalypse/src/zombie_apocalypse.c",
+            "lines": 241,
+            "language": "c"
+          },
+          {
+            "path": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/python/calculator/src/gui/gui.py",
+            "lines": 239,
+            "language": "python"
+          },
+          {
+            "path": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/battleship/src/battleship.c",
+            "lines": 239,
+            "language": "c"
+          },
+          {
+            "path": "/tmp/reposcope_yc2p1__4/Proste-Projekty/src/c/yahtzee/src/main.c",
+            "lines": 205,
+            "language": "c"
+          }
+        ]
+      }
+    },
+    "analysis_duration": "1.026433",
+    "error_message": null
+  }
+}

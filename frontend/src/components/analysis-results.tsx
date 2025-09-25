@@ -46,6 +46,45 @@ interface AnalysisResultsProps {
 }
 
 export function AnalysisResults({ analysis }: AnalysisResultsProps) {
+  const getLanguageColor = (language: string): string => {
+    const colors: Record<string, string> = {
+      // Popular languages with GitHub-style colors
+      python: '#3776ab',
+      javascript: '#f7df1e',
+      typescript: '#3178c6',
+      java: '#f89820',
+      cpp: '#00599c',
+      c: '#a8b9cc',
+      rust: '#dea584',
+      go: '#00add8',
+      php: '#777bb4',
+      ruby: '#cc342d',
+      csharp: '#239120',
+      swift: '#fa7343',
+      kotlin: '#7f52ff',
+      scala: '#dc322f',
+      shell: '#89e051',
+      bash: '#89e051',
+      powershell: '#012456',
+      dockerfile: '#2496ed',
+      cmake: '#064f8c',
+      makefile: '#427819',
+      html: '#e34c26',
+      css: '#1572b6',
+      sql: '#336791',
+      r: '#276dc3',
+      matlab: '#e16737',
+      perl: '#39457e',
+      lua: '#000080',
+      vim: '#019733',
+      elisp: '#c065db',
+      // Special cases
+      unknown: '#6b7280', // Gray for unknown
+    };
+
+    return colors[language.toLowerCase()] || '#6b7280';
+  };
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'completed':
@@ -629,72 +668,452 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="space-y-4">
-              <h4 className="font-medium text-sm">Basic Metrics</h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span>Lines of Code:</span>
-                  <span className="font-mono">
-                    {safeNumber(
-                      result.metrics?.lines_of_code,
-                      0
-                    ).toLocaleString()}
-                  </span>
+          <div className="space-y-8">
+            {/* Top Row - Languages and Largest Files */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Languages */}
+              <div className="space-y-4">
+                <h4 className="font-medium text-sm">Languages</h4>
+                <div className="space-y-2">
+                  {Object.entries(safeObject(result.metrics?.languages))
+                    .length > 0 ? (
+                    (() => {
+                      // Sort languages: unknown last, others by percentage
+                      const languages = Object.entries(
+                        safeObject(result.metrics?.languages)
+                      );
+                      const sortedLanguages = languages.sort(
+                        ([aName, aData], [bName, bData]) => {
+                          if (aName === 'unknown') return 1;
+                          if (bName === 'unknown') return -1;
+                          const aLines = safeNumber(
+                            (aData as Record<string, unknown>)?.lines,
+                            0
+                          );
+                          const bLines = safeNumber(
+                            (bData as Record<string, unknown>)?.lines,
+                            0
+                          );
+                          return bLines - aLines;
+                        }
+                      );
+
+                      // Calculate total lines for percentage
+                      const totalLines = safeNumber(
+                        result.metrics?.lines_of_code,
+                        1
+                      );
+
+                      return (
+                        <>
+                          {/* Language Distribution Bar */}
+                          <div className="mb-4">
+                            <div className="flex h-4 rounded-lg overflow-hidden border">
+                              {sortedLanguages.map(([lang, langData]) => {
+                                const langInfo = langData as Record<
+                                  string,
+                                  unknown
+                                >;
+                                const lines = safeNumber(langInfo?.lines, 0);
+                                const percentage =
+                                  totalLines > 0
+                                    ? (lines / totalLines) * 100
+                                    : 0;
+                                const color = getLanguageColor(lang);
+
+                                return (
+                                  <div
+                                    key={lang}
+                                    className="flex items-center justify-center text-xs font-medium text-white"
+                                    style={{
+                                      width: `${percentage}%`,
+                                      backgroundColor: color,
+                                      minWidth: percentage > 0 ? '20px' : '0px',
+                                    }}
+                                    title={`${lang}: ${percentage.toFixed(1)}%`}
+                                  >
+                                    {percentage > 5 && (
+                                      <span className="truncate px-1">
+                                        {percentage.toFixed(0)}%
+                                      </span>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+
+                          {/* Language Details */}
+                          {sortedLanguages.map(([lang, langData]) => {
+                            const langInfo = langData as Record<
+                              string,
+                              unknown
+                            >;
+                            const files = safeNumber(langInfo?.files, 0);
+                            const lines = safeNumber(langInfo?.lines, 0);
+                            const percentage =
+                              totalLines > 0 ? (lines / totalLines) * 100 : 0;
+                            const color = getLanguageColor(lang);
+
+                            return (
+                              <div key={lang} className="space-y-1">
+                                <div className="flex justify-between text-sm">
+                                  <div className="flex items-center gap-2">
+                                    <div
+                                      className="w-3 h-3 rounded-full"
+                                      style={{ backgroundColor: color }}
+                                    />
+                                    <span className="capitalize font-medium">
+                                      {safeString(lang)}
+                                    </span>
+                                  </div>
+                                  <span className="text-xs text-muted-foreground font-mono">
+                                    {percentage.toFixed(1)}%
+                                  </span>
+                                </div>
+                                <div className="flex justify-between text-xs text-muted-foreground">
+                                  <span>{files} files</span>
+                                  <span>{lines.toLocaleString()} lines</span>
+                                </div>
+                                <Progress
+                                  value={percentage}
+                                  className="h-1"
+                                  style={
+                                    {
+                                      '--progress-background': color + '20',
+                                    } as React.CSSProperties
+                                  }
+                                />
+                              </div>
+                            );
+                          })}
+                        </>
+                      );
+                    })()
+                  ) : (
+                    <div className="text-sm text-muted-foreground text-center py-4">
+                      No language data available
+                    </div>
+                  )}
                 </div>
-                <div className="flex justify-between">
-                  <span>Files:</span>
-                  <span className="font-mono">
-                    {safeNumber(result.metrics?.files_count, 0)}
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Complexity:</span>
-                  <span className="font-mono">
-                    {safeNumber(result.metrics?.complexity, 0)}
-                  </span>
+              </div>
+
+              {/* Largest Files */}
+              <div className="space-y-4">
+                <h4 className="font-medium text-sm">Largest Files</h4>
+                <div className="space-y-2">
+                  {safeArray(analysis.code_structure?.largest_files)
+                    .slice(0, 5)
+                    .map((file, index: number) => {
+                      const fileObj = file as Record<string, unknown>;
+                      const fileName = safeString(fileObj?.path, 'Unknown');
+                      const lines = safeNumber(fileObj?.lines, 0);
+                      const language = safeString(fileObj?.language, '');
+                      const color = getLanguageColor(language);
+
+                      return (
+                        <div
+                          key={index}
+                          className="flex justify-between items-center p-3 bg-muted/20 rounded-lg border"
+                        >
+                          <div className="flex items-center gap-3 flex-1 min-w-0">
+                            <div
+                              className="w-3 h-3 rounded-full flex-shrink-0"
+                              style={{ backgroundColor: color }}
+                            />
+                            <div className="flex-1 min-w-0">
+                              <div className="truncate font-medium text-sm">
+                                {fileName.split('/').pop()}
+                              </div>
+                              {language && (
+                                <div className="text-xs text-muted-foreground capitalize">
+                                  {language}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="text-right flex-shrink-0">
+                            <div className="font-mono font-semibold text-sm">
+                              {lines.toLocaleString()}
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              lines
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  {safeArray(analysis.code_structure?.largest_files).length ===
+                    0 && (
+                    <div className="text-sm text-muted-foreground text-center py-4">
+                      No file data available
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <h4 className="font-medium text-sm">Languages</h4>
-              <div className="space-y-2">
-                {Object.entries(safeObject(result.metrics?.languages)).map(
-                  ([lang, percentage]) => (
-                    <div key={lang} className="space-y-1">
-                      <div className="flex justify-between text-sm">
-                        <span>{safeString(lang)}</span>
-                        <span>{safeNumber(percentage, 0)}%</span>
-                      </div>
+            {/* Bottom Row - Metrics */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Basic Metrics */}
+              <div className="space-y-4">
+                <h4 className="font-medium text-sm">Basic Metrics</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-blue-500" />
+                      <span>Lines of Code:</span>
+                    </div>
+                    <span className="font-mono font-semibold text-blue-700 dark:text-blue-300">
+                      {safeNumber(
+                        analysis.code_structure?.total_lines,
+                        0
+                      ).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950/20 rounded-lg border">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-green-500" />
+                      <span>Files:</span>
+                    </div>
+                    <span className="font-mono font-semibold text-green-700 dark:text-green-300">
+                      {safeNumber(analysis.code_structure?.total_files, 0)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-orange-50 dark:bg-orange-950/20 rounded-lg border">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-orange-500" />
+                      <span>Complexity:</span>
+                    </div>
+                    <span className="font-mono font-semibold text-orange-700 dark:text-orange-300">
+                      {safeNumber(
+                        analysis.code_structure?.complexity_score,
+                        0
+                      ).toFixed(2)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-purple-50 dark:bg-purple-950/20 rounded-lg border">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-purple-500" />
+                      <span>Avg File Size:</span>
+                    </div>
+                    <span className="font-mono font-semibold text-purple-700 dark:text-purple-300">
+                      {safeNumber(analysis.code_structure?.total_files, 0) > 0
+                        ? Math.round(
+                            safeNumber(
+                              analysis.code_structure?.total_lines,
+                              0
+                            ) /
+                              safeNumber(
+                                analysis.code_structure?.total_files,
+                                1
+                              )
+                          )
+                        : 0}{' '}
+                      lines
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quality Metrics */}
+              <div className="space-y-4">
+                <h4 className="font-medium text-sm">Quality Metrics</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between items-center p-3 bg-emerald-50 dark:bg-emerald-950/20 rounded-lg border">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-emerald-500" />
+                      <span>Maintainability:</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono font-semibold text-emerald-700 dark:text-emerald-300">
+                        {safeNumber(
+                          (
+                            analysis.code_structure?.quality_metrics as Record<
+                              string,
+                              unknown
+                            >
+                          )?.maintainability_index,
+                          0
+                        ).toFixed(1)}
+                        /100
+                      </span>
                       <Progress
-                        value={safeNumber(percentage, 0)}
-                        className="h-1"
+                        value={safeNumber(
+                          (
+                            analysis.code_structure?.quality_metrics as Record<
+                              string,
+                              unknown
+                            >
+                          )?.maintainability_index,
+                          0
+                        )}
+                        className="w-16 h-2"
                       />
                     </div>
-                  )
-                )}
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-red-50 dark:bg-red-950/20 rounded-lg border">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-red-500" />
+                      <span>Tech Debt:</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono font-semibold text-red-700 dark:text-red-300">
+                        {safeNumber(
+                          (
+                            analysis.code_structure?.quality_metrics as Record<
+                              string,
+                              unknown
+                            >
+                          )?.technical_debt_ratio,
+                          0
+                        ).toFixed(1)}
+                        %
+                      </span>
+                      <Progress
+                        value={safeNumber(
+                          (
+                            analysis.code_structure?.quality_metrics as Record<
+                              string,
+                              unknown
+                            >
+                          )?.technical_debt_ratio,
+                          0
+                        )}
+                        className="w-16 h-2"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-yellow-50 dark:bg-yellow-950/20 rounded-lg border">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                      <span>Duplication:</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono font-semibold text-yellow-700 dark:text-yellow-300">
+                        {safeNumber(
+                          (
+                            analysis.code_structure?.quality_metrics as Record<
+                              string,
+                              unknown
+                            >
+                          )?.code_duplication,
+                          0
+                        ).toFixed(1)}
+                        %
+                      </span>
+                      <Progress
+                        value={safeNumber(
+                          (
+                            analysis.code_structure?.quality_metrics as Record<
+                              string,
+                              unknown
+                            >
+                          )?.code_duplication,
+                          0
+                        )}
+                        className="w-16 h-2"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-indigo-50 dark:bg-indigo-950/20 rounded-lg border">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-indigo-500" />
+                      <span>Architecture:</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono font-semibold text-indigo-700 dark:text-indigo-300">
+                        {safeNumber(
+                          analysis.code_structure?.architecture_score,
+                          0
+                        ).toFixed(1)}
+                        /100
+                      </span>
+                      <Progress
+                        value={safeNumber(
+                          analysis.code_structure?.architecture_score,
+                          0
+                        )}
+                        className="w-16 h-2"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div className="space-y-4">
-              <h4 className="font-medium text-sm">Largest Files</h4>
-              <div className="space-y-1 text-sm">
-                {safeArray(result.metrics?.largest_files).map(
-                  (file, index: number) => {
-                    const fileObj = file as Record<string, unknown>;
-                    return (
-                      <div key={index} className="flex justify-between">
-                        <span className="truncate">
-                          {safeString(fileObj?.name, 'Unknown')}
-                        </span>
-                        <span className="text-muted-foreground">
-                          {safeNumber(fileObj?.lines, 0)} lines
-                        </span>
-                      </div>
-                    );
-                  }
-                )}
+              {/* Additional Metrics */}
+              <div className="space-y-4">
+                <h4 className="font-medium text-sm">Additional Metrics</h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between items-center p-3 bg-cyan-50 dark:bg-cyan-950/20 rounded-lg border">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-cyan-500" />
+                      <span>Overall Score:</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono font-semibold text-cyan-700 dark:text-cyan-300">
+                        {safeNumber(analysis.code_structure?.score, 0)}/100
+                      </span>
+                      <Progress
+                        value={safeNumber(analysis.code_structure?.score, 0)}
+                        className="w-16 h-2"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-teal-50 dark:bg-teal-950/20 rounded-lg border">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-teal-500" />
+                      <span>Test Coverage:</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono font-semibold text-teal-700 dark:text-teal-300">
+                        {safeNumber(
+                          (
+                            analysis.code_structure?.quality_metrics as Record<
+                              string,
+                              unknown
+                            >
+                          )?.test_coverage,
+                          0
+                        ).toFixed(1)}
+                        %
+                      </span>
+                      <Progress
+                        value={safeNumber(
+                          (
+                            analysis.code_structure?.quality_metrics as Record<
+                              string,
+                              unknown
+                            >
+                          )?.test_coverage,
+                          0
+                        )}
+                        className="w-16 h-2"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-rose-50 dark:bg-rose-950/20 rounded-lg border">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-rose-500" />
+                      <span>Issues Found:</span>
+                    </div>
+                    <span className="font-mono font-semibold text-rose-700 dark:text-rose-300">
+                      {safeArray(analysis.code_structure?.issues).length}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-lime-50 dark:bg-lime-950/20 rounded-lg border">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-lime-500" />
+                      <span>Recommendations:</span>
+                    </div>
+                    <span className="font-mono font-semibold text-lime-700 dark:text-lime-300">
+                      {
+                        safeArray(analysis.code_structure?.recommendations)
+                          .length
+                      }
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -1,0 +1,319 @@
+{
+  "repository_url": "https://github.com/typicode/jsonplaceholder",
+  "cached_at": "2025-09-25T16:22:20.450047",
+  "analysis_data": {
+    "id": "34568e53-3137-4388-ab24-192cb078fe80",
+    "repository_url": "https://github.com/typicode/jsonplaceholder",
+    "repository_info": {
+      "name": "jsonplaceholder",
+      "owner": "typicode",
+      "full_name": "typicode/jsonplaceholder",
+      "description": "A simple online fake REST API server",
+      "language": "HTML",
+      "stars": 5174,
+      "forks": 592,
+      "size": 2316,
+      "created_at": "2013-09-20T13:49:48+00:00",
+      "updated_at": "2025-09-22T21:23:37+00:00"
+    },
+    "status": "completed",
+    "created_at": "2025-09-25T14:21:57.162437+00:00",
+    "completed_at": "2025-09-25T14:22:20.448510+00:00",
+    "code_structure": {
+      "total_files": 20,
+      "total_lines": 46347,
+      "languages": {
+        "unknown": {
+          "files": 15,
+          "lines": 46157
+        },
+        "javascript": {
+          "files": 5,
+          "lines": 190
+        }
+      },
+      "complexity_score": "0.8999999999999999",
+      "largest_files": [
+        {
+          "path": "/tmp/reposcope_wz9oi9tz/jsonplaceholder/data.json",
+          "lines": 41044,
+          "language": "unknown"
+        },
+        {
+          "path": "/tmp/reposcope_wz9oi9tz/jsonplaceholder/package-lock.json",
+          "lines": 3509,
+          "language": "unknown"
+        },
+        {
+          "path": "/tmp/reposcope_wz9oi9tz/jsonplaceholder/public/index.html",
+          "lines": 371,
+          "language": "unknown"
+        },
+        {
+          "path": "/tmp/reposcope_wz9oi9tz/jsonplaceholder/public/guide.html",
+          "lines": 286,
+          "language": "unknown"
+        },
+        {
+          "path": "/tmp/reposcope_wz9oi9tz/jsonplaceholder/templates/index.html",
+          "lines": 215,
+          "language": "unknown"
+        }
+      ],
+      "quality_metrics": {
+        "maintainability_index": "35.653",
+        "technical_debt_ratio": "1.0",
+        "code_duplication": "0.02",
+        "test_coverage": "0.2"
+      },
+      "architecture_score": "16.8",
+      "code_patterns": {
+        "design_patterns": [],
+        "anti_patterns": [],
+        "code_smells": []
+      },
+      "hotspots": [
+        {
+          "type": "large_file",
+          "file": "/tmp/reposcope_wz9oi9tz/jsonplaceholder/data.json",
+          "lines": 41044,
+          "severity": "high",
+          "description": "Large file with 41044 lines"
+        },
+        {
+          "type": "large_file",
+          "file": "/tmp/reposcope_wz9oi9tz/jsonplaceholder/package-lock.json",
+          "lines": 3509,
+          "severity": "high",
+          "description": "Large file with 3509 lines"
+        },
+        {
+          "type": "high_complexity",
+          "file": "repository",
+          "lines": 0,
+          "severity": "high",
+          "description": "High overall complexity: 0.90"
+        }
+      ],
+      "score": 0,
+      "issues": [
+        "Large file detected: data.json (41044 lines)",
+        "Large file detected: package-lock.json (3509 lines)",
+        "Low maintainability index - code is difficult to maintain",
+        "High technical debt ratio - significant refactoring needed",
+        "Poor architecture - consider restructuring"
+      ],
+      "recommendations": [
+        "Improve code maintainability by reducing complexity",
+        "Add more inline documentation and comments",
+        "Address technical debt through systematic refactoring",
+        "Prioritize refactoring of most complex modules",
+        "Improve code architecture and organization"
+      ]
+    },
+    "documentation_quality": {
+      "has_readme": true,
+      "has_contributing": false,
+      "has_license": true,
+      "has_api_docs": false,
+      "has_changelog": true,
+      "readme_quality": 8,
+      "comment_coverage": "0.10559006211180125",
+      "doc_files": [],
+      "issues": [
+        "Missing contributing guidelines",
+        "Missing API documentation",
+        "Low code comment coverage"
+      ],
+      "recommendations": [
+        "Add CONTRIBUTING.md file",
+        "Document API endpoints",
+        "Add more inline documentation"
+      ],
+      "documentation_score": "0.49055900621118015",
+      "score": 49
+    },
+    "test_coverage": {
+      "has_tests": false,
+      "test_frameworks": [],
+      "coverage_percentage": "0.0",
+      "test_files": [],
+      "test_directories": [
+        "/tmp/reposcope_wz9oi9tz/jsonplaceholder/test"
+      ],
+      "issues": [
+        "No test files found",
+        "No test framework detected"
+      ],
+      "recommendations": [
+        "Add unit tests for critical functionality",
+        "Set up a proper testing framework"
+      ]
+    },
+    "security_issues": [],
+    "license_info": {
+      "license_type": "MIT",
+      "is_open_source": true,
+      "license_file": "/tmp/reposcope_wz9oi9tz/jsonplaceholder/LICENSE",
+      "compatibility": "High"
+    },
+    "ai_summary": "📋 **Project Overview**\n\n- The repository is a **library** primarily written in **HTML**.\n- It's likely to be a front-end library given the primary language and the presence of JavaScript.\n- The exact purpose and functionality can't be determined without more specific details. However, it might be used for building user interfaces, handling user interactions, or managing application state.\n\n🛠️ **Technology Stack**\n\n- The primary language used is **HTML**, which is a standard markup language for creating web pages.\n- **JavaScript** is also used, which is a programming language that allows you to implement complex features on web pages.\n- The repository doesn't specify any particular frameworks or libraries used. It's recommended to include this information in the README for better understanding of the project.\n- The development tools used are also not specified. It would be beneficial to mention any linters, build tools, or testing frameworks used.\n\n📊 **Code Quality Assessment**\n\n- The complexity score is **0.9**, which is relatively high. This suggests that the code might be difficult to maintain or extend.\n- The repository contains a significant amount of code with **46,347 lines** across **20 files**. This suggests that the project is quite large and might benefit from further modularization.\n- Without more specific details, it's difficult to evaluate the architecture. However, the high complexity score suggests that there might be room for improvement.\n\n💡 **Key Recommendations**\n\n- **Reduce complexity**: Refactor the code to lower the complexity score. This could involve breaking down complex functions into smaller, more manageable pieces.\n- **Improve documentation**: Include information about the purpose and functionality of the library, as well as the technology stack and development tools used.\n- **Consider using a framework or library**: If not already in use, a JavaScript framework or library could help manage complexity and improve code organization.\n- **Implement testing**: If not already in use, consider implementing a testing framework to ensure code quality and prevent regressions.\n- **Modularize the code**: Given the large amount of code, it might be beneficial to break it down into smaller, more manageable modules. This could also help reduce the complexity score.",
+    "result": {
+      "summary": "Analysis completed",
+      "code_quality": {
+        "score": 0,
+        "issues": [
+          "Large file detected: data.json (41044 lines)",
+          "Large file detected: package-lock.json (3509 lines)",
+          "Low maintainability index - code is difficult to maintain",
+          "High technical debt ratio - significant refactoring needed",
+          "Poor architecture - consider restructuring"
+        ],
+        "recommendations": [
+          "Improve code maintainability by reducing complexity",
+          "Add more inline documentation and comments",
+          "Address technical debt through systematic refactoring",
+          "Prioritize refactoring of most complex modules",
+          "Improve code architecture and organization"
+        ],
+        "metrics": {
+          "maintainability_index": "35.653",
+          "technical_debt_ratio": "100.0",
+          "code_duplication": "2.0",
+          "architecture_score": "16.8"
+        },
+        "patterns": {
+          "design_patterns": [],
+          "anti_patterns": [],
+          "code_smells": []
+        },
+        "hotspots": [
+          {
+            "type": "large_file",
+            "file": "/tmp/reposcope_wz9oi9tz/jsonplaceholder/data.json",
+            "lines": 41044,
+            "severity": "high",
+            "description": "Large file with 41044 lines"
+          },
+          {
+            "type": "large_file",
+            "file": "/tmp/reposcope_wz9oi9tz/jsonplaceholder/package-lock.json",
+            "lines": 3509,
+            "severity": "high",
+            "description": "Large file with 3509 lines"
+          },
+          {
+            "type": "high_complexity",
+            "file": "repository",
+            "lines": 0,
+            "severity": "high",
+            "description": "High overall complexity: 0.90"
+          }
+        ]
+      },
+      "documentation": {
+        "score": 49,
+        "issues": [
+          "Missing contributing guidelines",
+          "Missing API documentation",
+          "Low code comment coverage"
+        ],
+        "recommendations": [
+          "Add CONTRIBUTING.md file",
+          "Document API endpoints",
+          "Add more inline documentation"
+        ],
+        "details": {
+          "has_readme": true,
+          "has_contributing": false,
+          "has_license": true,
+          "has_api_docs": false,
+          "has_changelog": true,
+          "readme_quality": 8,
+          "comment_coverage": "0.10559006211180125",
+          "doc_files": []
+        }
+      },
+      "security": {
+        "score": 100,
+        "vulnerabilities": [],
+        "recommendations": [
+          "No security issues found - good job!"
+        ],
+        "summary": {
+          "total_issues": 0,
+          "high_severity": 0,
+          "medium_severity": 0,
+          "low_severity": 0
+        }
+      },
+      "test_coverage": {
+        "has_tests": false,
+        "coverage_percentage": "0.0",
+        "test_frameworks": [],
+        "test_files": [],
+        "test_directories": [
+          "/tmp/reposcope_wz9oi9tz/jsonplaceholder/test"
+        ],
+        "issues": [
+          "No test files found",
+          "No test framework detected"
+        ],
+        "recommendations": [
+          "Add unit tests for critical functionality",
+          "Set up a proper testing framework"
+        ]
+      },
+      "license_info": {
+        "license_type": "Unknown",
+        "is_open_source": false,
+        "license_file": null,
+        "compatibility": "Unknown"
+      },
+      "metrics": {
+        "lines_of_code": 46347,
+        "files_count": 20,
+        "complexity": "0.8999999999999999",
+        "languages": {
+          "unknown": {
+            "files": 15,
+            "lines": 46157
+          },
+          "javascript": {
+            "files": 5,
+            "lines": 190
+          }
+        },
+        "largest_files": [
+          {
+            "path": "/tmp/reposcope_wz9oi9tz/jsonplaceholder/data.json",
+            "lines": 41044,
+            "language": "unknown"
+          },
+          {
+            "path": "/tmp/reposcope_wz9oi9tz/jsonplaceholder/package-lock.json",
+            "lines": 3509,
+            "language": "unknown"
+          },
+          {
+            "path": "/tmp/reposcope_wz9oi9tz/jsonplaceholder/public/index.html",
+            "lines": 371,
+            "language": "unknown"
+          },
+          {
+            "path": "/tmp/reposcope_wz9oi9tz/jsonplaceholder/public/guide.html",
+            "lines": 286,
+            "language": "unknown"
+          },
+          {
+            "path": "/tmp/reposcope_wz9oi9tz/jsonplaceholder/templates/index.html",
+            "lines": 215,
+            "language": "unknown"
+          }
+        ]
+      }
+    },
+    "analysis_duration": "23.286073",
+    "error_message": null
+  }
+}

@@ -5,8 +5,6 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 import tree_sitter
-from tree_sitter import Language, Parser
-
 from schemas.code_metrics import (
     CodePattern,
     ComplexityMetrics,
@@ -15,6 +13,7 @@ from schemas.code_metrics import (
     QualityMetrics,
     RepositoryMetrics,
 )
+from tree_sitter import Language, Parser
 
 
 class CodeAnalyzer:
@@ -122,9 +121,38 @@ class CodeAnalyzer:
             ".cxx": "cpp",
             ".hpp": "cpp",
             ".h": "cpp",
+            ".c": "c",  # C language
             ".rs": "rust",
             ".go": "go",
+            ".php": "php",
+            ".rb": "ruby",
+            ".cs": "csharp",
+            ".swift": "swift",
+            ".kt": "kotlin",
+            ".scala": "scala",
+            ".sh": "shell",
+            ".bash": "shell",
+            ".zsh": "shell",
+            ".fish": "shell",
+            ".cmake": "cmake",  # CMake files
+            ".dockerfile": "dockerfile",  # Docker files
+            ".html": "html",  # HTML files
+            ".xml": "xml",  # XML files
+            ".sql": "sql",  # SQL files
+            ".r": "r",  # R language
+            ".m": "matlab",  # MATLAB
+            ".pl": "perl",  # Perl
+            ".lua": "lua",  # Lua
+            ".vim": "vim",  # Vim script
+            ".el": "elisp",  # Emacs Lisp
         }
+
+        # Special file names (check before extension)
+        filename = Path(file_path).name.lower()
+        if filename in ["cmakelists.txt", "makefile", "makefile.am", "makefile.in"]:
+            return "cmake" if filename == "cmakelists.txt" else "makefile"
+        elif filename == "dockerfile":
+            return "dockerfile"
 
         file_ext = Path(file_path).suffix.lower()
         return extension_map.get(file_ext)
@@ -132,7 +160,13 @@ class CodeAnalyzer:
     def analyze_file(self, file_path: str, content: str) -> Dict:
         """Analyze a single file and return statistics."""
         language = self.detect_language(file_path)
-        if not language or language not in self.languages:
+
+        # If we have a language but no Tree-sitter parser, use enhanced basic analysis
+        if language and language not in self.languages:
+            return self._enhanced_basic_analysis(content, language)
+
+        # If no language detected, use basic analysis
+        if not language:
             return self._basic_analysis(content)
 
         try:
@@ -143,7 +177,8 @@ class CodeAnalyzer:
             return self._analyze_ast(tree, content, language)
         except Exception as e:
             print(f"Error analyzing {file_path}: {e}")
-            return self._basic_analysis(content)
+            # Fallback to enhanced basic analysis with detected language
+            return self._enhanced_basic_analysis(content, language)
 
     def _analyze_ast(self, tree: tree_sitter.Tree, content: str, language: str) -> Dict:
         """Analyze AST and extract statistics."""
@@ -342,6 +377,171 @@ class CodeAnalyzer:
             "comments": 0,
         }
 
+    def _enhanced_basic_analysis(self, content: str, language: str) -> Dict:
+        """Enhanced basic analysis with language-specific heuristics."""
+        lines = content.splitlines()
+
+        # Language-specific analysis without Tree-sitter
+        functions = 0
+        classes = 0
+        imports = 0
+        comments = 0
+
+        if language == "python":
+            functions = len([line for line in lines if line.strip().startswith("def ")])
+            classes = len([line for line in lines if line.strip().startswith("class ")])
+            imports = len([line for line in lines if line.strip().startswith(("import ", "from "))])
+            comments = len([line for line in lines if line.strip().startswith("#")])
+        elif language in ["javascript", "typescript"]:
+            functions = len(
+                [
+                    line
+                    for line in lines
+                    if "function " in line
+                    or "=>" in line
+                    or "(" in line
+                    and ")" in line
+                    and "{" in line
+                ]
+            )
+            classes = len([line for line in lines if "class " in line])
+            imports = len(
+                [line for line in lines if line.strip().startswith(("import ", "require("))]
+            )
+            comments = len([line for line in lines if line.strip().startswith(("//", "/*"))])
+        elif language == "java":
+            functions = len(
+                [line for line in lines if "public " in line and "(" in line and ")" in line]
+            )
+            classes = len([line for line in lines if "class " in line])
+            imports = len([line for line in lines if line.strip().startswith("import ")])
+            comments = len([line for line in lines if line.strip().startswith(("//", "/*"))])
+        elif language == "cpp":
+            functions = len([line for line in lines if "{" in line and "(" in line and ")" in line])
+            classes = len([line for line in lines if "class " in line])
+            imports = len([line for line in lines if line.strip().startswith("#include")])
+            comments = len([line for line in lines if line.strip().startswith(("//", "/*"))])
+        elif language == "rust":
+            functions = len([line for line in lines if "fn " in line])
+            classes = len([line for line in lines if "struct " in line])
+            imports = len([line for line in lines if line.strip().startswith("use ")])
+            comments = len([line for line in lines if line.strip().startswith(("//", "/*"))])
+        elif language == "go":
+            functions = len([line for line in lines if "func " in line])
+            classes = len([line for line in lines if "type " in line])
+            imports = len([line for line in lines if line.strip().startswith("import ")])
+            comments = len([line for line in lines if line.strip().startswith(("//", "/*"))])
+        elif language == "c":
+            functions = len([line for line in lines if "{" in line and "(" in line and ")" in line])
+            classes = 0  # C doesn't have classes
+            imports = len([line for line in lines if line.strip().startswith("#include")])
+            comments = len([line for line in lines if line.strip().startswith(("//", "/*"))])
+        elif language == "cmake":
+            functions = len(
+                [
+                    line
+                    for line in lines
+                    if "(" in line and ")" in line and not line.strip().startswith("#")
+                ]
+            )
+            classes = 0  # CMake doesn't have classes
+            imports = len(
+                [
+                    line
+                    for line in lines
+                    if line.strip().startswith(("find_package", "include", "add_subdirectory"))
+                ]
+            )
+            comments = len([line for line in lines if line.strip().startswith("#")])
+        elif language == "makefile":
+            functions = len(
+                [line for line in lines if ":" in line and not line.strip().startswith("#")]
+            )
+            classes = 0  # Makefiles don't have classes
+            imports = len([line for line in lines if line.strip().startswith("include ")])
+            comments = len([line for line in lines if line.strip().startswith("#")])
+        elif language == "dockerfile":
+            functions = len(
+                [line for line in lines if line.strip().startswith(("RUN ", "CMD ", "ENTRYPOINT "))]
+            )
+            classes = 0  # Dockerfiles don't have classes
+            imports = len(
+                [line for line in lines if line.strip().startswith(("FROM ", "COPY ", "ADD "))]
+            )
+            comments = len([line for line in lines if line.strip().startswith("#")])
+        elif language == "html":
+            functions = len([line for line in lines if "<script" in line or "function" in line])
+            classes = len([line for line in lines if "class=" in line])
+            imports = len(
+                [line for line in lines if line.strip().startswith(("<link", "<script", "<style"))]
+            )
+            comments = len([line for line in lines if line.strip().startswith(("<!--", "//"))])
+        elif language == "sql":
+            functions = len(
+                [
+                    line
+                    for line in lines
+                    if "CREATE FUNCTION" in line.upper() or "CREATE PROCEDURE" in line.upper()
+                ]
+            )
+            classes = 0  # SQL doesn't have classes
+            imports = len(
+                [line for line in lines if line.strip().startswith(("USE ", "IMPORT ", "INCLUDE "))]
+            )
+            comments = len([line for line in lines if line.strip().startswith(("--", "/*"))])
+
+        return {
+            "lines_of_code": len(lines),
+            "non_empty_lines": len([line for line in lines if line.strip()]),
+            "blank_lines": len([line for line in lines if not line.strip()]),
+            "language": language,
+            "functions": functions,
+            "classes": classes,
+            "imports": imports,
+            "comments": comments,
+        }
+
+    def _is_code_file(self, file_path: str) -> bool:
+        """Check if file is a code file (not documentation, config, etc.)."""
+        non_code_extensions = {
+            ".md",
+            ".txt",
+            ".rst",
+            ".adoc",  # Documentation
+            ".json",
+            ".yaml",
+            ".yml",
+            ".toml",
+            ".ini",
+            ".cfg",
+            ".conf",  # Config
+            ".css",
+            ".scss",
+            ".sass",
+            ".less",  # Styles (not code for analysis)
+            ".png",
+            ".jpg",
+            ".jpeg",
+            ".gif",
+            ".svg",
+            ".ico",  # Images
+            ".pdf",
+            ".doc",
+            ".docx",
+            ".xls",
+            ".xlsx",  # Documents
+            ".zip",
+            ".tar",
+            ".gz",
+            ".rar",  # Archives
+            ".log",
+            ".tmp",
+            ".cache",  # Temporary files
+        }
+
+        file_ext = Path(file_path).suffix.lower()
+        return file_ext not in non_code_extensions
+
     def analyze_repository(self, repo_path: str) -> Dict:
         """Analyze entire repository and return comprehensive statistics."""
         if not os.path.exists(repo_path):
@@ -383,6 +583,11 @@ class CodeAnalyzer:
                     continue
 
                 file_path = os.path.join(root, file)
+
+                # Skip non-code files
+                if not self._is_code_file(file_path):
+                    continue
+
                 try:
                     with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
                         content = f.read()
@@ -511,30 +716,6 @@ class CodeAnalyzer:
             hotspots=hotspots[:10],  # Top 10 hotspots
             architecture_score=architecture_score,
         )
-
-    def _is_code_file(self, filename: str) -> bool:
-        """Check if file is a code file."""
-        code_extensions = {
-            ".py",
-            ".js",
-            ".jsx",
-            ".ts",
-            ".tsx",
-            ".java",
-            ".cpp",
-            ".cc",
-            ".cxx",
-            ".hpp",
-            ".h",
-            ".rs",
-            ".go",
-            ".php",
-            ".rb",
-            ".cs",
-            ".swift",
-            ".kt",
-        }
-        return Path(filename).suffix.lower() in code_extensions
 
     def _calculate_architecture_score(self, file_metrics: List[FileMetrics]) -> float:
         """Calculate architecture quality score."""

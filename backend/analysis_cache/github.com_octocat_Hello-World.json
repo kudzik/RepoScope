@@ -1,0 +1,219 @@
+{
+  "repository_url": "https://github.com/octocat/Hello-World",
+  "cached_at": "2025-09-25T16:37:42.077672",
+  "analysis_data": {
+    "id": "c6c4c976-9463-40a9-bbde-979b876f0fc5",
+    "repository_url": "https://github.com/octocat/Hello-World",
+    "repository_info": {
+      "name": "Hello-World",
+      "owner": "octocat",
+      "full_name": "octocat/Hello-World",
+      "description": "My first repository on GitHub!",
+      "language": null,
+      "stars": 3144,
+      "forks": 3774,
+      "size": 1,
+      "created_at": "2011-01-26T19:01:12+00:00",
+      "updated_at": "2025-09-25T14:16:16+00:00"
+    },
+    "status": "completed",
+    "created_at": "2025-09-25T14:37:41.175732+00:00",
+    "completed_at": "2025-09-25T14:37:42.076930+00:00",
+    "code_structure": {
+      "total_files": 1,
+      "total_lines": 1,
+      "languages": {
+        "unknown": {
+          "files": 1,
+          "lines": 1
+        }
+      },
+      "complexity_score": "0.10253999999999999",
+      "largest_files": [
+        {
+          "path": "/tmp/reposcope_mioataym/Hello-World/README",
+          "lines": 1,
+          "language": "unknown"
+        }
+      ],
+      "quality_metrics": {
+        "maintainability_index": "97.9482",
+        "technical_debt_ratio": "0.010353999999999999",
+        "code_duplication": "0.001",
+        "test_coverage": "0.01"
+      },
+      "architecture_score": 2,
+      "code_patterns": {
+        "design_patterns": [],
+        "anti_patterns": [],
+        "code_smells": []
+      },
+      "hotspots": [],
+      "score": 73,
+      "issues": [
+        "Poor architecture - consider restructuring"
+      ],
+      "recommendations": [
+        "Improve code architecture and organization",
+        "Consider breaking down large modules into smaller ones",
+        "Consider implementing design patterns for better code structure"
+      ]
+    },
+    "documentation_quality": {
+      "has_readme": false,
+      "has_contributing": false,
+      "has_license": false,
+      "has_api_docs": false,
+      "has_changelog": false,
+      "readme_quality": 0,
+      "comment_coverage": "0.0",
+      "doc_files": [],
+      "issues": [
+        "Missing README file",
+        "Missing contributing guidelines",
+        "Missing license file",
+        "Missing API documentation",
+        "Low code comment coverage"
+      ],
+      "recommendations": [
+        "Add comprehensive README.md",
+        "Add CONTRIBUTING.md file",
+        "Add LICENSE file",
+        "Document API endpoints",
+        "Add more inline documentation"
+      ],
+      "documentation_score": "0.0",
+      "score": 0
+    },
+    "test_coverage": {
+      "has_tests": false,
+      "test_frameworks": [],
+      "coverage_percentage": "0.0",
+      "test_files": [],
+      "test_directories": [],
+      "issues": [
+        "No test files found",
+        "No test framework detected"
+      ],
+      "recommendations": [
+        "Add unit tests for critical functionality",
+        "Set up a proper testing framework"
+      ]
+    },
+    "security_issues": [],
+    "license_info": {
+      "license_type": "Unknown",
+      "is_open_source": false,
+      "license_file": null,
+      "compatibility": "Unknown"
+    },
+    "ai_summary": "This is a multi-language repository with 3144 stars and 3774 forks. The repository contains 1 files with 1 lines of code.",
+    "result": {
+      "summary": "Analysis completed",
+      "code_quality": {
+        "score": 73,
+        "issues": [
+          "Poor architecture - consider restructuring"
+        ],
+        "recommendations": [
+          "Improve code architecture and organization",
+          "Consider breaking down large modules into smaller ones",
+          "Consider implementing design patterns for better code structure"
+        ],
+        "metrics": {
+          "maintainability_index": "97.9482",
+          "technical_debt_ratio": "1.0353999999999999",
+          "code_duplication": "0.1",
+          "architecture_score": 2
+        },
+        "patterns": {
+          "design_patterns": [],
+          "anti_patterns": [],
+          "code_smells": []
+        },
+        "hotspots": []
+      },
+      "documentation": {
+        "score": 0,
+        "issues": [
+          "Missing README file",
+          "Missing contributing guidelines",
+          "Missing license file",
+          "Missing API documentation",
+          "Low code comment coverage"
+        ],
+        "recommendations": [
+          "Add comprehensive README.md",
+          "Add CONTRIBUTING.md file",
+          "Add LICENSE file",
+          "Document API endpoints",
+          "Add more inline documentation"
+        ],
+        "details": {
+          "has_readme": false,
+          "has_contributing": false,
+          "has_license": false,
+          "has_api_docs": false,
+          "has_changelog": false,
+          "readme_quality": 0,
+          "comment_coverage": "0.0",
+          "doc_files": []
+        }
+      },
+      "security": {
+        "score": 100,
+        "vulnerabilities": [],
+        "recommendations": [
+          "No security issues found - good job!"
+        ],
+        "summary": {
+          "total_issues": 0,
+          "high_severity": 0,
+          "medium_severity": 0,
+          "low_severity": 0
+        }
+      },
+      "test_coverage": {
+        "has_tests": false,
+        "coverage_percentage": "0.0",
+        "test_frameworks": [],
+        "test_files": [],
+        "test_directories": [],
+        "issues": [
+          "No test files found",
+          "No test framework detected"
+        ],
+        "recommendations": [
+          "Add unit tests for critical functionality",
+          "Set up a proper testing framework"
+        ]
+      },
+      "license_info": {
+        "license_type": "Unknown",
+        "is_open_source": false,
+        "license_file": null,
+        "compatibility": "Unknown"
+      },
+      "metrics": {
+        "lines_of_code": 1,
+        "files_count": 1,
+        "complexity": "0.10253999999999999",
+        "languages": {
+          "unknown": {
+            "files": 1,
+            "lines": 1
+          }
+        },
+        "largest_files": [
+          {
+            "path": "/tmp/reposcope_mioataym/Hello-World/README",
+            "lines": 1,
+            "language": "unknown"
+          }
+        ]
+      }
+    },
+    "analysis_duration": "0.901198",
+    "error_message": null
+  }
+}

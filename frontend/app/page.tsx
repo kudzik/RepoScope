@@ -1,13 +1,14 @@
 'use client';
 
-import { Card, CardContent } from '@/components/ui/card';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { AnalysisForm } from '@/components/analysis-form';
-import { AnalysisResults } from '@/components/analysis-results';
 import { AnalysisList } from '@/components/analysis-list';
+import { AnalysisResults } from '@/components/analysis-results';
+import APIDebug from '@/components/api-debug';
 import { LoadingOverlay } from '@/components/loading-overlay';
-import { useState } from 'react';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { Card, CardContent } from '@/components/ui/card';
 import type { AnalysisResponse } from '@/lib/api-types';
+import { useState } from 'react';
 
 export default function Home() {
   const [selectedAnalysis, setSelectedAnalysis] =
@@ -15,6 +16,7 @@ export default function Home() {
   const [showList, setShowList] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisError, setAnalysisError] = useState<string | null>(null);
+  const [showDebug, setShowDebug] = useState(false);
 
   const handleAnalysisStart = () => {
     setIsAnalyzing(true);
@@ -36,6 +38,10 @@ export default function Home() {
     setSelectedAnalysis(null);
     setShowList(false);
     setAnalysisError(null);
+  };
+
+  const toggleDebug = () => {
+    setShowDebug(!showDebug);
   };
 
   return (
@@ -68,13 +74,23 @@ export default function Home() {
                 </button>
               )}
             </div>
-            <ThemeToggle />
+            <div className="flex items-center gap-2">
+              <button
+                onClick={toggleDebug}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {showDebug ? 'Hide Debug' : 'API Debug'}
+              </button>
+              <ThemeToggle />
+            </div>
           </div>
         </header>
 
         {/* Main content */}
         <div className="container mx-auto px-4 py-6 sm:py-8 md:py-12 lg:py-16">
-          {!selectedAnalysis ? (
+          {showDebug ? (
+            <APIDebug />
+          ) : !selectedAnalysis ? (
             <div className="text-center space-y-6">
               {/* Hero section */}
               <section className="space-y-4" aria-labelledby="hero-title">

@@ -1,5 +1,7 @@
 """Analysis API endpoints."""
 
+import asyncio
+import subprocess
 from typing import AsyncGenerator
 from uuid import UUID
 
@@ -39,6 +41,15 @@ async def create_analysis(
         print(f"📤 API REQUEST: Starting analysis for {request.repository_url}")
         print(f"   🔧 Include AI Summary: {request.include_ai_summary}")
         print(f"   🔧 Analysis Depth: {request.analysis_depth}")
+
+        # Check repository size before analysis
+        repo_size_check = await _check_repository_size(str(request.repository_url))
+        if not repo_size_check["suitable"]:
+            raise HTTPException(
+                status_code=413,
+                detail=f"Repository too large for analysis: {repo_size_check['reason']}. "
+                f"Try with a smaller repository or use 'quick' analysis depth.",
+            )
 
         # Start analysis with overall timeout handling
         analysis = await asyncio.wait_for(
@@ -157,3 +168,87 @@ async def delete_analysis(
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to delete analysis: {str(e)}") from e
+
+
+async def _check_repository_size(repo_url: str) -> dict:
+    """Check if repository is suitable for analysis based on size."""
+    try:
+        # Extract owner/repo from URL
+        if "github.com" not in repo_url:
+            return {"suitable": True, "reason": "Non-GitHub repository"}
+
+        # Parse GitHub URL
+        parts = (
+            repo_url.replace("https://github.com/", "").replace("http://github.com/", "").strip("/")
+        )
+        if "/" not in parts:
+            return {"suitable": False, "reason": "Invalid GitHub URL format"}
+
+        owner, repo = parts.split("/", 1)
+        repo = repo.split("/")[0]  # Remove any path after repo name
+
+        print(f"🔍 Checking repository size: {owner}/{repo}")
+
+        # Use GitHub API to get repository info
+        import aiohttp
+
+        async with aiohttp.ClientSession() as session:
+            api_url = f"https://api.github.com/repos/{owner}/{repo}"
+            headers = {
+                "Accept": "application/vnd.github.v3+json",
+                "User-Agent": "RepoScope-Analyzer",
+            }
+
+            async with session.get(api_url, headers=headers, timeout=10) as response:
+                if response.status == 404:
+                    return {"suitable": False, "reason": "Repository not found"}
+                elif response.status == 403:
+                    return {"suitable": False, "reason": "Repository access forbidden"}
+                elif response.status != 200:
+                    return {"suitable": False, "reason": f"GitHub API error: {response.status}"}
+
+                repo_data = await response.json()
+
+                # Check repository size (in KB)
+                size_kb = repo_data.get("size", 0)
+                stargazers_count = repo_data.get("stargazers_count", 0)
+                forks_count = repo_data.get("forks_count", 0)
+
+                print(
+                    f"📊 Repository stats: {size_kb}KB, {stargazers_count} stars, {forks_count} forks"
+                )
+
+                # Size limits based on analysis depth
+                max_size_quick = 50_000  # 50MB for quick analysis
+                max_size_full = 10_000  # 10MB for full analysis
+
+                # Check if it's a very large/popular repository
+                if stargazers_count > 10000 or forks_count > 1000:
+                    return {
+                        "suitable": False,
+                        "reason": f"Repository too popular (>{stargazers_count} stars, {forks_count} forks). "
+                        f"Use a smaller repository for analysis.",
+                    }
+
+                # Check size limits
+                if size_kb > max_size_quick:
+                    return {
+                        "suitable": False,
+                        "reason": f"Repository too large ({size_kb:,}KB > {max_size_quick:,}KB). "
+                        f"Maximum size for analysis is {max_size_quick:,}KB.",
+                    }
+
+                return {
+                    "suitable": True,
+                    "reason": f"Repository size OK ({size_kb:,}KB)",
+                    "size_kb": size_kb,
+                    "stars": stargazers_count,
+                    "forks": forks_count,
+                }
+
+    except asyncio.TimeoutError:
+        return {"suitable": False, "reason": "Timeout checking repository size"}
+    except Exception as e:
+        print(f"⚠️ Error checking repository size: {e}")
+        # Allow analysis to proceed if we can't check size
+        return {"suitable": True, "reason": f"Could not check size: {str(e)}"}

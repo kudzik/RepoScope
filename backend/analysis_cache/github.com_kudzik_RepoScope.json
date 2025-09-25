@@ -1,0 +1,2191 @@
+{
+  "repository_url": "https://github.com/kudzik/RepoScope",
+  "cached_at": "2025-09-25T16:48:29.997269",
+  "analysis_data": {
+    "id": "b35205a4-1511-4e76-b1ba-fdc9d1eaf848",
+    "repository_url": "https://github.com/kudzik/RepoScope",
+    "repository_info": {
+      "name": "RepoScope",
+      "owner": "kudzik",
+      "full_name": "kudzik/RepoScope",
+      "description": null,
+      "language": "Python",
+      "stars": 0,
+      "forks": 0,
+      "size": 686,
+      "created_at": "2025-09-23T19:02:55+00:00",
+      "updated_at": "2025-09-25T12:28:25+00:00"
+    },
+    "status": "completed",
+    "created_at": "2025-09-25T14:48:28.985686+00:00",
+    "completed_at": "2025-09-25T14:48:29.993973+00:00",
+    "code_structure": {
+      "total_files": 97,
+      "total_lines": 18024,
+      "languages": {
+        "unknown": {
+          "files": 10,
+          "lines": 446
+        },
+        "javascript": {
+          "files": 4,
+          "lines": 107
+        },
+        "typescript": {
+          "files": 25,
+          "lines": 3482
+        },
+        "python": {
+          "files": 57,
+          "lines": 13946
+        },
+        "shell": {
+          "files": 1,
+          "lines": 43
+        }
+      },
+      "complexity_score": "0.9645360824742268",
+      "largest_files": [
+        {
+          "path": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/analysis_service.py",
+          "lines": 1464,
+          "language": "python"
+        },
+        {
+          "path": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/code_analyzer.py",
+          "lines": 1189,
+          "language": "python"
+        },
+        {
+          "path": "/tmp/reposcope_vokzyzat/RepoScope/frontend/src/components/analysis-results.tsx",
+          "lines": 1088,
+          "language": "typescript"
+        },
+        {
+          "path": "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_step_by_step.py",
+          "lines": 534,
+          "language": "python"
+        },
+        {
+          "path": "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_comprehensive.py",
+          "lines": 517,
+          "language": "python"
+        }
+      ],
+      "quality_metrics": {
+        "maintainability_index": "62.68527835051546",
+        "technical_debt_ratio": "1.0",
+        "code_duplication": "0.097",
+        "test_coverage": "0.9"
+      },
+      "architecture_score": "42.0",
+      "code_patterns": {
+        "design_patterns": [
+          {
+            "pattern": "Singleton",
+            "file": "test_code_metrics.py",
+            "line": 205,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "test_code_metrics.py",
+            "line": 206,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "test_code_metrics.py",
+            "line": 207,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "test_code_metrics.py",
+            "line": 209,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "test_code_metrics.py",
+            "line": 217,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "test_code_metrics.py",
+            "line": 219,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "test_code_metrics.py",
+            "line": 221,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "test_code_metrics.py",
+            "line": 222,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "test_code_metrics.py",
+            "line": 223,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "test_code_metrics.py",
+            "line": 334,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "llm_service.py",
+            "line": 272,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Observer",
+            "file": "llm_service.py",
+            "line": 272,
+            "confidence": "0.6"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "code_analyzer.py",
+            "line": 646,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "code_analyzer.py",
+            "line": 647,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "code_analyzer.py",
+            "line": 650,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Factory",
+            "file": "code_analyzer.py",
+            "line": 658,
+            "confidence": "0.6"
+          },
+          {
+            "pattern": "Observer",
+            "file": "code_analyzer.py",
+            "line": 668,
+            "confidence": "0.6"
+          },
+          {
+            "pattern": "Observer",
+            "file": "code_analyzer.py",
+            "line": 669,
+            "confidence": "0.6"
+          },
+          {
+            "pattern": "Observer",
+            "file": "code_analyzer.py",
+            "line": 672,
+            "confidence": "0.6"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "code_analyzer.py",
+            "line": 1042,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "code_analyzer.py",
+            "line": 1045,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "code_analyzer.py",
+            "line": 1049,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Singleton",
+            "file": "api-client.ts",
+            "line": 164,
+            "confidence": "0.7"
+          }
+        ],
+        "anti_patterns": [
+          {
+            "pattern": "God Class",
+            "file": ".agentic-cursorrules",
+            "line": 99,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": ".agentic-cursorrules",
+            "line": 126,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": ".agentic-cursorrules",
+            "line": 235,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": ".agentic-cursorrules",
+            "line": 270,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": ".agentic-cursorrules",
+            "line": 283,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "setup_api_keys.py",
+            "line": 120,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_analysis_service_cache_integration.py",
+            "line": 53,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_analysis_service_cache_integration.py",
+            "line": 112,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_analysis_service_cache_integration.py",
+            "line": 164,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_analysis_service_cache_integration.py",
+            "line": 234,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_analysis_service_cache_integration.py",
+            "line": 307,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_api_endpoints.py",
+            "line": 153,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_code_metrics.py",
+            "line": 13,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_code_metrics.py",
+            "line": 28,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_code_metrics.py",
+            "line": 55,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_code_metrics.py",
+            "line": 196,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_code_metrics.py",
+            "line": 197,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_code_metrics.py",
+            "line": 198,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_code_metrics.py",
+            "line": 206,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_code_metrics.py",
+            "line": 319,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_component_diagnostics.py",
+            "line": 38,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_component_diagnostics.py",
+            "line": 111,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_component_diagnostics.py",
+            "line": 208,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_component_diagnostics.py",
+            "line": 314,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_diagnostic.py",
+            "line": 203,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_llm_service.py",
+            "line": 15,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_comprehensive_integration.py",
+            "line": 54,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_comprehensive_integration.py",
+            "line": 141,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_comprehensive_integration.py",
+            "line": 219,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_comprehensive_integration.py",
+            "line": 290,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_comprehensive_integration.py",
+            "line": 351,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_architecture_analysis.py",
+            "line": 40,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_architecture_analysis.py",
+            "line": 133,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_architecture_analysis.py",
+            "line": 254,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_architecture_analysis.py",
+            "line": 370,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_architecture_analysis.py",
+            "line": 444,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_simple.py",
+            "line": 70,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_simple.py",
+            "line": 181,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_fixed.py",
+            "line": 71,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_fixed.py",
+            "line": 189,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_fixed.py",
+            "line": 268,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_fixed.py",
+            "line": 361,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_github_service.py",
+            "line": 15,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_cache_comprehensive.py",
+            "line": 26,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_cache_comprehensive.py",
+            "line": 58,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_cache_comprehensive.py",
+            "line": 124,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_cache_comprehensive.py",
+            "line": 197,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_cache_comprehensive.py",
+            "line": 294,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_cache_comprehensive.py",
+            "line": 332,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_cache_comprehensive.py",
+            "line": 390,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_cache_comprehensive.py",
+            "line": 434,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_debugging.py",
+            "line": 223,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_step_by_step.py",
+            "line": 405,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_step_by_step.py",
+            "line": 457,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_cost_optimization.py",
+            "line": 11,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_cost_optimization.py",
+            "line": 31,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_cost_optimization.py",
+            "line": 52,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_cost_optimization.py",
+            "line": 99,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "test_cost_optimization.py",
+            "line": 173,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_analysis_cache_storage.py",
+            "line": 135,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_analysis_cache_storage.py",
+            "line": 254,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_analysis_cache_storage.py",
+            "line": 307,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_cache_integration_e2e.py",
+            "line": 37,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "analysis_cache.py",
+            "line": 63,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 20,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "code_analyzer.py",
+            "line": 28,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 180,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 188,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 189,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 205,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 217,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 218,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 234,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 242,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 243,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 259,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 267,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 268,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 340,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "code_analyzer.py",
+            "line": 345,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "code_analyzer.py",
+            "line": 437,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "code_analyzer.py",
+            "line": 632,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 683,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 685,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 688,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 946,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 999,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 1000,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 1001,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 1004,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 1006,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 1017,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 1021,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 1029,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 1032,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "code_analyzer.py",
+            "line": 1083,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "analysis_service.py",
+            "line": 23,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "analysis_service.py",
+            "line": 684,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "analysis_service.py",
+            "line": 884,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "analysis_service.py",
+            "line": 1195,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "God Class",
+            "file": "cost_optimization.py",
+            "line": 13,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "cost_optimization.py",
+            "line": 90,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "God Class",
+            "file": "cost_optimization.py",
+            "line": 241,
+            "confidence": "0.8"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "run_cache_tests.py",
+            "line": 90,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "auto-commit-fix.py",
+            "line": 22,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "fix-code-quality.py",
+            "line": 34,
+            "confidence": "0.7"
+          },
+          {
+            "pattern": "Long Method",
+            "file": "test_ai_cache.py",
+            "line": 17,
+            "confidence": "0.7"
+          }
+        ],
+        "code_smells": [
+          {
+            "pattern": "Dead Code",
+            "file": "test-vscode-format.tsx",
+            "line": 2,
+            "confidence": "0.6"
+          },
+          {
+            "pattern": "Dead Code",
+            "file": "code_analyzer.py",
+            "line": 709,
+            "confidence": "0.6"
+          },
+          {
+            "pattern": "Dead Code",
+            "file": "auto-commit-fix.py",
+            "line": 31,
+            "confidence": "0.6"
+          },
+          {
+            "pattern": "Dead Code",
+            "file": "auto-commit-fix.py",
+            "line": 54,
+            "confidence": "0.6"
+          },
+          {
+            "pattern": "Dead Code",
+            "file": "auto-commit-fix.py",
+            "line": 89,
+            "confidence": "0.6"
+          },
+          {
+            "pattern": "Dead Code",
+            "file": "auto-commit-fix.py",
+            "line": 119,
+            "confidence": "0.6"
+          },
+          {
+            "pattern": "Dead Code",
+            "file": "eslint.config.mjs",
+            "line": 32,
+            "confidence": "0.6"
+          }
+        ]
+      },
+      "hotspots": [
+        {
+          "type": "large_file",
+          "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/analysis_service.py",
+          "lines": 1464,
+          "severity": "high",
+          "description": "Large file with 1464 lines"
+        },
+        {
+          "type": "large_file",
+          "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/code_analyzer.py",
+          "lines": 1189,
+          "severity": "high",
+          "description": "Large file with 1189 lines"
+        },
+        {
+          "type": "large_file",
+          "file": "/tmp/reposcope_vokzyzat/RepoScope/frontend/src/components/analysis-results.tsx",
+          "lines": 1088,
+          "severity": "high",
+          "description": "Large file with 1088 lines"
+        },
+        {
+          "type": "large_file",
+          "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_step_by_step.py",
+          "lines": 534,
+          "severity": "medium",
+          "description": "Large file with 534 lines"
+        },
+        {
+          "type": "large_file",
+          "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_comprehensive.py",
+          "lines": 517,
+          "severity": "medium",
+          "description": "Large file with 517 lines"
+        },
+        {
+          "type": "high_complexity",
+          "file": "repository",
+          "lines": 0,
+          "severity": "high",
+          "description": "High overall complexity: 0.96"
+        }
+      ],
+      "score": 33,
+      "issues": [
+        "Large file detected: analysis_service.py (1464 lines)",
+        "Large file detected: code_analyzer.py (1189 lines)",
+        "Large file detected: analysis-results.tsx (1088 lines)",
+        "High technical debt ratio - significant refactoring needed",
+        "Anti-patterns detected: 107 issues found"
+      ],
+      "recommendations": [
+        "Address technical debt through systematic refactoring",
+        "Prioritize refactoring of most complex modules",
+        "Improve code architecture and organization",
+        "Consider breaking down large modules into smaller ones",
+        "Refactor anti-patterns to improve code quality"
+      ]
+    },
+    "documentation_quality": {
+      "has_readme": true,
+      "has_contributing": false,
+      "has_license": false,
+      "has_api_docs": true,
+      "has_changelog": true,
+      "readme_quality": 3,
+      "comment_coverage": "0.07120849024306744",
+      "doc_files": [
+        "API_KEYS_SETUP.md",
+        "API_KEYS_SETUP.md",
+        "API.md"
+      ],
+      "issues": [
+        "Missing contributing guidelines",
+        "Missing license file",
+        "Low code comment coverage"
+      ],
+      "recommendations": [
+        "Add CONTRIBUTING.md file",
+        "Add LICENSE file",
+        "Add more inline documentation"
+      ],
+      "documentation_score": "0.5371208490243068",
+      "score": 53
+    },
+    "test_coverage": {
+      "has_tests": true,
+      "test_frameworks": [
+        "pytest"
+      ],
+      "coverage_percentage": "85.0",
+      "test_files": [
+        "/tmp/reposcope_vokzyzat/RepoScope/test-editorconfig.js",
+        "/tmp/reposcope_vokzyzat/RepoScope/test-vscode-format.tsx",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/test_server.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/test_api_connection.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/test_responses.json",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/requirements-test.txt",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/test_ai_responses_cache.json",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/pytest.ini",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/test_hot_reload.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_analysis_service_cache_integration.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_api_endpoints.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_code_metrics.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_component_diagnostics.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_main.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_diagnostic.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_llm_service.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_comprehensive_integration.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_config.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_architecture_analysis.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_simple.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_fixed.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_github_service.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_comprehensive.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_code_analyzer.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_debugging.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_analysis_service_enhanced.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_step_by_step.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cost_optimization.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_analysis_api.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_analysis_cache_storage.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_integration_e2e.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/config/test_mode.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/analysis_cache/github.com_test-owner_test-repo.json",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/scripts/run_cache_tests.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/scripts/test_cache_integration.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/scripts/test_ai_cache.py",
+        "/tmp/reposcope_vokzyzat/RepoScope/docs/TESTING_STRATEGY.md",
+        "/tmp/reposcope_vokzyzat/RepoScope/docs/TESTS.md",
+        "/tmp/reposcope_vokzyzat/RepoScope/frontend/test-tailwind.tsx"
+      ],
+      "test_directories": [
+        "/tmp/reposcope_vokzyzat/RepoScope/backend/tests"
+      ],
+      "issues": [],
+      "recommendations": []
+    },
+    "security_issues": [
+      {
+        "type": "security",
+        "severity": "high",
+        "description": "Hardcoded token",
+        "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_github_service.py",
+        "line": 293
+      },
+      {
+        "type": "security",
+        "severity": "high",
+        "description": "Private key in code",
+        "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/analysis_service.py",
+        "line": 1047
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/analysis_service.py",
+        "line": 1121
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of eval() function",
+        "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/analysis_service.py",
+        "line": 1319
+      },
+      {
+        "type": "security",
+        "severity": "medium",
+        "description": "Use of document.write()",
+        "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/analysis_service.py",
+        "line": 1123
+      }
+    ],
+    "license_info": {
+      "license_type": "Unknown",
+      "is_open_source": false,
+      "license_file": null,
+      "compatibility": "Unknown"
+    },
+    "ai_summary": "This is a Python repository with 0 stars and 0 forks. The repository contains 97 files with 18024 lines of code.",
+    "result": {
+      "summary": "Analysis completed",
+      "code_quality": {
+        "score": 33,
+        "issues": [
+          "Large file detected: analysis_service.py (1464 lines)",
+          "Large file detected: code_analyzer.py (1189 lines)",
+          "Large file detected: analysis-results.tsx (1088 lines)",
+          "High technical debt ratio - significant refactoring needed",
+          "Anti-patterns detected: 107 issues found"
+        ],
+        "recommendations": [
+          "Address technical debt through systematic refactoring",
+          "Prioritize refactoring of most complex modules",
+          "Improve code architecture and organization",
+          "Consider breaking down large modules into smaller ones",
+          "Refactor anti-patterns to improve code quality"
+        ],
+        "metrics": {
+          "maintainability_index": "62.68527835051546",
+          "technical_debt_ratio": "100.0",
+          "code_duplication": "9.700000000000001",
+          "architecture_score": "42.0"
+        },
+        "patterns": {
+          "design_patterns": [
+            {
+              "pattern": "Singleton",
+              "file": "test_code_metrics.py",
+              "line": 205,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "test_code_metrics.py",
+              "line": 206,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "test_code_metrics.py",
+              "line": 207,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "test_code_metrics.py",
+              "line": 209,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "test_code_metrics.py",
+              "line": 217,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "test_code_metrics.py",
+              "line": 219,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "test_code_metrics.py",
+              "line": 221,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "test_code_metrics.py",
+              "line": 222,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "test_code_metrics.py",
+              "line": 223,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "test_code_metrics.py",
+              "line": 334,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "llm_service.py",
+              "line": 272,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Observer",
+              "file": "llm_service.py",
+              "line": 272,
+              "confidence": "0.6"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "code_analyzer.py",
+              "line": 646,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "code_analyzer.py",
+              "line": 647,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "code_analyzer.py",
+              "line": 650,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Factory",
+              "file": "code_analyzer.py",
+              "line": 658,
+              "confidence": "0.6"
+            },
+            {
+              "pattern": "Observer",
+              "file": "code_analyzer.py",
+              "line": 668,
+              "confidence": "0.6"
+            },
+            {
+              "pattern": "Observer",
+              "file": "code_analyzer.py",
+              "line": 669,
+              "confidence": "0.6"
+            },
+            {
+              "pattern": "Observer",
+              "file": "code_analyzer.py",
+              "line": 672,
+              "confidence": "0.6"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "code_analyzer.py",
+              "line": 1042,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "code_analyzer.py",
+              "line": 1045,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "code_analyzer.py",
+              "line": 1049,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Singleton",
+              "file": "api-client.ts",
+              "line": 164,
+              "confidence": "0.7"
+            }
+          ],
+          "anti_patterns": [
+            {
+              "pattern": "God Class",
+              "file": ".agentic-cursorrules",
+              "line": 99,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": ".agentic-cursorrules",
+              "line": 126,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": ".agentic-cursorrules",
+              "line": 235,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": ".agentic-cursorrules",
+              "line": 270,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": ".agentic-cursorrules",
+              "line": 283,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "setup_api_keys.py",
+              "line": 120,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_analysis_service_cache_integration.py",
+              "line": 53,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_analysis_service_cache_integration.py",
+              "line": 112,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_analysis_service_cache_integration.py",
+              "line": 164,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_analysis_service_cache_integration.py",
+              "line": 234,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_analysis_service_cache_integration.py",
+              "line": 307,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_api_endpoints.py",
+              "line": 153,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_code_metrics.py",
+              "line": 13,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_code_metrics.py",
+              "line": 28,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_code_metrics.py",
+              "line": 55,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_code_metrics.py",
+              "line": 196,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_code_metrics.py",
+              "line": 197,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_code_metrics.py",
+              "line": 198,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_code_metrics.py",
+              "line": 206,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_code_metrics.py",
+              "line": 319,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_component_diagnostics.py",
+              "line": 38,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_component_diagnostics.py",
+              "line": 111,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_component_diagnostics.py",
+              "line": 208,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_component_diagnostics.py",
+              "line": 314,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_diagnostic.py",
+              "line": 203,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_llm_service.py",
+              "line": 15,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_comprehensive_integration.py",
+              "line": 54,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_comprehensive_integration.py",
+              "line": 141,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_comprehensive_integration.py",
+              "line": 219,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_comprehensive_integration.py",
+              "line": 290,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_comprehensive_integration.py",
+              "line": 351,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_architecture_analysis.py",
+              "line": 40,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_architecture_analysis.py",
+              "line": 133,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_architecture_analysis.py",
+              "line": 254,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_architecture_analysis.py",
+              "line": 370,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_architecture_analysis.py",
+              "line": 444,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_simple.py",
+              "line": 70,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_simple.py",
+              "line": 181,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_fixed.py",
+              "line": 71,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_fixed.py",
+              "line": 189,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_fixed.py",
+              "line": 268,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_fixed.py",
+              "line": 361,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_github_service.py",
+              "line": 15,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_cache_comprehensive.py",
+              "line": 26,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_cache_comprehensive.py",
+              "line": 58,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_cache_comprehensive.py",
+              "line": 124,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_cache_comprehensive.py",
+              "line": 197,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_cache_comprehensive.py",
+              "line": 294,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_cache_comprehensive.py",
+              "line": 332,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_cache_comprehensive.py",
+              "line": 390,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_cache_comprehensive.py",
+              "line": 434,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_debugging.py",
+              "line": 223,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_step_by_step.py",
+              "line": 405,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_step_by_step.py",
+              "line": 457,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_cost_optimization.py",
+              "line": 11,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_cost_optimization.py",
+              "line": 31,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_cost_optimization.py",
+              "line": 52,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_cost_optimization.py",
+              "line": 99,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "test_cost_optimization.py",
+              "line": 173,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_analysis_cache_storage.py",
+              "line": 135,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_analysis_cache_storage.py",
+              "line": 254,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_analysis_cache_storage.py",
+              "line": 307,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_cache_integration_e2e.py",
+              "line": 37,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "analysis_cache.py",
+              "line": 63,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 20,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "code_analyzer.py",
+              "line": 28,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 180,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 188,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 189,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 205,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 217,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 218,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 234,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 242,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 243,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 259,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 267,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 268,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 340,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "code_analyzer.py",
+              "line": 345,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "code_analyzer.py",
+              "line": 437,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "code_analyzer.py",
+              "line": 632,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 683,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 685,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 688,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 946,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 999,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 1000,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 1001,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 1004,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 1006,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 1017,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 1021,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 1029,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 1032,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "code_analyzer.py",
+              "line": 1083,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "analysis_service.py",
+              "line": 23,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "analysis_service.py",
+              "line": 684,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "analysis_service.py",
+              "line": 884,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "analysis_service.py",
+              "line": 1195,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "God Class",
+              "file": "cost_optimization.py",
+              "line": 13,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "cost_optimization.py",
+              "line": 90,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "God Class",
+              "file": "cost_optimization.py",
+              "line": 241,
+              "confidence": "0.8"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "run_cache_tests.py",
+              "line": 90,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "auto-commit-fix.py",
+              "line": 22,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "fix-code-quality.py",
+              "line": 34,
+              "confidence": "0.7"
+            },
+            {
+              "pattern": "Long Method",
+              "file": "test_ai_cache.py",
+              "line": 17,
+              "confidence": "0.7"
+            }
+          ],
+          "code_smells": [
+            {
+              "pattern": "Dead Code",
+              "file": "test-vscode-format.tsx",
+              "line": 2,
+              "confidence": "0.6"
+            },
+            {
+              "pattern": "Dead Code",
+              "file": "code_analyzer.py",
+              "line": 709,
+              "confidence": "0.6"
+            },
+            {
+              "pattern": "Dead Code",
+              "file": "auto-commit-fix.py",
+              "line": 31,
+              "confidence": "0.6"
+            },
+            {
+              "pattern": "Dead Code",
+              "file": "auto-commit-fix.py",
+              "line": 54,
+              "confidence": "0.6"
+            },
+            {
+              "pattern": "Dead Code",
+              "file": "auto-commit-fix.py",
+              "line": 89,
+              "confidence": "0.6"
+            },
+            {
+              "pattern": "Dead Code",
+              "file": "auto-commit-fix.py",
+              "line": 119,
+              "confidence": "0.6"
+            },
+            {
+              "pattern": "Dead Code",
+              "file": "eslint.config.mjs",
+              "line": 32,
+              "confidence": "0.6"
+            }
+          ]
+        },
+        "hotspots": [
+          {
+            "type": "large_file",
+            "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/analysis_service.py",
+            "lines": 1464,
+            "severity": "high",
+            "description": "Large file with 1464 lines"
+          },
+          {
+            "type": "large_file",
+            "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/code_analyzer.py",
+            "lines": 1189,
+            "severity": "high",
+            "description": "Large file with 1189 lines"
+          },
+          {
+            "type": "large_file",
+            "file": "/tmp/reposcope_vokzyzat/RepoScope/frontend/src/components/analysis-results.tsx",
+            "lines": 1088,
+            "severity": "high",
+            "description": "Large file with 1088 lines"
+          },
+          {
+            "type": "large_file",
+            "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_step_by_step.py",
+            "lines": 534,
+            "severity": "medium",
+            "description": "Large file with 534 lines"
+          },
+          {
+            "type": "large_file",
+            "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_comprehensive.py",
+            "lines": 517,
+            "severity": "medium",
+            "description": "Large file with 517 lines"
+          },
+          {
+            "type": "high_complexity",
+            "file": "repository",
+            "lines": 0,
+            "severity": "high",
+            "description": "High overall complexity: 0.96"
+          }
+        ]
+      },
+      "documentation": {
+        "score": 53,
+        "issues": [
+          "Missing contributing guidelines",
+          "Missing license file",
+          "Low code comment coverage"
+        ],
+        "recommendations": [
+          "Add CONTRIBUTING.md file",
+          "Add LICENSE file",
+          "Add more inline documentation"
+        ],
+        "details": {
+          "has_readme": true,
+          "has_contributing": false,
+          "has_license": false,
+          "has_api_docs": true,
+          "has_changelog": true,
+          "readme_quality": 3,
+          "comment_coverage": "0.07120849024306744",
+          "doc_files": [
+            "API_KEYS_SETUP.md",
+            "API_KEYS_SETUP.md",
+            "API.md"
+          ]
+        }
+      },
+      "security": {
+        "score": 30,
+        "vulnerabilities": [
+          {
+            "type": "security",
+            "severity": "high",
+            "description": "Hardcoded token",
+            "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_github_service.py",
+            "line": 293
+          },
+          {
+            "type": "security",
+            "severity": "high",
+            "description": "Private key in code",
+            "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/analysis_service.py",
+            "line": 1047
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/analysis_service.py",
+            "line": 1121
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of eval() function",
+            "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/analysis_service.py",
+            "line": 1319
+          },
+          {
+            "type": "security",
+            "severity": "medium",
+            "description": "Use of document.write()",
+            "file": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/analysis_service.py",
+            "line": 1123
+          }
+        ],
+        "recommendations": [
+          "Review and remove hardcoded secrets",
+          "Use environment variables for sensitive data",
+          "Avoid using eval() function",
+          "Use safer alternatives for dynamic code execution",
+          "Implement proper input validation"
+        ],
+        "summary": {
+          "total_issues": 5,
+          "high_severity": 2,
+          "medium_severity": 3,
+          "low_severity": 0
+        }
+      },
+      "test_coverage": {
+        "has_tests": true,
+        "coverage_percentage": "85.0",
+        "test_frameworks": [
+          "pytest"
+        ],
+        "test_files": [
+          "/tmp/reposcope_vokzyzat/RepoScope/test-editorconfig.js",
+          "/tmp/reposcope_vokzyzat/RepoScope/test-vscode-format.tsx",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/test_server.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/test_api_connection.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/test_responses.json",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/requirements-test.txt",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/test_ai_responses_cache.json",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/pytest.ini",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/test_hot_reload.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_analysis_service_cache_integration.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_api_endpoints.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_code_metrics.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_component_diagnostics.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_main.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_diagnostic.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_llm_service.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_comprehensive_integration.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_config.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_architecture_analysis.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_simple.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_fixed.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_github_service.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_comprehensive.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_code_analyzer.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_debugging.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_analysis_service_enhanced.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_step_by_step.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cost_optimization.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_analysis_api.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_analysis_cache_storage.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_integration_e2e.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/config/test_mode.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/analysis_cache/github.com_test-owner_test-repo.json",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/scripts/run_cache_tests.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/scripts/test_cache_integration.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/scripts/test_ai_cache.py",
+          "/tmp/reposcope_vokzyzat/RepoScope/docs/TESTING_STRATEGY.md",
+          "/tmp/reposcope_vokzyzat/RepoScope/docs/TESTS.md",
+          "/tmp/reposcope_vokzyzat/RepoScope/frontend/test-tailwind.tsx"
+        ],
+        "test_directories": [
+          "/tmp/reposcope_vokzyzat/RepoScope/backend/tests"
+        ],
+        "issues": [],
+        "recommendations": []
+      },
+      "license_info": {
+        "license_type": "Unknown",
+        "is_open_source": false,
+        "license_file": null,
+        "compatibility": "Unknown"
+      },
+      "metrics": {
+        "lines_of_code": 18024,
+        "files_count": 97,
+        "complexity": "0.9645360824742268",
+        "languages": {
+          "unknown": {
+            "files": 10,
+            "lines": 446
+          },
+          "javascript": {
+            "files": 4,
+            "lines": 107
+          },
+          "typescript": {
+            "files": 25,
+            "lines": 3482
+          },
+          "python": {
+            "files": 57,
+            "lines": 13946
+          },
+          "shell": {
+            "files": 1,
+            "lines": 43
+          }
+        },
+        "largest_files": [
+          {
+            "path": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/analysis_service.py",
+            "lines": 1464,
+            "language": "python"
+          },
+          {
+            "path": "/tmp/reposcope_vokzyzat/RepoScope/backend/services/code_analyzer.py",
+            "lines": 1189,
+            "language": "python"
+          },
+          {
+            "path": "/tmp/reposcope_vokzyzat/RepoScope/frontend/src/components/analysis-results.tsx",
+            "lines": 1088,
+            "language": "typescript"
+          },
+          {
+            "path": "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_step_by_step.py",
+            "lines": 534,
+            "language": "python"
+          },
+          {
+            "path": "/tmp/reposcope_vokzyzat/RepoScope/backend/tests/test_cache_comprehensive.py",
+            "lines": 517,
+            "language": "python"
+          }
+        ]
+      }
+    },
+    "analysis_duration": "1.008287",
+    "error_message": null
+  }
+}

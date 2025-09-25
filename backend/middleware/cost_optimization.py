@@ -185,12 +185,8 @@ class ResponseCache:
         except Exception as e:
             print(f"Error saving cache file: {e}")
 
-    def export_cache_for_tests(self, export_file: str = "test_ai_responses.json") -> None:
-        """Export cache for use in tests."""
-        if not self.test_mode:
-            print("Export only available in test mode")
-            return
-
+    def export_to_file(self, export_file: str = "test_ai_responses.json") -> None:
+        """Export cache to file."""
         try:
             # Create a clean export without timestamps for tests
             export_data = {}
@@ -207,12 +203,8 @@ class ResponseCache:
         except Exception as e:
             print(f"Error exporting cache: {e}")
 
-    def import_cache_for_tests(self, import_file: str) -> None:
-        """Import cache from test file."""
-        if not self.test_mode:
-            print("Import only available in test mode")
-            return
-
+    def import_from_file(self, import_file: str) -> None:
+        """Import cache from file."""
         if not os.path.exists(import_file):
             print(f"Import file {import_file} not found")
             return
@@ -262,11 +254,28 @@ class CostOptimizationMiddleware:
         """
         # 1. Check cache first
         if self.llm_config.should_use_cache(prompt):
-            cached_response = self.response_cache.get(prompt, "any")
+            # Try to find cached response for any model
+            cached_response = None
+            cached_model = None
+
+            # Use default models if available_models is None
+            models_to_check = available_models or ["gpt-3.5-turbo", "gpt-4", "gpt-4-turbo"]
+
+            for model in models_to_check:
+                cached_response = self.response_cache.get(prompt, model)
+                if cached_response:
+                    cached_model = model
+                    break
+
             if cached_response:
                 if self.test_mode:
-                    print(f"Using cached AI response for prompt: {prompt[:50]}...")
-                return {"response": cached_response, "cached": True, "cost": 0.0, "model": "cached"}
+                    print(f"🧪 Using cached AI response for prompt: {prompt[:50]}...")
+                return {
+                    "response": cached_response,
+                    "cached": True,
+                    "cost": 0.0,
+                    "model": cached_model or "cached",
+                }
 
         # 2. Select optimal model
         optimal_model = self.llm_config.get_optimal_model(task_complexity, available_models)

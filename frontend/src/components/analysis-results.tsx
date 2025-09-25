@@ -1541,108 +1541,73 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                 Documentation Status
               </h4>
               {result.documentation.details ? (
-                <div className="space-y-3">
-                  {/* Documentation Files */}
-                  <div className="space-y-2">
-                    <div
-                      className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-950/20 rounded-lg border cursor-help"
-                      title="README file: Essential project documentation that explains what the project does, how to install and use it."
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-green-500" />
-                        <span>README:</span>
-                      </div>
-                      <span
-                        className={
-                          result.documentation.details.has_readme
-                            ? 'text-green-600 font-semibold'
-                            : 'text-red-600 font-semibold'
-                        }
-                      >
+                <div className="space-y-2 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
+                  <div
+                    className="text-sm p-2 bg-green-50 dark:bg-green-950/20 rounded-lg border cursor-help"
+                    title="README file: Essential project documentation that explains what the project does, how to install and use it."
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-green-500" />
+                      <span className="text-green-700 dark:text-green-300">
+                        README:{' '}
                         {result.documentation.details.has_readme ? '✓' : '✗'}
                       </span>
                     </div>
-                    <div
-                      className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border cursor-help"
-                      title="API Documentation: Documentation for application programming interfaces and endpoints."
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-blue-500" />
-                        <span>API Docs:</span>
-                      </div>
-                      <span
-                        className={
-                          result.documentation.details.has_api_docs
-                            ? 'text-green-600 font-semibold'
-                            : 'text-red-600 font-semibold'
-                        }
-                      >
+                  </div>
+                  <div
+                    className="text-sm p-2 bg-blue-50 dark:bg-blue-950/20 rounded-lg border cursor-help"
+                    title="API Documentation: Documentation for application programming interfaces and endpoints."
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-blue-500" />
+                      <span className="text-blue-700 dark:text-blue-300">
+                        API Docs:{' '}
                         {result.documentation.details.has_api_docs ? '✓' : '✗'}
                       </span>
                     </div>
-                    <div
-                      className="flex items-center justify-between p-3 bg-purple-50 dark:bg-purple-950/20 rounded-lg border cursor-help"
-                      title="License file: Legal document that specifies the terms under which the software can be used."
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-purple-500" />
-                        <span>License:</span>
-                      </div>
-                      <span
-                        className={
-                          result.documentation.details.has_license
-                            ? 'text-green-600 font-semibold'
-                            : 'text-red-600 font-semibold'
-                        }
-                      >
+                  </div>
+                  <div
+                    className="text-sm p-2 bg-purple-50 dark:bg-purple-950/20 rounded-lg border cursor-help"
+                    title="License file: Legal document that specifies the terms under which the software can be used."
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-purple-500" />
+                      <span className="text-purple-700 dark:text-purple-300">
+                        License:{' '}
                         {result.documentation.details.has_license ? '✓' : '✗'}
                       </span>
                     </div>
-                    <div
-                      className="flex items-center justify-between p-3 bg-orange-50 dark:bg-orange-950/20 rounded-lg border cursor-help"
-                      title="Contributing guidelines: Instructions for developers on how to contribute to the project."
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-orange-500" />
-                        <span>Contributing:</span>
-                      </div>
-                      <span
-                        className={
-                          result.documentation.details.has_contributing
-                            ? 'text-green-600 font-semibold'
-                            : 'text-red-600 font-semibold'
-                        }
-                      >
+                  </div>
+                  <div
+                    className="text-sm p-2 bg-orange-50 dark:bg-orange-950/20 rounded-lg border cursor-help"
+                    title="Contributing guidelines: Instructions for developers on how to contribute to the project."
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-orange-500" />
+                      <span className="text-orange-700 dark:text-orange-300">
+                        Contributing:{' '}
                         {result.documentation.details.has_contributing
                           ? '✓'
                           : '✗'}
                       </span>
                     </div>
                   </div>
-
-                  {/* Comment Coverage */}
                   {result.documentation.details.comment_coverage !==
                     undefined && (
-                    <div className="p-3 bg-gray-50 dark:bg-gray-950/20 rounded-lg border">
-                      <div
-                        className="flex items-center justify-between text-sm cursor-help"
-                        title="Comment Coverage: Percentage of code lines that contain comments. Higher values indicate better code documentation."
-                      >
-                        <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 rounded-full bg-gray-500" />
-                          <span>Comment Coverage:</span>
-                        </div>
-                        <span className="font-mono font-semibold">
+                    <div
+                      className="text-sm p-2 bg-gray-50 dark:bg-gray-950/20 rounded-lg border cursor-help"
+                      title="Comment Coverage: Percentage of code lines that contain comments. Higher values indicate better code documentation."
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-gray-500" />
+                        <span className="text-gray-700 dark:text-gray-300">
+                          Comment Coverage:{' '}
                           {safeNumber(
                             result.documentation.details.comment_coverage
                           ).toFixed(1)}
                           %
                         </span>
                       </div>
-                      <Progress
-                        value={result.documentation.details.comment_coverage}
-                        className="h-2 mt-2"
-                      />
                     </div>
                   )}
                 </div>

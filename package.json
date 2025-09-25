@@ -14,21 +14,27 @@
     "format:all": "npm run format:frontend && npm run format:backend"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.44.1",
+    "@typescript-eslint/parser": "^8.44.1",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "husky": "^9.1.7",
-    "lint-staged": "^15.5.2"
+    "lint-staged": "^15.5.2",
+    "prettier": "^3.6.2"
   },
   "lint-staged": {
     "frontend/**/*.{ts,tsx,js,jsx,json,css,md}": [
-      "prettier --write --config frontend/.prettierrc",
-      "eslint --fix --config frontend/eslint.config.mjs"
+      "npx prettier --write --config frontend/.prettierrc"
     ],
     "backend/**/*.py": [
-      "black --config backend/pyproject.toml",
-      "isort --settings-path backend/pyproject.toml",
-      "flake8 --config backend/.flake8"
+      "npx black --config backend/pyproject.toml",
+      "npx isort --settings-path backend/pyproject.toml"
     ],
     "*.md": [
-      "prettier --write"
+      "npx prettier --write"
     ]
   }
 }

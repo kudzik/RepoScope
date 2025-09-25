@@ -1156,59 +1156,85 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
         </CardContent>
       </Card>
 
-      {/* Detailed Analysis Results */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        {/* Code Quality Details */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Code className="h-5 w-5" />
-              Code Quality Analysis
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {Array.isArray(result.code_quality.issues) &&
-              result.code_quality.issues.length > 0 && (
-                <div>
-                  <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                    <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                    Issues Found ({result.code_quality.issues.length})
-                  </h4>
-                  <ul className="space-y-1 text-sm max-h-32 overflow-y-auto">
-                    {result.code_quality.issues.map(
-                      (issue: string, index: number) => (
-                        <li key={index} className="text-muted-foreground">
-                          • {typeof issue === 'string' ? issue : String(issue)}
-                        </li>
-                      )
-                    )}
-                  </ul>
+      {/* Code Quality Analysis - Full Width */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg flex items-center gap-2">
+            <Code className="h-5 w-5" />
+            Code Quality Analysis
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Issues Column */}
+            <div className="space-y-4">
+              <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                Issues Found ({result.code_quality.issues?.length || 0})
+              </h4>
+              {Array.isArray(result.code_quality.issues) &&
+              result.code_quality.issues.length > 0 ? (
+                <div className="space-y-2 max-h-32 overflow-y-auto">
+                  {result.code_quality.issues.map(
+                    (issue: string, index: number) => (
+                      <div
+                        key={index}
+                        className="text-sm p-2 bg-yellow-50 dark:bg-yellow-950/20 rounded-lg border"
+                      >
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-yellow-500" />
+                          <span className="text-yellow-700 dark:text-yellow-300">
+                            {typeof issue === 'string' ? issue : String(issue)}
+                          </span>
+                        </div>
+                      </div>
+                    )
+                  )}
+                </div>
+              ) : (
+                <div className="text-sm text-muted-foreground p-4 bg-muted/20 rounded-lg border">
+                  No issues found
                 </div>
               )}
+            </div>
 
-            {Array.isArray(result.code_quality.recommendations) &&
-              result.code_quality.recommendations.length > 0 && (
-                <div>
-                  <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                    <Target className="h-4 w-4 text-green-500" />
-                    Recommendations (
-                    {result.code_quality.recommendations.length})
-                  </h4>
-                  <ul className="space-y-1 text-sm max-h-32 overflow-y-auto">
-                    {result.code_quality.recommendations.map(
-                      (rec: string, index: number) => (
-                        <li key={index} className="text-muted-foreground">
-                          • {typeof rec === 'string' ? rec : String(rec)}
-                        </li>
-                      )
-                    )}
-                  </ul>
+            {/* Recommendations Column */}
+            <div className="space-y-4">
+              <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
+                <Target className="h-4 w-4 text-green-500" />
+                Recommendations (
+                {result.code_quality.recommendations?.length || 0})
+              </h4>
+              {Array.isArray(result.code_quality.recommendations) &&
+              result.code_quality.recommendations.length > 0 ? (
+                <div className="space-y-2 max-h-32 overflow-y-auto">
+                  {result.code_quality.recommendations.map(
+                    (rec: string, index: number) => (
+                      <div
+                        key={index}
+                        className="text-sm p-2 bg-blue-50 dark:bg-blue-950/20 rounded-lg border"
+                      >
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-blue-500" />
+                          <span className="text-blue-700 dark:text-blue-300">
+                            {typeof rec === 'string' ? rec : String(rec)}
+                          </span>
+                        </div>
+                      </div>
+                    )
+                  )}
+                </div>
+              ) : (
+                <div className="text-sm text-muted-foreground p-4 bg-muted/20 rounded-lg border">
+                  No recommendations available
                 </div>
               )}
+            </div>
 
-            {result.code_quality.patterns && (
-              <div>
-                <h4 className="font-medium text-sm mb-2">Code Patterns</h4>
+            {/* Patterns Column */}
+            <div className="space-y-4">
+              <h4 className="font-medium text-sm mb-2">Code Patterns</h4>
+              {result.code_quality.patterns && (
                 <div className="space-y-2 text-sm">
                   {Array.isArray(
                     result.code_quality.patterns.design_patterns
@@ -1218,31 +1244,197 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                         <span className="text-green-600">
                           Design Patterns:{' '}
                         </span>
-                        <span>
-                          {result.code_quality.patterns.design_patterns.join(
-                            ', '
-                          )}
-                        </span>
+                        <div className="space-y-1">
+                          {(() => {
+                            // Group design patterns by pattern name
+                            const groupedPatterns =
+                              result.code_quality.patterns.design_patterns.reduce(
+                                (
+                                  acc: Record<
+                                    string,
+                                    (string | Record<string, unknown>)[]
+                                  >,
+                                  pattern: string | Record<string, unknown>
+                                ) => {
+                                  const patternName: string =
+                                    typeof pattern === 'string'
+                                      ? pattern
+                                      : String(
+                                          (pattern as Record<string, unknown>)
+                                            .pattern ||
+                                            (pattern as Record<string, unknown>)
+                                              .name ||
+                                            'Unknown Pattern'
+                                        );
+
+                                  if (!acc[patternName]) {
+                                    acc[patternName] = [];
+                                  }
+                                  acc[patternName].push(pattern);
+                                  return acc;
+                                },
+                                {}
+                              );
+
+                            return Object.entries(groupedPatterns).map(
+                              ([patternName, patterns]) => (
+                                <div
+                                  key={patternName}
+                                  className="text-sm p-2 bg-green-50 dark:bg-green-950/20 rounded-lg border"
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <div className="w-2 h-2 rounded-full bg-green-500" />
+                                    <span className="font-medium text-green-700 dark:text-green-300">
+                                      {patternName}
+                                    </span>
+                                    <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-2 py-1 rounded-full">
+                                      {patterns.length} occurrence
+                                      {patterns.length > 1 ? 's' : ''}
+                                    </span>
+                                  </div>
+                                  {patterns.length <= 3 && (
+                                    <div className="ml-4 mt-1 space-y-1">
+                                      {patterns.map((pattern, index) => {
+                                        if (typeof pattern === 'string')
+                                          return null;
+
+                                        const patternObj = pattern as Record<
+                                          string,
+                                          unknown
+                                        >;
+                                        const file = patternObj.file as
+                                          | string
+                                          | undefined;
+                                        const line = patternObj.line as
+                                          | number
+                                          | undefined;
+
+                                        return (
+                                          <div
+                                            key={index}
+                                            className="text-xs text-muted-foreground"
+                                          >
+                                            📁 {String(file)}
+                                            {line && `:${String(line)}`}
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  )}
+                                  {patterns.length > 3 && (
+                                    <div className="ml-4 mt-1 text-xs text-muted-foreground">
+                                      📁 Found in {patterns.length} locations
+                                    </div>
+                                  )}
+                                </div>
+                              )
+                            );
+                          })()}
+                        </div>
                       </div>
                     )}
                   {Array.isArray(result.code_quality.patterns.anti_patterns) &&
                     result.code_quality.patterns.anti_patterns.length > 0 && (
                       <div>
                         <span className="text-red-600">Anti-patterns: </span>
-                        <span>
-                          {result.code_quality.patterns.anti_patterns.join(
-                            ', '
-                          )}
-                        </span>
+                        <div className="space-y-1">
+                          {(() => {
+                            // Group anti-patterns by pattern name
+                            const groupedPatterns =
+                              result.code_quality.patterns.anti_patterns.reduce(
+                                (
+                                  acc: Record<
+                                    string,
+                                    (string | Record<string, unknown>)[]
+                                  >,
+                                  pattern: string | Record<string, unknown>
+                                ) => {
+                                  const patternName: string =
+                                    typeof pattern === 'string'
+                                      ? pattern
+                                      : String(
+                                          (pattern as Record<string, unknown>)
+                                            .pattern ||
+                                            (pattern as Record<string, unknown>)
+                                              .name ||
+                                            'Unknown Pattern'
+                                        );
+
+                                  if (!acc[patternName]) {
+                                    acc[patternName] = [];
+                                  }
+                                  acc[patternName].push(pattern);
+                                  return acc;
+                                },
+                                {}
+                              );
+
+                            return Object.entries(groupedPatterns).map(
+                              ([patternName, patterns]) => (
+                                <div
+                                  key={patternName}
+                                  className="text-sm p-2 bg-red-50 dark:bg-red-950/20 rounded-lg border"
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <div className="w-2 h-2 rounded-full bg-red-500" />
+                                    <span className="font-medium text-red-700 dark:text-red-300">
+                                      {patternName}
+                                    </span>
+                                    <span className="text-xs bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 px-2 py-1 rounded-full">
+                                      {patterns.length} occurrence
+                                      {patterns.length > 1 ? 's' : ''}
+                                    </span>
+                                  </div>
+                                  {patterns.length <= 3 && (
+                                    <div className="ml-4 mt-1 space-y-1">
+                                      {patterns.map((pattern, index) => {
+                                        if (typeof pattern === 'string')
+                                          return null;
+
+                                        const patternObj = pattern as Record<
+                                          string,
+                                          unknown
+                                        >;
+                                        const file = patternObj.file as
+                                          | string
+                                          | undefined;
+                                        const line = patternObj.line as
+                                          | number
+                                          | undefined;
+
+                                        return (
+                                          <div
+                                            key={index}
+                                            className="text-xs text-muted-foreground"
+                                          >
+                                            📁 {String(file)}
+                                            {line && `:${String(line)}`}
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  )}
+                                  {patterns.length > 3 && (
+                                    <div className="ml-4 mt-1 text-xs text-muted-foreground">
+                                      📁 Found in {patterns.length} locations
+                                    </div>
+                                  )}
+                                </div>
+                              )
+                            );
+                          })()}
+                        </div>
                       </div>
                     )}
                 </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-        {/* Security & Documentation Details */}
+      {/* Security & Documentation Details */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">

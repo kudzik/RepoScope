@@ -1244,196 +1244,92 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                 Code Patterns
               </h4>
               {result.code_quality.patterns && (
-                <div className="space-y-2 text-sm max-h-32 overflow-y-auto">
+                <div className="space-y-2 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                   {Array.isArray(
                     result.code_quality.patterns.design_patterns
                   ) &&
-                    result.code_quality.patterns.design_patterns.length > 0 && (
-                      <div>
-                        <span className="text-green-600">
-                          Design Patterns:{' '}
-                        </span>
-                        <div className="space-y-1">
-                          {(() => {
-                            // Group design patterns by pattern name
-                            const groupedPatterns =
-                              result.code_quality.patterns.design_patterns.reduce(
-                                (
-                                  acc: Record<
-                                    string,
-                                    (string | Record<string, unknown>)[]
-                                  >,
-                                  pattern: string | Record<string, unknown>
-                                ) => {
-                                  const patternName: string =
-                                    typeof pattern === 'string'
-                                      ? pattern
-                                      : String(
-                                          (pattern as Record<string, unknown>)
-                                            .pattern ||
-                                            (pattern as Record<string, unknown>)
-                                              .name ||
-                                            'Unknown Pattern'
-                                        );
-
-                                  if (!acc[patternName]) {
-                                    acc[patternName] = [];
-                                  }
-                                  acc[patternName].push(pattern);
-                                  return acc;
-                                },
-                                {}
+                    result.code_quality.patterns.design_patterns.length > 0 &&
+                    result.code_quality.patterns.design_patterns.map(
+                      (pattern, index: number) => {
+                        const patternName =
+                          typeof pattern === 'string'
+                            ? pattern
+                            : String(
+                                (pattern as Record<string, unknown>).pattern ||
+                                  (pattern as Record<string, unknown>).name ||
+                                  'Unknown Pattern'
                               );
+                        const patternObj = pattern as unknown as Record<
+                          string,
+                          unknown
+                        >;
+                        const file = patternObj.file as string | undefined;
+                        const line = patternObj.line as number | undefined;
 
-                            return Object.entries(groupedPatterns).map(
-                              ([patternName, patterns]) => (
-                                <div
-                                  key={patternName}
-                                  className="text-sm p-2 bg-green-50 dark:bg-green-950/20 rounded-lg border"
-                                >
-                                  <div className="flex items-center gap-2">
-                                    <div className="w-2 h-2 rounded-full bg-green-500" />
-                                    <span className="font-medium text-green-700 dark:text-green-300">
-                                      {patternName}
-                                    </span>
-                                    <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-2 py-1 rounded-full">
-                                      {patterns.length} occurrence
-                                      {patterns.length > 1 ? 's' : ''}
-                                    </span>
-                                  </div>
-                                  {patterns.length <= 3 && (
-                                    <div className="ml-4 mt-1 space-y-1">
-                                      {patterns.map((pattern, index) => {
-                                        if (typeof pattern === 'string')
-                                          return null;
-
-                                        const patternObj = pattern as Record<
-                                          string,
-                                          unknown
-                                        >;
-                                        const file = patternObj.file as
-                                          | string
-                                          | undefined;
-                                        const line = patternObj.line as
-                                          | number
-                                          | undefined;
-
-                                        return (
-                                          <div
-                                            key={index}
-                                            className="text-xs text-muted-foreground"
-                                          >
-                                            📁 {String(file)}
-                                            {line && `:${String(line)}`}
-                                          </div>
-                                        );
-                                      })}
-                                    </div>
-                                  )}
-                                  {patterns.length > 3 && (
-                                    <div className="ml-4 mt-1 text-xs text-muted-foreground">
-                                      📁 Found in {patterns.length} locations
-                                    </div>
-                                  )}
-                                </div>
-                              )
-                            );
-                          })()}
-                        </div>
-                      </div>
+                        return (
+                          <div
+                            key={index}
+                            className="text-sm p-2 bg-green-50 dark:bg-green-950/20 rounded-lg border"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-green-500" />
+                                <span className="text-green-700 dark:text-green-300">
+                                  Design Pattern: {patternName}
+                                </span>
+                              </div>
+                              {file && (
+                                <span className="text-xs text-muted-foreground">
+                                  📁 {String(file)}
+                                  {line && `:${String(line)}`}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      }
                     )}
                   {Array.isArray(result.code_quality.patterns.anti_patterns) &&
-                    result.code_quality.patterns.anti_patterns.length > 0 && (
-                      <div>
-                        <span className="text-red-600">Anti-patterns: </span>
-                        <div className="space-y-1">
-                          {(() => {
-                            // Group anti-patterns by pattern name
-                            const groupedPatterns =
-                              result.code_quality.patterns.anti_patterns.reduce(
-                                (
-                                  acc: Record<
-                                    string,
-                                    (string | Record<string, unknown>)[]
-                                  >,
-                                  pattern: string | Record<string, unknown>
-                                ) => {
-                                  const patternName: string =
-                                    typeof pattern === 'string'
-                                      ? pattern
-                                      : String(
-                                          (pattern as Record<string, unknown>)
-                                            .pattern ||
-                                            (pattern as Record<string, unknown>)
-                                              .name ||
-                                            'Unknown Pattern'
-                                        );
-
-                                  if (!acc[patternName]) {
-                                    acc[patternName] = [];
-                                  }
-                                  acc[patternName].push(pattern);
-                                  return acc;
-                                },
-                                {}
+                    result.code_quality.patterns.anti_patterns.length > 0 &&
+                    result.code_quality.patterns.anti_patterns.map(
+                      (pattern, index: number) => {
+                        const patternName =
+                          typeof pattern === 'string'
+                            ? pattern
+                            : String(
+                                (pattern as Record<string, unknown>).pattern ||
+                                  (pattern as Record<string, unknown>).name ||
+                                  'Unknown Pattern'
                               );
+                        const patternObj = pattern as unknown as Record<
+                          string,
+                          unknown
+                        >;
+                        const file = patternObj.file as string | undefined;
+                        const line = patternObj.line as number | undefined;
 
-                            return Object.entries(groupedPatterns).map(
-                              ([patternName, patterns]) => (
-                                <div
-                                  key={patternName}
-                                  className="text-sm p-2 bg-red-50 dark:bg-red-950/20 rounded-lg border"
-                                >
-                                  <div className="flex items-center gap-2">
-                                    <div className="w-2 h-2 rounded-full bg-red-500" />
-                                    <span className="font-medium text-red-700 dark:text-red-300">
-                                      {patternName}
-                                    </span>
-                                    <span className="text-xs bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 px-2 py-1 rounded-full">
-                                      {patterns.length} occurrence
-                                      {patterns.length > 1 ? 's' : ''}
-                                    </span>
-                                  </div>
-                                  {patterns.length <= 3 && (
-                                    <div className="ml-4 mt-1 space-y-1">
-                                      {patterns.map((pattern, index) => {
-                                        if (typeof pattern === 'string')
-                                          return null;
-
-                                        const patternObj = pattern as Record<
-                                          string,
-                                          unknown
-                                        >;
-                                        const file = patternObj.file as
-                                          | string
-                                          | undefined;
-                                        const line = patternObj.line as
-                                          | number
-                                          | undefined;
-
-                                        return (
-                                          <div
-                                            key={index}
-                                            className="text-xs text-muted-foreground"
-                                          >
-                                            📁 {String(file)}
-                                            {line && `:${String(line)}`}
-                                          </div>
-                                        );
-                                      })}
-                                    </div>
-                                  )}
-                                  {patterns.length > 3 && (
-                                    <div className="ml-4 mt-1 text-xs text-muted-foreground">
-                                      📁 Found in {patterns.length} locations
-                                    </div>
-                                  )}
-                                </div>
-                              )
-                            );
-                          })()}
-                        </div>
-                      </div>
+                        return (
+                          <div
+                            key={index}
+                            className="text-sm p-2 bg-red-50 dark:bg-red-950/20 rounded-lg border"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <div className="w-2 h-2 rounded-full bg-red-500" />
+                                <span className="text-red-700 dark:text-red-300">
+                                  Anti-pattern: {patternName}
+                                </span>
+                              </div>
+                              {file && (
+                                <span className="text-xs text-muted-foreground">
+                                  📁 {String(file)}
+                                  {line && `:${String(line)}`}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      }
                     )}
                 </div>
               )}
@@ -1464,31 +1360,23 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                 <div className="space-y-2 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                   {result.security.vulnerabilities.map(
                     (vuln, index: number) => {
-                      const severityColors = getSeverityColor(
-                        vuln?.severity || 'issues'
-                      );
                       return (
                         <div
                           key={index}
-                          className={`text-sm p-2 ${severityColors.bg} ${severityColors.border} border rounded`}
+                          className="text-sm p-2 bg-red-50 dark:bg-red-950/20 rounded-lg border"
                         >
-                          <div className="flex justify-between items-start">
-                            <span
-                              className={`font-medium ${severityColors.text}`}
-                            >
-                              {vuln?.type || 'Unknown'}
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-red-500" />
+                            <span className="text-red-700 dark:text-red-300">
+                              {vuln?.type || 'Unknown'}:{' '}
+                              {vuln?.description || 'No description'}
                             </span>
-                            <Badge className={severityColors.badge}>
-                              {vuln?.severity || 'Unknown'}
-                            </Badge>
                           </div>
-                          <p className="text-muted-foreground text-xs mt-1">
-                            {vuln?.description || 'No description'}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
+                          <div className="ml-4 mt-1 text-xs text-muted-foreground">
                             File: {vuln?.file || 'Unknown'}:
-                            {vuln?.line || 'Unknown'}
-                          </p>
+                            {vuln?.line || 'Unknown'} | Severity:{' '}
+                            {vuln?.severity || 'Unknown'}
+                          </div>
                         </div>
                       );
                     }

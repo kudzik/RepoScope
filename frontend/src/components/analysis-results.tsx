@@ -262,15 +262,15 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
       </Card>
 
       {/* Main Metrics Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Code Quality */}
-        <Card>
-          <CardHeader className="pb-2">
+        <Card className="border-l-4 border-l-blue-500">
+          <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
-              <Code className="h-4 w-4" />
-              <CardTitle className="text-sm">Code Quality</CardTitle>
+              <Code className="h-5 w-5 text-blue-500" />
+              <CardTitle className="text-base">Code Quality</CardTitle>
             </div>
-            <CardDescription className="text-xs">
+            <CardDescription className="text-sm">
               Overall code maintainability, complexity, and technical debt
               assessment
             </CardDescription>
@@ -352,13 +352,13 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
         </Card>
 
         {/* Documentation */}
-        <Card>
-          <CardHeader className="pb-2">
+        <Card className="border-l-4 border-l-purple-500">
+          <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
-              <FileText className="h-4 w-4" />
-              <CardTitle className="text-sm">Documentation</CardTitle>
+              <FileText className="h-5 w-5 text-purple-500" />
+              <CardTitle className="text-base">Documentation</CardTitle>
             </div>
-            <CardDescription className="text-xs">
+            <CardDescription className="text-sm">
               Quality and completeness of project documentation and code
               comments
             </CardDescription>
@@ -460,13 +460,13 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
         </Card>
 
         {/* Security */}
-        <Card>
-          <CardHeader className="pb-2">
+        <Card className="border-l-4 border-l-red-500">
+          <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
-              <Shield className="h-4 w-4" />
-              <CardTitle className="text-sm">Security</CardTitle>
+              <Shield className="h-5 w-5 text-red-500" />
+              <CardTitle className="text-base">Security</CardTitle>
             </div>
-            <CardDescription className="text-xs">
+            <CardDescription className="text-sm">
               Security vulnerabilities, hardcoded secrets, and security best
               practices
             </CardDescription>
@@ -561,13 +561,13 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
         </Card>
 
         {/* Test Coverage */}
-        <Card>
-          <CardHeader className="pb-2">
+        <Card className="border-l-4 border-l-green-500">
+          <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
-              <TestTube className="h-4 w-4" />
-              <CardTitle className="text-sm">Test Coverage</CardTitle>
+              <TestTube className="h-5 w-5 text-green-500" />
+              <CardTitle className="text-base">Test Coverage</CardTitle>
             </div>
-            <CardDescription className="text-xs">
+            <CardDescription className="text-sm">
               Test coverage percentage, frameworks used, and testing quality
               metrics
             </CardDescription>
@@ -660,10 +660,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
       </div>
 
       {/* Code Metrics */}
-      <Card>
+      <Card className="border-l-4 border-l-indigo-500">
         <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <BarChart3 className="h-5 w-5" />
+          <CardTitle className="text-xl flex items-center gap-3">
+            <BarChart3 className="h-6 w-6 text-indigo-500" />
             Code Metrics
           </CardTitle>
         </CardHeader>
@@ -673,7 +673,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Languages */}
               <div className="space-y-4">
-                <h4 className="font-medium text-sm">Languages</h4>
+                <h4 className="font-semibold text-base flex items-center gap-2">
+                  <Code className="h-4 w-4 text-blue-500" />
+                  Languages
+                </h4>
                 <div className="space-y-2">
                   {Object.entries(safeObject(result.metrics?.languages))
                     .length > 0 ? (
@@ -800,7 +803,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
 
               {/* Largest Files */}
               <div className="space-y-4">
-                <h4 className="font-medium text-sm">Largest Files</h4>
+                <h4 className="font-semibold text-base flex items-center gap-2">
+                  <FileCode className="h-4 w-4 text-green-500" />
+                  Largest Files
+                </h4>
                 <div className="space-y-2">
                   {safeArray(analysis.code_structure?.largest_files)
                     .slice(0, 5)
@@ -1157,10 +1163,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
       </Card>
 
       {/* Code Quality Analysis - Full Width */}
-      <Card>
+      <Card className="border-l-4 border-l-orange-500">
         <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <Code className="h-5 w-5" />
+          <CardTitle className="text-xl flex items-center gap-3">
+            <Code className="h-6 w-6 text-orange-500" />
             Code Quality Analysis
           </CardTitle>
         </CardHeader>
@@ -1168,13 +1174,13 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Issues Column */}
             <div className="space-y-4">
-              <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 text-yellow-500" />
+              <h4 className="font-semibold text-base mb-3 flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-yellow-500" />
                 Issues Found ({result.code_quality.issues?.length || 0})
               </h4>
               {Array.isArray(result.code_quality.issues) &&
               result.code_quality.issues.length > 0 ? (
-                <div className="space-y-2 max-h-32 overflow-y-auto">
+                <div className="space-y-2 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                   {result.code_quality.issues.map(
                     (issue: string, index: number) => (
                       <div
@@ -1200,14 +1206,14 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
 
             {/* Recommendations Column */}
             <div className="space-y-4">
-              <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                <Target className="h-4 w-4 text-green-500" />
-                Recommendations (
+              <h4 className="font-semibold text-base mb-3 flex items-center gap-2">
+                <Target className="h-5 w-5 text-green-500" />
+                Code Quality Recommendations (
                 {result.code_quality.recommendations?.length || 0})
               </h4>
               {Array.isArray(result.code_quality.recommendations) &&
               result.code_quality.recommendations.length > 0 ? (
-                <div className="space-y-2 max-h-32 overflow-y-auto">
+                <div className="space-y-2 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                   {result.code_quality.recommendations.map(
                     (rec: string, index: number) => (
                       <div
@@ -1233,9 +1239,12 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
 
             {/* Patterns Column */}
             <div className="space-y-4">
-              <h4 className="font-medium text-sm mb-2">Code Patterns</h4>
+              <h4 className="font-semibold text-base mb-3 flex items-center gap-2">
+                <Code className="h-5 w-5 text-purple-500" />
+                Code Patterns
+              </h4>
               {result.code_quality.patterns && (
-                <div className="space-y-2 text-sm">
+                <div className="space-y-2 text-sm max-h-32 overflow-y-auto">
                   {Array.isArray(
                     result.code_quality.patterns.design_patterns
                   ) &&
@@ -1434,173 +1443,218 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
       </Card>
 
       {/* Security & Documentation Details */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Shield className="h-5 w-5" />
-              Security & Documentation
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {Array.isArray(result.security.vulnerabilities) &&
-              result.security.vulnerabilities.length > 0 && (
-                <div>
-                  <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                    <AlertCircle className="h-4 w-4 text-red-500" />
-                    Security Vulnerabilities (
-                    {result.security.vulnerabilities.length})
-                  </h4>
-                  <div className="space-y-2 max-h-32 overflow-y-auto">
-                    {result.security.vulnerabilities.map(
-                      (vuln, index: number) => {
-                        const severityColors = getSeverityColor(
-                          vuln?.severity || 'issues'
-                        );
-                        return (
-                          <div
-                            key={index}
-                            className={`text-sm p-2 ${severityColors.bg} ${severityColors.border} border rounded`}
-                          >
-                            <div className="flex justify-between items-start">
-                              <span
-                                className={`font-medium ${severityColors.text}`}
-                              >
-                                {vuln?.type || 'Unknown'}
-                              </span>
-                              <Badge className={severityColors.badge}>
-                                {vuln?.severity || 'Unknown'}
-                              </Badge>
-                            </div>
-                            <p className="text-muted-foreground text-xs mt-1">
-                              {vuln?.description || 'No description'}
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              File: {vuln?.file || 'Unknown'}:
-                              {vuln?.line || 'Unknown'}
-                            </p>
+      <Card className="border-l-4 border-l-cyan-500">
+        <CardHeader>
+          <CardTitle className="text-xl flex items-center gap-3">
+            <Shield className="h-6 w-6 text-cyan-500" />
+            Security & Documentation
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Security Vulnerabilities */}
+            <div className="space-y-4">
+              <h4 className="font-semibold text-base mb-3 flex items-center gap-2">
+                <AlertCircle className="h-5 w-5 text-red-500" />
+                Security Vulnerabilities (
+                {result.security.vulnerabilities?.length || 0})
+              </h4>
+              {Array.isArray(result.security.vulnerabilities) &&
+              result.security.vulnerabilities.length > 0 ? (
+                <div className="space-y-2 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
+                  {result.security.vulnerabilities.map(
+                    (vuln, index: number) => {
+                      const severityColors = getSeverityColor(
+                        vuln?.severity || 'issues'
+                      );
+                      return (
+                        <div
+                          key={index}
+                          className={`text-sm p-2 ${severityColors.bg} ${severityColors.border} border rounded`}
+                        >
+                          <div className="flex justify-between items-start">
+                            <span
+                              className={`font-medium ${severityColors.text}`}
+                            >
+                              {vuln?.type || 'Unknown'}
+                            </span>
+                            <Badge className={severityColors.badge}>
+                              {vuln?.severity || 'Unknown'}
+                            </Badge>
                           </div>
-                        );
-                      }
-                    )}
-                  </div>
+                          <p className="text-muted-foreground text-xs mt-1">
+                            {vuln?.description || 'No description'}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            File: {vuln?.file || 'Unknown'}:
+                            {vuln?.line || 'Unknown'}
+                          </p>
+                        </div>
+                      );
+                    }
+                  )}
+                </div>
+              ) : (
+                <div className="text-sm text-muted-foreground p-4 bg-muted/20 rounded-lg border">
+                  No security vulnerabilities found
                 </div>
               )}
+            </div>
 
-            {Array.isArray(result.security.recommendations) &&
-              result.security.recommendations.length > 0 && (
-                <div>
-                  <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                    <Info className="h-4 w-4 text-blue-500" />
-                    Security Recommendations
-                  </h4>
-                  <ul className="space-y-1 text-sm max-h-24 overflow-y-auto">
-                    {result.security.recommendations.map(
-                      (rec: string, index: number) => (
-                        <li key={index} className="text-muted-foreground">
-                          • {typeof rec === 'string' ? rec : String(rec)}
-                        </li>
-                      )
-                    )}
-                  </ul>
+            {/* Security Recommendations */}
+            <div className="space-y-4">
+              <h4 className="font-semibold text-base mb-3 flex items-center gap-2">
+                <Info className="h-5 w-5 text-blue-500" />
+                Security Recommendations (
+                {result.security.recommendations?.length || 0})
+              </h4>
+              {Array.isArray(result.security.recommendations) &&
+              result.security.recommendations.length > 0 ? (
+                <div className="space-y-2 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
+                  {result.security.recommendations.map(
+                    (rec: string, index: number) => (
+                      <div
+                        key={index}
+                        className="text-sm p-2 bg-blue-50 dark:bg-blue-950/20 rounded-lg border"
+                      >
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-blue-500" />
+                          <span className="text-blue-700 dark:text-blue-300">
+                            {typeof rec === 'string' ? rec : String(rec)}
+                          </span>
+                        </div>
+                      </div>
+                    )
+                  )}
+                </div>
+              ) : (
+                <div className="text-sm text-muted-foreground p-4 bg-muted/20 rounded-lg border">
+                  No security recommendations available
                 </div>
               )}
+            </div>
 
-            {result.documentation.details && (
-              <div>
-                <h4 className="font-medium text-sm mb-2">
-                  Documentation Details
-                </h4>
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div
-                    className="flex items-center gap-2 cursor-help"
-                    title="README file: Essential project documentation that explains what the project does, how to install and use it."
-                  >
-                    <span>README:</span>
-                    <span
-                      className={
-                        result.documentation.details.has_readme
-                          ? 'text-green-600'
-                          : 'text-red-600'
-                      }
-                    >
-                      {result.documentation.details.has_readme ? '✓' : '✗'}
-                    </span>
-                  </div>
-                  <div
-                    className="flex items-center gap-2 cursor-help"
-                    title="API Documentation: Documentation for application programming interfaces and endpoints."
-                  >
-                    <span>API Docs:</span>
-                    <span
-                      className={
-                        result.documentation.details.has_api_docs
-                          ? 'text-green-600'
-                          : 'text-red-600'
-                      }
-                    >
-                      {result.documentation.details.has_api_docs ? '✓' : '✗'}
-                    </span>
-                  </div>
-                  <div
-                    className="flex items-center gap-2 cursor-help"
-                    title="License file: Legal document that specifies the terms under which the software can be used."
-                  >
-                    <span>License:</span>
-                    <span
-                      className={
-                        result.documentation.details.has_license
-                          ? 'text-green-600'
-                          : 'text-red-600'
-                      }
-                    >
-                      {result.documentation.details.has_license ? '✓' : '✗'}
-                    </span>
-                  </div>
-                  <div
-                    className="flex items-center gap-2 cursor-help"
-                    title="Contributing guidelines: Instructions for developers on how to contribute to the project."
-                  >
-                    <span>Contributing:</span>
-                    <span
-                      className={
-                        result.documentation.details.has_contributing
-                          ? 'text-green-600'
-                          : 'text-red-600'
-                      }
-                    >
-                      {result.documentation.details.has_contributing
-                        ? '✓'
-                        : '✗'}
-                    </span>
-                  </div>
-                </div>
-                {result.documentation.details.comment_coverage !==
-                  undefined && (
-                  <div className="mt-3">
+            {/* Documentation Details */}
+            <div className="space-y-4">
+              <h4 className="font-semibold text-base mb-3 flex items-center gap-2">
+                <FileText className="h-5 w-5 text-green-500" />
+                Documentation Status
+              </h4>
+              {result.documentation.details ? (
+                <div className="space-y-3">
+                  {/* Documentation Files */}
+                  <div className="space-y-2">
                     <div
-                      className="flex items-center justify-between text-sm cursor-help"
-                      title="Comment Coverage: Percentage of code lines that contain comments. Higher values indicate better code documentation."
+                      className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-950/20 rounded-lg border cursor-help"
+                      title="README file: Essential project documentation that explains what the project does, how to install and use it."
                     >
-                      <span>Comment Coverage:</span>
-                      <span className="font-mono">
-                        {safeNumber(
-                          result.documentation.details.comment_coverage
-                        ).toFixed(1)}
-                        %
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-green-500" />
+                        <span>README:</span>
+                      </div>
+                      <span
+                        className={
+                          result.documentation.details.has_readme
+                            ? 'text-green-600 font-semibold'
+                            : 'text-red-600 font-semibold'
+                        }
+                      >
+                        {result.documentation.details.has_readme ? '✓' : '✗'}
                       </span>
                     </div>
-                    <Progress
-                      value={result.documentation.details.comment_coverage}
-                      className="h-1 mt-1"
-                    />
+                    <div
+                      className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border cursor-help"
+                      title="API Documentation: Documentation for application programming interfaces and endpoints."
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-blue-500" />
+                        <span>API Docs:</span>
+                      </div>
+                      <span
+                        className={
+                          result.documentation.details.has_api_docs
+                            ? 'text-green-600 font-semibold'
+                            : 'text-red-600 font-semibold'
+                        }
+                      >
+                        {result.documentation.details.has_api_docs ? '✓' : '✗'}
+                      </span>
+                    </div>
+                    <div
+                      className="flex items-center justify-between p-3 bg-purple-50 dark:bg-purple-950/20 rounded-lg border cursor-help"
+                      title="License file: Legal document that specifies the terms under which the software can be used."
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-purple-500" />
+                        <span>License:</span>
+                      </div>
+                      <span
+                        className={
+                          result.documentation.details.has_license
+                            ? 'text-green-600 font-semibold'
+                            : 'text-red-600 font-semibold'
+                        }
+                      >
+                        {result.documentation.details.has_license ? '✓' : '✗'}
+                      </span>
+                    </div>
+                    <div
+                      className="flex items-center justify-between p-3 bg-orange-50 dark:bg-orange-950/20 rounded-lg border cursor-help"
+                      title="Contributing guidelines: Instructions for developers on how to contribute to the project."
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-orange-500" />
+                        <span>Contributing:</span>
+                      </div>
+                      <span
+                        className={
+                          result.documentation.details.has_contributing
+                            ? 'text-green-600 font-semibold'
+                            : 'text-red-600 font-semibold'
+                        }
+                      >
+                        {result.documentation.details.has_contributing
+                          ? '✓'
+                          : '✗'}
+                      </span>
+                    </div>
                   </div>
-                )}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+
+                  {/* Comment Coverage */}
+                  {result.documentation.details.comment_coverage !==
+                    undefined && (
+                    <div className="p-3 bg-gray-50 dark:bg-gray-950/20 rounded-lg border">
+                      <div
+                        className="flex items-center justify-between text-sm cursor-help"
+                        title="Comment Coverage: Percentage of code lines that contain comments. Higher values indicate better code documentation."
+                      >
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded-full bg-gray-500" />
+                          <span>Comment Coverage:</span>
+                        </div>
+                        <span className="font-mono font-semibold">
+                          {safeNumber(
+                            result.documentation.details.comment_coverage
+                          ).toFixed(1)}
+                          %
+                        </span>
+                      </div>
+                      <Progress
+                        value={result.documentation.details.comment_coverage}
+                        className="h-2 mt-2"
+                      />
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="text-sm text-muted-foreground p-4 bg-muted/20 rounded-lg border">
+                  No documentation details available
+                </div>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Test Coverage & License Info */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">

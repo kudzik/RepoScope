@@ -48,7 +48,10 @@ export function useAsyncOperationWithToast<T extends unknown[], R>(
 
         return result;
       } catch (err) {
-        const errorMessage = err instanceof ApiError ? err.message : 'An unexpected error occurred';
+        const errorMessage =
+          err instanceof ApiError
+            ? err.message
+            : 'An unexpected error occurred';
 
         setError(errorMessage);
 
@@ -73,16 +76,21 @@ export function useAsyncOperationWithToast<T extends unknown[], R>(
 
 // Enhanced hooks with toast notifications
 export function useAnalyzeRepositoryWithToast() {
-  return useAsyncOperationWithToast(apiClient.analyzeRepository.bind(apiClient), {
-    loadingMessage: 'Starting repository analysis... This may take up to 2 minutes.',
-    successMessage: (result: AnalysisResponse) => `Analysis completed for ${result.repository_url}`,
-    errorMessage: (error: Error) => {
-      if (error.message.includes('timeout')) {
-        return 'Analysis timed out. The repository may be too large or the server is slow. Please try again.';
-      }
-      return 'Failed to analyze repository. Please check the URL and try again.';
-    },
-  });
+  return useAsyncOperationWithToast(
+    apiClient.analyzeRepository.bind(apiClient),
+    {
+      loadingMessage:
+        'Starting repository analysis... This may take up to 2 minutes.',
+      successMessage: (result: AnalysisResponse) =>
+        `Analysis completed for ${result.repository_url}`,
+      errorMessage: (error: Error) => {
+        if (error.message.includes('timeout')) {
+          return 'Analysis timed out. The repository may be too large or the server is slow. Please try again.';
+        }
+        return 'Failed to analyze repository. Please check the URL and try again.';
+      },
+    }
+  );
 }
 
 export function useGetAnalysesWithToast() {

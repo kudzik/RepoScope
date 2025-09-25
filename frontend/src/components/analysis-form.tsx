@@ -3,7 +3,13 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, AlertCircle, CheckCircle } from 'lucide-react';
 import { useAnalyzeRepositoryWithToast } from '@/hooks/use-toast-api';
@@ -61,10 +67,12 @@ export function AnalysisForm({
     <div className="space-y-6">
       <Card className="max-w-sm mx-auto sm:max-w-md md:max-w-lg lg:max-w-xl">
         <CardHeader className="space-y-2">
-          <CardTitle className="text-xl sm:text-2xl">Analyze Repository</CardTitle>
+          <CardTitle className="text-xl sm:text-2xl">
+            Analyze Repository
+          </CardTitle>
           <CardDescription className="text-sm sm:text-base">
-            Enter a GitHub repository URL to get AI-powered insights about code quality,
-            documentation, and more.
+            Enter a GitHub repository URL to get AI-powered insights about code
+            quality, documentation, and more.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -85,7 +93,8 @@ export function AnalysisForm({
                 disabled={loading}
               />
               <div id="repository-help" className="sr-only">
-                Enter a valid GitHub repository URL starting with https://github.com/
+                Enter a valid GitHub repository URL starting with
+                https://github.com/
               </div>
 
               {url && !isValidGitHubUrl(url) && (
@@ -104,7 +113,9 @@ export function AnalysisForm({
             <Button
               type="submit"
               className="w-full text-sm sm:text-base"
-              disabled={loading || !url.trim() || !isValidGitHubUrl(url) || !isOnline}
+              disabled={
+                loading || !url.trim() || !isValidGitHubUrl(url) || !isOnline
+              }
             >
               {loading ? (
                 <>

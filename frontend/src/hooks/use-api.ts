@@ -7,7 +7,9 @@ import { apiClient, ApiError } from '@/lib/api-client';
 // import type { AnalysisResponse, PaginatedResponse } from '@/lib/api-types';
 
 // Generic hook for async operations
-export function useAsyncOperation<T extends unknown[], R>(operation: (...args: T) => Promise<R>) {
+export function useAsyncOperation<T extends unknown[], R>(
+  operation: (...args: T) => Promise<R>
+) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -19,7 +21,10 @@ export function useAsyncOperation<T extends unknown[], R>(operation: (...args: T
         const result = await operation(...args);
         return result;
       } catch (err) {
-        const errorMessage = err instanceof ApiError ? err.message : 'An unexpected error occurred';
+        const errorMessage =
+          err instanceof ApiError
+            ? err.message
+            : 'An unexpected error occurred';
         setError(errorMessage);
         return null;
       } finally {

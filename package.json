@@ -1,0 +1,34 @@
+{
+  "name": "reposcope",
+  "version": "1.0.0",
+  "description": "Repository Analysis Tool powered by AI",
+  "private": true,
+  "scripts": {
+    "prepare": "husky install",
+    "lint:frontend": "cd frontend && npm run lint",
+    "lint:frontend:fix": "cd frontend && npm run lint:fix",
+    "format:frontend": "cd frontend && npm run format",
+    "lint:backend": "cd backend && flake8 .",
+    "format:backend": "cd backend && black . && isort .",
+    "lint:all": "npm run lint:frontend && npm run lint:backend",
+    "format:all": "npm run format:frontend && npm run format:backend"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2"
+  },
+  "lint-staged": {
+    "frontend/**/*.{ts,tsx,js,jsx,json,css,md}": [
+      "prettier --write --config frontend/.prettierrc",
+      "eslint --fix --config frontend/eslint.config.mjs"
+    ],
+    "backend/**/*.py": [
+      "black --config backend/pyproject.toml",
+      "isort --settings-path backend/pyproject.toml",
+      "flake8 --config backend/.flake8"
+    ],
+    "*.md": [
+      "prettier --write"
+    ]
+  }
+}

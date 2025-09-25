@@ -2,7 +2,13 @@
 
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import type { AnalysisResponse } from '@/lib/api-types';
 import {
@@ -110,9 +116,13 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
           <div className="flex items-center gap-2">
             {getStatusIcon(analysis.status)}
             <CardTitle className="text-lg">Analysis Status</CardTitle>
-            <Badge className={getStatusColor(analysis.status)}>{analysis.status}</Badge>
+            <Badge className={getStatusColor(analysis.status)}>
+              {analysis.status}
+            </Badge>
           </div>
-          <CardDescription>Repository: {analysis.repository_url}</CardDescription>
+          <CardDescription>
+            Repository: {analysis.repository_url}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {analysis.status === 'processing' && (
@@ -147,35 +157,49 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
             <div className="flex items-center gap-2">
               <CheckCircle className="h-5 w-5 text-green-500" />
               <CardTitle>Analysis Complete</CardTitle>
-              <Badge className={getStatusColor(analysis.status)}>{analysis.status}</Badge>
+              <Badge className={getStatusColor(analysis.status)}>
+                {analysis.status}
+              </Badge>
             </div>
             <div className="text-sm text-muted-foreground">
               Duration:{' '}
-              {analysis.analysis_duration ? `${Math.round(analysis.analysis_duration)}s` : 'N/A'}
+              {analysis.analysis_duration
+                ? `${Math.round(analysis.analysis_duration)}s`
+                : 'N/A'}
             </div>
           </div>
-          <CardDescription>Repository: {analysis.repository_url}</CardDescription>
+          <CardDescription>
+            Repository: {analysis.repository_url}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {/* Repository Info */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
             <div className="flex items-center gap-2">
               <Star className="h-4 w-4 text-yellow-500" />
-              <span className="text-sm">{analysis.repository_info.stars} stars</span>
+              <span className="text-sm">
+                {analysis.repository_info.stars} stars
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <GitFork className="h-4 w-4 text-blue-500" />
-              <span className="text-sm">{analysis.repository_info.forks} forks</span>
+              <span className="text-sm">
+                {analysis.repository_info.forks} forks
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <FileCode className="h-4 w-4 text-green-500" />
-              <span className="text-sm">{analysis.repository_info.language || 'Unknown'}</span>
+              <span className="text-sm">
+                {analysis.repository_info.language || 'Unknown'}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4 text-purple-500" />
               <span className="text-sm">
                 {analysis.repository_info.updated_at
-                  ? new Date(analysis.repository_info.updated_at).toLocaleDateString()
+                  ? new Date(
+                      analysis.repository_info.updated_at
+                    ).toLocaleDateString()
                   : 'N/A'}
               </span>
             </div>
@@ -208,7 +232,8 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <CardTitle className="text-sm">Code Quality</CardTitle>
             </div>
             <CardDescription className="text-xs">
-              Overall code maintainability, complexity, and technical debt assessment
+              Overall code maintainability, complexity, and technical debt
+              assessment
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -248,7 +273,9 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       <span className={`font-medium ${qualityColors.text}`}>
                         {qualityColors.title}
                       </span>
-                      <Badge className={qualityColors.badge}>{qualityLevel}</Badge>
+                      <Badge className={qualityColors.badge}>
+                        {qualityLevel}
+                      </Badge>
                     </div>
                     <p className={`text-xs mt-1 ${qualityColors.text}`}>
                       {qualityColors.description}
@@ -263,14 +290,21 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                     title="Maintainability Index: Measures how easy the code is to understand and modify. Higher values (80+) indicate excellent maintainability, while lower values (below 40) suggest significant maintenance challenges."
                   >
                     Maintainability:{' '}
-                    {safeNumber(result.code_quality.metrics.maintainability_index, 0).toFixed(2)}
+                    {safeNumber(
+                      result.code_quality.metrics.maintainability_index,
+                      0
+                    ).toFixed(2)}
                   </div>
                   <div
                     className="cursor-help"
                     title="Technical Debt Ratio: Percentage of code that needs refactoring or improvement. Lower values (below 30%) are better, while higher values (above 70%) indicate significant technical debt."
                   >
                     Technical Debt:{' '}
-                    {safeNumber(result.code_quality.metrics.technical_debt_ratio, 0).toFixed(2)}%
+                    {safeNumber(
+                      result.code_quality.metrics.technical_debt_ratio,
+                      0
+                    ).toFixed(2)}
+                    %
                   </div>
                 </div>
               )}
@@ -286,7 +320,8 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <CardTitle className="text-sm">Documentation</CardTitle>
             </div>
             <CardDescription className="text-xs">
-              Quality and completeness of project documentation and code comments
+              Quality and completeness of project documentation and code
+              comments
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -319,12 +354,18 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                 );
                 const docColors = getDocumentationColor(docLevel);
                 return (
-                  <div className={`text-xs p-2 rounded ${docColors.bg} ${docColors.border} border`}>
+                  <div
+                    className={`text-xs p-2 rounded ${docColors.bg} ${docColors.border} border`}
+                  >
                     <div className="flex items-center gap-2">
-                      <span className={`font-medium ${docColors.text}`}>{docColors.title}</span>
+                      <span className={`font-medium ${docColors.text}`}>
+                        {docColors.title}
+                      </span>
                       <Badge className={docColors.badge}>{docLevel}</Badge>
                     </div>
-                    <p className={`text-xs mt-1 ${docColors.text}`}>{docColors.description}</p>
+                    <p className={`text-xs mt-1 ${docColors.text}`}>
+                      {docColors.description}
+                    </p>
                   </div>
                 );
               })()}
@@ -337,7 +378,9 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                     <span>README:</span>
                     <span
                       className={
-                        result.documentation.details.has_readme ? 'text-green-600' : 'text-red-600'
+                        result.documentation.details.has_readme
+                          ? 'text-green-600'
+                          : 'text-red-600'
                       }
                     >
                       {result.documentation.details.has_readme ? '✓' : '✗'}
@@ -364,7 +407,11 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                   >
                     <span>Comments:</span>
                     <span className="font-mono">
-                      {safeNumber(result.documentation.details.comment_coverage, 0).toFixed(1)}%
+                      {safeNumber(
+                        result.documentation.details.comment_coverage,
+                        0
+                      ).toFixed(1)}
+                      %
                     </span>
                   </div>
                 </div>
@@ -381,14 +428,19 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <CardTitle className="text-sm">Security</CardTitle>
             </div>
             <CardDescription className="text-xs">
-              Security vulnerabilities, hardcoded secrets, and security best practices
+              Security vulnerabilities, hardcoded secrets, and security best
+              practices
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold">{safeNumber(result.security?.score, 0)}</span>
-                <span className={`text-sm ${getScoreColor(safeNumber(result.security?.score, 0))}`}>
+                <span className="text-2xl font-bold">
+                  {safeNumber(result.security?.score, 0)}
+                </span>
+                <span
+                  className={`text-sm ${getScoreColor(safeNumber(result.security?.score, 0))}`}
+                >
                   /100
                 </span>
               </div>
@@ -397,7 +449,9 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                 className="h-2"
                 style={
                   {
-                    '--progress-background': getScoreBgColor(safeNumber(result.security?.score, 0)),
+                    '--progress-background': getScoreBgColor(
+                      safeNumber(result.security?.score, 0)
+                    ),
                   } as React.CSSProperties
                 }
               />
@@ -415,7 +469,9 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       <span className={`font-medium ${securityColors.text}`}>
                         {securityColors.title}
                       </span>
-                      <Badge className={securityColors.badge}>{securityLevel}</Badge>
+                      <Badge className={securityColors.badge}>
+                        {securityLevel}
+                      </Badge>
                     </div>
                     <p className={`text-xs mt-1 ${securityColors.text}`}>
                       {securityColors.description}
@@ -473,7 +529,8 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <CardTitle className="text-sm">Test Coverage</CardTitle>
             </div>
             <CardDescription className="text-xs">
-              Test coverage percentage, frameworks used, and testing quality metrics
+              Test coverage percentage, frameworks used, and testing quality
+              metrics
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -513,7 +570,9 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       <span className={`font-medium ${coverageColors.text}`}>
                         {coverageColors.title}
                       </span>
-                      <Badge className={coverageColors.badge}>{coverageLevel}</Badge>
+                      <Badge className={coverageColors.badge}>
+                        {coverageLevel}
+                      </Badge>
                     </div>
                     <p className={`text-xs mt-1 ${coverageColors.text}`}>
                       {coverageColors.description}
@@ -528,7 +587,11 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                 >
                   <span>Has Tests:</span>
                   <span
-                    className={result.test_coverage?.has_tests ? 'text-green-600' : 'text-red-600'}
+                    className={
+                      result.test_coverage?.has_tests
+                        ? 'text-green-600'
+                        : 'text-red-600'
+                    }
                   >
                     {result.test_coverage?.has_tests ? '✓' : '✗'}
                   </span>
@@ -573,16 +636,23 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                 <div className="flex justify-between">
                   <span>Lines of Code:</span>
                   <span className="font-mono">
-                    {safeNumber(result.metrics?.lines_of_code, 0).toLocaleString()}
+                    {safeNumber(
+                      result.metrics?.lines_of_code,
+                      0
+                    ).toLocaleString()}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Files:</span>
-                  <span className="font-mono">{safeNumber(result.metrics?.files_count, 0)}</span>
+                  <span className="font-mono">
+                    {safeNumber(result.metrics?.files_count, 0)}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Complexity:</span>
-                  <span className="font-mono">{safeNumber(result.metrics?.complexity, 0)}</span>
+                  <span className="font-mono">
+                    {safeNumber(result.metrics?.complexity, 0)}
+                  </span>
                 </div>
               </div>
             </div>
@@ -590,32 +660,41 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
             <div className="space-y-4">
               <h4 className="font-medium text-sm">Languages</h4>
               <div className="space-y-2">
-                {Object.entries(safeObject(result.metrics?.languages)).map(([lang, percentage]) => (
-                  <div key={lang} className="space-y-1">
-                    <div className="flex justify-between text-sm">
-                      <span>{safeString(lang)}</span>
-                      <span>{safeNumber(percentage, 0)}%</span>
+                {Object.entries(safeObject(result.metrics?.languages)).map(
+                  ([lang, percentage]) => (
+                    <div key={lang} className="space-y-1">
+                      <div className="flex justify-between text-sm">
+                        <span>{safeString(lang)}</span>
+                        <span>{safeNumber(percentage, 0)}%</span>
+                      </div>
+                      <Progress
+                        value={safeNumber(percentage, 0)}
+                        className="h-1"
+                      />
                     </div>
-                    <Progress value={safeNumber(percentage, 0)} className="h-1" />
-                  </div>
-                ))}
+                  )
+                )}
               </div>
             </div>
 
             <div className="space-y-4">
               <h4 className="font-medium text-sm">Largest Files</h4>
               <div className="space-y-1 text-sm">
-                {safeArray(result.metrics?.largest_files).map((file, index: number) => {
-                  const fileObj = file as Record<string, unknown>;
-                  return (
-                    <div key={index} className="flex justify-between">
-                      <span className="truncate">{safeString(fileObj?.name, 'Unknown')}</span>
-                      <span className="text-muted-foreground">
-                        {safeNumber(fileObj?.lines, 0)} lines
-                      </span>
-                    </div>
-                  );
-                })}
+                {safeArray(result.metrics?.largest_files).map(
+                  (file, index: number) => {
+                    const fileObj = file as Record<string, unknown>;
+                    return (
+                      <div key={index} className="flex justify-between">
+                        <span className="truncate">
+                          {safeString(fileObj?.name, 'Unknown')}
+                        </span>
+                        <span className="text-muted-foreground">
+                          {safeNumber(fileObj?.lines, 0)} lines
+                        </span>
+                      </div>
+                    );
+                  }
+                )}
               </div>
             </div>
           </div>
@@ -633,35 +712,41 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {Array.isArray(result.code_quality.issues) && result.code_quality.issues.length > 0 && (
-              <div>
-                <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                  Issues Found ({result.code_quality.issues.length})
-                </h4>
-                <ul className="space-y-1 text-sm max-h-32 overflow-y-auto">
-                  {result.code_quality.issues.map((issue: string, index: number) => (
-                    <li key={index} className="text-muted-foreground">
-                      • {typeof issue === 'string' ? issue : String(issue)}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            {Array.isArray(result.code_quality.issues) &&
+              result.code_quality.issues.length > 0 && (
+                <div>
+                  <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
+                    <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                    Issues Found ({result.code_quality.issues.length})
+                  </h4>
+                  <ul className="space-y-1 text-sm max-h-32 overflow-y-auto">
+                    {result.code_quality.issues.map(
+                      (issue: string, index: number) => (
+                        <li key={index} className="text-muted-foreground">
+                          • {typeof issue === 'string' ? issue : String(issue)}
+                        </li>
+                      )
+                    )}
+                  </ul>
+                </div>
+              )}
 
             {Array.isArray(result.code_quality.recommendations) &&
               result.code_quality.recommendations.length > 0 && (
                 <div>
                   <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
                     <Target className="h-4 w-4 text-green-500" />
-                    Recommendations ({result.code_quality.recommendations.length})
+                    Recommendations (
+                    {result.code_quality.recommendations.length})
                   </h4>
                   <ul className="space-y-1 text-sm max-h-32 overflow-y-auto">
-                    {result.code_quality.recommendations.map((rec: string, index: number) => (
-                      <li key={index} className="text-muted-foreground">
-                        • {typeof rec === 'string' ? rec : String(rec)}
-                      </li>
-                    ))}
+                    {result.code_quality.recommendations.map(
+                      (rec: string, index: number) => (
+                        <li key={index} className="text-muted-foreground">
+                          • {typeof rec === 'string' ? rec : String(rec)}
+                        </li>
+                      )
+                    )}
                   </ul>
                 </div>
               )}
@@ -670,18 +755,30 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <div>
                 <h4 className="font-medium text-sm mb-2">Code Patterns</h4>
                 <div className="space-y-2 text-sm">
-                  {Array.isArray(result.code_quality.patterns.design_patterns) &&
+                  {Array.isArray(
+                    result.code_quality.patterns.design_patterns
+                  ) &&
                     result.code_quality.patterns.design_patterns.length > 0 && (
                       <div>
-                        <span className="text-green-600">Design Patterns: </span>
-                        <span>{result.code_quality.patterns.design_patterns.join(', ')}</span>
+                        <span className="text-green-600">
+                          Design Patterns:{' '}
+                        </span>
+                        <span>
+                          {result.code_quality.patterns.design_patterns.join(
+                            ', '
+                          )}
+                        </span>
                       </div>
                     )}
                   {Array.isArray(result.code_quality.patterns.anti_patterns) &&
                     result.code_quality.patterns.anti_patterns.length > 0 && (
                       <div>
                         <span className="text-red-600">Anti-patterns: </span>
-                        <span>{result.code_quality.patterns.anti_patterns.join(', ')}</span>
+                        <span>
+                          {result.code_quality.patterns.anti_patterns.join(
+                            ', '
+                          )}
+                        </span>
                       </div>
                     )}
                 </div>
@@ -704,33 +801,41 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                 <div>
                   <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
                     <AlertCircle className="h-4 w-4 text-red-500" />
-                    Security Vulnerabilities ({result.security.vulnerabilities.length})
+                    Security Vulnerabilities (
+                    {result.security.vulnerabilities.length})
                   </h4>
                   <div className="space-y-2 max-h-32 overflow-y-auto">
-                    {result.security.vulnerabilities.map((vuln, index: number) => {
-                      const severityColors = getSeverityColor(vuln?.severity || 'issues');
-                      return (
-                        <div
-                          key={index}
-                          className={`text-sm p-2 ${severityColors.bg} ${severityColors.border} border rounded`}
-                        >
-                          <div className="flex justify-between items-start">
-                            <span className={`font-medium ${severityColors.text}`}>
-                              {vuln?.type || 'Unknown'}
-                            </span>
-                            <Badge className={severityColors.badge}>
-                              {vuln?.severity || 'Unknown'}
-                            </Badge>
+                    {result.security.vulnerabilities.map(
+                      (vuln, index: number) => {
+                        const severityColors = getSeverityColor(
+                          vuln?.severity || 'issues'
+                        );
+                        return (
+                          <div
+                            key={index}
+                            className={`text-sm p-2 ${severityColors.bg} ${severityColors.border} border rounded`}
+                          >
+                            <div className="flex justify-between items-start">
+                              <span
+                                className={`font-medium ${severityColors.text}`}
+                              >
+                                {vuln?.type || 'Unknown'}
+                              </span>
+                              <Badge className={severityColors.badge}>
+                                {vuln?.severity || 'Unknown'}
+                              </Badge>
+                            </div>
+                            <p className="text-muted-foreground text-xs mt-1">
+                              {vuln?.description || 'No description'}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              File: {vuln?.file || 'Unknown'}:
+                              {vuln?.line || 'Unknown'}
+                            </p>
                           </div>
-                          <p className="text-muted-foreground text-xs mt-1">
-                            {vuln?.description || 'No description'}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            File: {vuln?.file || 'Unknown'}:{vuln?.line || 'Unknown'}
-                          </p>
-                        </div>
-                      );
-                    })}
+                        );
+                      }
+                    )}
                   </div>
                 </div>
               )}
@@ -743,18 +848,22 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                     Security Recommendations
                   </h4>
                   <ul className="space-y-1 text-sm max-h-24 overflow-y-auto">
-                    {result.security.recommendations.map((rec: string, index: number) => (
-                      <li key={index} className="text-muted-foreground">
-                        • {typeof rec === 'string' ? rec : String(rec)}
-                      </li>
-                    ))}
+                    {result.security.recommendations.map(
+                      (rec: string, index: number) => (
+                        <li key={index} className="text-muted-foreground">
+                          • {typeof rec === 'string' ? rec : String(rec)}
+                        </li>
+                      )
+                    )}
                   </ul>
                 </div>
               )}
 
             {result.documentation.details && (
               <div>
-                <h4 className="font-medium text-sm mb-2">Documentation Details</h4>
+                <h4 className="font-medium text-sm mb-2">
+                  Documentation Details
+                </h4>
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   <div
                     className="flex items-center gap-2 cursor-help"
@@ -763,7 +872,9 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                     <span>README:</span>
                     <span
                       className={
-                        result.documentation.details.has_readme ? 'text-green-600' : 'text-red-600'
+                        result.documentation.details.has_readme
+                          ? 'text-green-600'
+                          : 'text-red-600'
                       }
                     >
                       {result.documentation.details.has_readme ? '✓' : '✗'}
@@ -791,7 +902,9 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                     <span>License:</span>
                     <span
                       className={
-                        result.documentation.details.has_license ? 'text-green-600' : 'text-red-600'
+                        result.documentation.details.has_license
+                          ? 'text-green-600'
+                          : 'text-red-600'
                       }
                     >
                       {result.documentation.details.has_license ? '✓' : '✗'}
@@ -809,11 +922,14 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                           : 'text-red-600'
                       }
                     >
-                      {result.documentation.details.has_contributing ? '✓' : '✗'}
+                      {result.documentation.details.has_contributing
+                        ? '✓'
+                        : '✗'}
                     </span>
                   </div>
                 </div>
-                {result.documentation.details.comment_coverage !== undefined && (
+                {result.documentation.details.comment_coverage !==
+                  undefined && (
                   <div className="mt-3">
                     <div
                       className="flex items-center justify-between text-sm cursor-help"
@@ -821,7 +937,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                     >
                       <span>Comment Coverage:</span>
                       <span className="font-mono">
-                        {result.documentation.details.comment_coverage.toFixed(1)}%
+                        {result.documentation.details.comment_coverage.toFixed(
+                          1
+                        )}
+                        %
                       </span>
                     </div>
                     <Progress
@@ -850,9 +969,14 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span>Coverage Percentage:</span>
-                <span className="font-mono">{result.test_coverage.coverage_percentage}%</span>
+                <span className="font-mono">
+                  {result.test_coverage.coverage_percentage}%
+                </span>
               </div>
-              <Progress value={result.test_coverage.coverage_percentage} className="h-2" />
+              <Progress
+                value={result.test_coverage.coverage_percentage}
+                className="h-2"
+              />
             </div>
 
             {Array.isArray(result.test_coverage.test_frameworks) &&
@@ -862,8 +986,14 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                   <div className="flex flex-wrap gap-1">
                     {result.test_coverage.test_frameworks.map(
                       (framework: string, index: number) => (
-                        <Badge key={index} variant="outline" className="text-xs">
-                          {typeof framework === 'string' ? framework : String(framework)}
+                        <Badge
+                          key={index}
+                          variant="outline"
+                          className="text-xs"
+                        >
+                          {typeof framework === 'string'
+                            ? framework
+                            : String(framework)}
                         </Badge>
                       )
                     )}
@@ -876,11 +1006,13 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                 <div>
                   <h4 className="font-medium text-sm mb-2">Test Issues</h4>
                   <ul className="space-y-1 text-sm max-h-24 overflow-y-auto">
-                    {result.test_coverage.issues.map((issue: string, index: number) => (
-                      <li key={index} className="text-muted-foreground">
-                        • {typeof issue === 'string' ? issue : String(issue)}
-                      </li>
-                    ))}
+                    {result.test_coverage.issues.map(
+                      (issue: string, index: number) => (
+                        <li key={index} className="text-muted-foreground">
+                          • {typeof issue === 'string' ? issue : String(issue)}
+                        </li>
+                      )
+                    )}
                   </ul>
                 </div>
               )}
@@ -888,13 +1020,17 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
             {Array.isArray(result.test_coverage.recommendations) &&
               result.test_coverage.recommendations.length > 0 && (
                 <div>
-                  <h4 className="font-medium text-sm mb-2">Test Recommendations</h4>
+                  <h4 className="font-medium text-sm mb-2">
+                    Test Recommendations
+                  </h4>
                   <ul className="space-y-1 text-sm max-h-24 overflow-y-auto">
-                    {result.test_coverage.recommendations.map((rec: string, index: number) => (
-                      <li key={index} className="text-muted-foreground">
-                        • {typeof rec === 'string' ? rec : String(rec)}
-                      </li>
-                    ))}
+                    {result.test_coverage.recommendations.map(
+                      (rec: string, index: number) => (
+                        <li key={index} className="text-muted-foreground">
+                          • {typeof rec === 'string' ? rec : String(rec)}
+                        </li>
+                      )
+                    )}
                   </ul>
                 </div>
               )}
@@ -913,24 +1049,34 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span>License Type:</span>
-                <span className="font-mono">{result.license_info.license_type}</span>
+                <span className="font-mono">
+                  {result.license_info.license_type}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span>Open Source:</span>
                 <span
-                  className={result.license_info.is_open_source ? 'text-green-600' : 'text-red-600'}
+                  className={
+                    result.license_info.is_open_source
+                      ? 'text-green-600'
+                      : 'text-red-600'
+                  }
                 >
                   {result.license_info.is_open_source ? '✓ Yes' : '✗ No'}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span>Compatibility:</span>
-                <span className="font-mono">{result.license_info.compatibility}</span>
+                <span className="font-mono">
+                  {result.license_info.compatibility}
+                </span>
               </div>
               {result.license_info.license_file && (
                 <div className="flex justify-between">
                   <span>License File:</span>
-                  <span className="font-mono text-sm">{result.license_info.license_file}</span>
+                  <span className="font-mono text-sm">
+                    {result.license_info.license_file}
+                  </span>
                 </div>
               )}
             </div>

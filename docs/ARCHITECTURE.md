@@ -19,7 +19,7 @@
 
 **Struktura katalogów:**
 
-```
+```text
 frontend/
 ├── app/                    # App Router (Next.js 15)
 │   ├── globals.css        # Globalne style + CSS variables
@@ -61,7 +61,7 @@ frontend/
 
 **Struktura katalogów:**
 
-```
+```text
 backend/
 ├── api/                    # API endpoints
 │   └── analysis.py         # Endpoints analizy repozytoriów

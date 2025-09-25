@@ -3,8 +3,17 @@
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useDeleteAnalysisWithToast, useGetAnalysesWithToast } from '@/hooks/use-toast-api';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  useDeleteAnalysisWithToast,
+  useGetAnalysesWithToast,
+} from '@/hooks/use-toast-api';
 import type { AnalysisResponse } from '@/lib/api-types';
 import { getSeverityColor } from '@/lib/utils';
 import {
@@ -26,7 +35,8 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
   const [page] = useState(1);
   const [analyses, setAnalyses] = useState<AnalysisResponse[]>([]);
   const { execute: fetchAnalyses, loading, error } = useGetAnalysesWithToast();
-  const { execute: deleteAnalysis, loading: deleting } = useDeleteAnalysisWithToast();
+  const { execute: deleteAnalysis, loading: deleting } =
+    useDeleteAnalysisWithToast();
 
   const loadAnalyses = useCallback(async () => {
     const result = await fetchAnalyses(page, 10);
@@ -105,8 +115,15 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">Recent Analyses</h2>
-        <Button onClick={loadAnalyses} disabled={loading} variant="outline" size="sm">
-          <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+        <Button
+          onClick={loadAnalyses}
+          disabled={loading}
+          variant="outline"
+          size="sm"
+        >
+          <RefreshCw
+            className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`}
+          />
           Refresh
         </Button>
       </div>
@@ -127,7 +144,10 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
       ) : (
         <div className="grid gap-4">
           {analyses.map(analysis => (
-            <Card key={analysis.id} className="hover:shadow-md transition-shadow">
+            <Card
+              key={analysis.id}
+              className="hover:shadow-md transition-shadow"
+            >
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="space-y-1">
@@ -136,7 +156,9 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
                       <CardTitle className="text-lg">
                         {getRepoName(analysis.repository_url)}
                       </CardTitle>
-                      <Badge className={getStatusColor(analysis.status)}>{analysis.status}</Badge>
+                      <Badge className={getStatusColor(analysis.status)}>
+                        {analysis.status}
+                      </Badge>
                     </div>
                     <CardDescription>
                       Created: {formatDate(analysis.created_at)}
@@ -172,7 +194,9 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
                 <CardContent className="pt-0">
                   <Alert variant="destructive">
                     <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>{analysis.error_message}</AlertDescription>
+                    <AlertDescription>
+                      {analysis.error_message}
+                    </AlertDescription>
                   </Alert>
                 </CardContent>
               )}
@@ -193,11 +217,15 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
                   <div className="grid grid-cols-3 gap-4 text-sm">
                     <div className="text-center">
                       <div className="font-medium">Stars</div>
-                      <div className="text-2xl font-bold">{analysis.repository_info.stars}</div>
+                      <div className="text-2xl font-bold">
+                        {analysis.repository_info.stars}
+                      </div>
                     </div>
                     <div className="text-center">
                       <div className="font-medium">Forks</div>
-                      <div className="text-2xl font-bold">{analysis.repository_info.forks}</div>
+                      <div className="text-2xl font-bold">
+                        {analysis.repository_info.forks}
+                      </div>
                     </div>
                     <div className="text-center">
                       <div className="font-medium">Language</div>
@@ -213,25 +241,33 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
                       {/* Main Metrics */}
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                         <div className="text-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                          <div className="font-medium text-green-600">Code Quality</div>
+                          <div className="font-medium text-green-600">
+                            Code Quality
+                          </div>
                           <div className="text-2xl font-bold text-green-700">
                             {analysis.result.code_quality.score}/100
                           </div>
                         </div>
                         <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                          <div className="font-medium text-blue-600">Documentation</div>
+                          <div className="font-medium text-blue-600">
+                            Documentation
+                          </div>
                           <div className="text-2xl font-bold text-blue-700">
                             {analysis.result.documentation.score}/100
                           </div>
                         </div>
                         <div className="text-center p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
-                          <div className="font-medium text-red-600">Security</div>
+                          <div className="font-medium text-red-600">
+                            Security
+                          </div>
                           <div className="text-2xl font-bold text-red-700">
                             {analysis.result.security.score}/100
                           </div>
                         </div>
                         <div className="text-center p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-                          <div className="font-medium text-purple-600">Test Coverage</div>
+                          <div className="font-medium text-purple-600">
+                            Test Coverage
+                          </div>
                           <div className="text-2xl font-bold text-purple-700">
                             {analysis.result.test_coverage.coverage_percentage}%
                           </div>
@@ -244,19 +280,27 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
                         {analysis.result.code_quality.issues.length > 0 && (
                           <div className="space-y-2">
                             <h5 className="font-medium text-yellow-600">
-                              Code Issues ({analysis.result.code_quality.issues.length})
+                              Code Issues (
+                              {analysis.result.code_quality.issues.length})
                             </h5>
                             <div className="max-h-20 overflow-y-auto space-y-1">
                               {analysis.result.code_quality.issues
                                 .slice(0, 3)
                                 .map((issue: string, index: number) => (
-                                  <div key={index} className="text-xs text-muted-foreground">
+                                  <div
+                                    key={index}
+                                    className="text-xs text-muted-foreground"
+                                  >
                                     • {issue}
                                   </div>
                                 ))}
-                              {analysis.result.code_quality.issues.length > 3 && (
+                              {analysis.result.code_quality.issues.length >
+                                3 && (
                                 <div className="text-xs text-muted-foreground">
-                                  ... i {analysis.result.code_quality.issues.length - 3} więcej
+                                  ... i{' '}
+                                  {analysis.result.code_quality.issues.length -
+                                    3}{' '}
+                                  więcej
                                 </div>
                               )}
                             </div>
@@ -264,30 +308,48 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
                         )}
 
                         {/* Security Details */}
-                        {analysis.result.security.vulnerabilities.length > 0 && (
+                        {analysis.result.security.vulnerabilities.length >
+                          0 && (
                           <div className="space-y-2">
                             <h5 className="font-medium text-red-600">
-                              Security Issues ({analysis.result.security.vulnerabilities.length})
+                              Security Issues (
+                              {analysis.result.security.vulnerabilities.length})
                             </h5>
                             <div className="max-h-20 overflow-y-auto space-y-1">
                               {analysis.result.security.vulnerabilities
                                 .slice(0, 3)
-                                .map((vuln: { type: string; severity: string }, index: number) => {
-                                  const severityColors = getSeverityColor(vuln.severity);
-                                  return (
-                                    <div key={index} className="flex items-center gap-2 text-xs">
-                                      <span
-                                        className={`px-2 py-1 rounded text-xs font-medium ${severityColors.badge}`}
+                                .map(
+                                  (
+                                    vuln: { type: string; severity: string },
+                                    index: number
+                                  ) => {
+                                    const severityColors = getSeverityColor(
+                                      vuln.severity
+                                    );
+                                    return (
+                                      <div
+                                        key={index}
+                                        className="flex items-center gap-2 text-xs"
                                       >
-                                        {vuln.severity}
-                                      </span>
-                                      <span className="text-muted-foreground">{vuln.type}</span>
-                                    </div>
-                                  );
-                                })}
-                              {analysis.result.security.vulnerabilities.length > 3 && (
+                                        <span
+                                          className={`px-2 py-1 rounded text-xs font-medium ${severityColors.badge}`}
+                                        >
+                                          {vuln.severity}
+                                        </span>
+                                        <span className="text-muted-foreground">
+                                          {vuln.type}
+                                        </span>
+                                      </div>
+                                    );
+                                  }
+                                )}
+                              {analysis.result.security.vulnerabilities.length >
+                                3 && (
                                 <div className="text-xs text-muted-foreground">
-                                  ... i {analysis.result.security.vulnerabilities.length - 3} więcej
+                                  ... i{' '}
+                                  {analysis.result.security.vulnerabilities
+                                    .length - 3}{' '}
+                                  więcej
                                 </div>
                               )}
                             </div>
@@ -295,9 +357,12 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
                         )}
 
                         {/* Test Coverage Details */}
-                        {analysis.result.test_coverage.test_frameworks.length > 0 && (
+                        {analysis.result.test_coverage.test_frameworks.length >
+                          0 && (
                           <div className="space-y-2">
-                            <h5 className="font-medium text-purple-600">Test Frameworks</h5>
+                            <h5 className="font-medium text-purple-600">
+                              Test Frameworks
+                            </h5>
                             <div className="flex flex-wrap gap-1">
                               {analysis.result.test_coverage.test_frameworks.map(
                                 (framework: string, index: number) => (
@@ -316,54 +381,70 @@ export function AnalysisList({ onSelectAnalysis }: AnalysisListProps) {
                         {/* Documentation Details */}
                         {analysis.result.documentation.details && (
                           <div className="space-y-2">
-                            <h5 className="font-medium text-blue-600">Documentation Status</h5>
+                            <h5 className="font-medium text-blue-600">
+                              Documentation Status
+                            </h5>
                             <div className="grid grid-cols-2 gap-2 text-xs">
                               <div className="flex items-center gap-1">
                                 <span>README:</span>
                                 <span
                                   className={
-                                    analysis.result.documentation.details.has_readme
+                                    analysis.result.documentation.details
+                                      .has_readme
                                       ? 'text-green-600'
                                       : 'text-red-600'
                                   }
                                 >
-                                  {analysis.result.documentation.details.has_readme ? '✓' : '✗'}
+                                  {analysis.result.documentation.details
+                                    .has_readme
+                                    ? '✓'
+                                    : '✗'}
                                 </span>
                               </div>
                               <div className="flex items-center gap-1">
                                 <span>API Docs:</span>
                                 <span
                                   className={
-                                    analysis.result.documentation.details.has_api_docs
+                                    analysis.result.documentation.details
+                                      .has_api_docs
                                       ? 'text-green-600'
                                       : 'text-red-600'
                                   }
                                 >
-                                  {analysis.result.documentation.details.has_api_docs ? '✓' : '✗'}
+                                  {analysis.result.documentation.details
+                                    .has_api_docs
+                                    ? '✓'
+                                    : '✗'}
                                 </span>
                               </div>
                               <div className="flex items-center gap-1">
                                 <span>License:</span>
                                 <span
                                   className={
-                                    analysis.result.documentation.details.has_license
+                                    analysis.result.documentation.details
+                                      .has_license
                                       ? 'text-green-600'
                                       : 'text-red-600'
                                   }
                                 >
-                                  {analysis.result.documentation.details.has_license ? '✓' : '✗'}
+                                  {analysis.result.documentation.details
+                                    .has_license
+                                    ? '✓'
+                                    : '✗'}
                                 </span>
                               </div>
                               <div className="flex items-center gap-1">
                                 <span>Contributing:</span>
                                 <span
                                   className={
-                                    analysis.result.documentation.details.has_contributing
+                                    analysis.result.documentation.details
+                                      .has_contributing
                                       ? 'text-green-600'
                                       : 'text-red-600'
                                   }
                                 >
-                                  {analysis.result.documentation.details.has_contributing
+                                  {analysis.result.documentation.details
+                                    .has_contributing
                                     ? '✓'
                                     : '✗'}
                                 </span>

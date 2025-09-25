@@ -65,7 +65,9 @@ export class ApiClient {
         // Retry on server errors (5xx) or timeout (408)
         if (retries > 0 && (error.status >= 500 || error.status === 408)) {
           console.log(`Retrying request (${4 - retries}/3)...`);
-          await new Promise(resolve => setTimeout(resolve, 1000 * (4 - retries))); // Exponential backoff
+          await new Promise(resolve =>
+            setTimeout(resolve, 1000 * (4 - retries))
+          ); // Exponential backoff
           return this.request(endpoint, options, retries - 1);
         }
         throw error;
@@ -73,7 +75,10 @@ export class ApiClient {
 
       if (error instanceof Error) {
         if (error.name === 'AbortError') {
-          throw new ApiError(408, 'Request timeout - analysis may take longer than expected');
+          throw new ApiError(
+            408,
+            'Request timeout - analysis may take longer than expected'
+          );
         }
         throw new ApiError(0, `Network error: ${error.message}`);
       }

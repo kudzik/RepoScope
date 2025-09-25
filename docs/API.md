@@ -152,7 +152,10 @@ Authorization: Bearer <token>
     "documentation": {
       "score": 72,
       "issues": ["Missing API documentation", "Low comment coverage"],
-      "recommendations": ["Add comprehensive API docs", "Increase inline comments"],
+      "recommendations": [
+        "Add comprehensive API docs",
+        "Increase inline comments"
+      ],
       "details": {
         "has_readme": true,
         "has_contributing": false,
@@ -188,7 +191,10 @@ Authorization: Bearer <token>
       "test_files": ["tests/test_main.py", "tests/test_utils.py"],
       "test_directories": ["tests/"],
       "issues": ["Low test coverage for utils module"],
-      "recommendations": ["Increase test coverage to 90%", "Add integration tests"]
+      "recommendations": [
+        "Increase test coverage to 90%",
+        "Add integration tests"
+      ]
     },
     "license_info": {
       "license_type": "MIT",
@@ -549,22 +555,22 @@ if status_response.json()["status"] == "completed":
 ### JavaScript
 
 ```javascript
-const API_BASE = "https://api.reposcope.com/v1";
-const TOKEN = "your-access-token";
+const API_BASE = 'https://api.reposcope.com/v1';
+const TOKEN = 'your-access-token';
 
 const headers = {
   Authorization: `Bearer ${TOKEN}`,
-  "Content-Type": "application/json",
+  'Content-Type': 'application/json',
 };
 
 // Rozpoczęcie analizy
 const startAnalysis = async () => {
   const response = await fetch(`${API_BASE}/analysis`, {
-    method: "POST",
+    method: 'POST',
     headers,
     body: JSON.stringify({
-      repository_url: "https://github.com/username/repository",
-      analysis_type: "comprehensive",
+      repository_url: 'https://github.com/username/repository',
+      analysis_type: 'comprehensive',
     }),
   });
 
@@ -573,7 +579,7 @@ const startAnalysis = async () => {
 };
 
 // Sprawdzenie statusu
-const checkStatus = async (analysisId) => {
+const checkStatus = async analysisId => {
   const response = await fetch(`${API_BASE}/analysis/${analysisId}`, {
     headers,
   });
@@ -630,14 +636,14 @@ npm install reposcope-sdk
 ```
 
 ```javascript
-import { RepoScopeClient } from "reposcope-sdk";
+import { RepoScopeClient } from 'reposcope-sdk';
 
-const client = new RepoScopeClient("your-api-key");
+const client = new RepoScopeClient('your-api-key');
 
 // Rozpoczęcie analizy
 const analysis = await client.startAnalysis({
-  repositoryUrl: "https://github.com/username/repository",
-  analysisType: "comprehensive",
+  repositoryUrl: 'https://github.com/username/repository',
+  analysisType: 'comprehensive',
 });
 
 // Oczekiwanie na zakończenie
@@ -649,10 +655,10 @@ console.log(`Score: ${results.overallScore}`);
 
 ### Kontakt
 
-- **Email**: support@reposcope.com
-- **Documentation**: https://docs.reposcope.com
-- **Status Page**: https://status.reposcope.com
-- **GitHub**: https://github.com/reposcope
+- **Email**: <support@reposcope.com>
+- **Documentation**: <https://docs.reposcope.com>
+- **Status Page**: <https://status.reposcope.com>
+- **GitHub**: <https://github.com/reposcope>
 
 ### Wsparcie techniczne
 

@@ -31,7 +31,8 @@ export const env = {
   SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
 
   // SuperTokens Configuration (optional for now)
-  SUPERTOKENS_WEBSITE_DOMAIN: process.env.NEXT_PUBLIC_SUPERTOKENS_WEBSITE_DOMAIN || '',
+  SUPERTOKENS_WEBSITE_DOMAIN:
+    process.env.NEXT_PUBLIC_SUPERTOKENS_WEBSITE_DOMAIN || '',
   SUPERTOKENS_API_DOMAIN: process.env.NEXT_PUBLIC_SUPERTOKENS_API_DOMAIN || '',
 
   // Application Settings

@@ -8,7 +8,10 @@ interface LoadingOverlayProps {
   progress?: number;
 }
 
-export function LoadingOverlay({ message = 'Loading...', progress }: LoadingOverlayProps) {
+export function LoadingOverlay({
+  message = 'Loading...',
+  progress,
+}: LoadingOverlayProps) {
   return (
     <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center">
       <Card className="w-full max-w-md mx-4">

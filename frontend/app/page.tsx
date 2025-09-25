@@ -10,7 +10,8 @@ import { useState } from 'react';
 import type { AnalysisResponse } from '@/lib/api-types';
 
 export default function Home() {
-  const [selectedAnalysis, setSelectedAnalysis] = useState<AnalysisResponse | null>(null);
+  const [selectedAnalysis, setSelectedAnalysis] =
+    useState<AnalysisResponse | null>(null);
   const [showList, setShowList] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisError, setAnalysisError] = useState<string | null>(null);
@@ -98,14 +99,19 @@ export default function Home() {
               </section>
 
               {/* Features section */}
-              <section aria-labelledby="features-title" className="mt-8 sm:mt-12">
+              <section
+                aria-labelledby="features-title"
+                className="mt-8 sm:mt-12"
+              >
                 <h3 id="features-title" className="sr-only">
                   Key Features
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
                   <Card className="p-4 sm:p-6">
                     <CardContent className="pt-0">
-                      <h4 className="font-semibold text-sm sm:text-base mb-2">Code Quality</h4>
+                      <h4 className="font-semibold text-sm sm:text-base mb-2">
+                        Code Quality
+                      </h4>
                       <p className="text-xs sm:text-sm text-muted-foreground">
                         Analyze code structure, patterns, and best practices
                       </p>
@@ -114,7 +120,9 @@ export default function Home() {
 
                   <Card className="p-4 sm:p-6">
                     <CardContent className="pt-0">
-                      <h4 className="font-semibold text-sm sm:text-base mb-2">Documentation</h4>
+                      <h4 className="font-semibold text-sm sm:text-base mb-2">
+                        Documentation
+                      </h4>
                       <p className="text-xs sm:text-sm text-muted-foreground">
                         Evaluate README, API docs, and code comments
                       </p>
@@ -123,7 +131,9 @@ export default function Home() {
 
                   <Card className="p-4 sm:p-6 sm:col-span-2 lg:col-span-1">
                     <CardContent className="pt-0">
-                      <h4 className="font-semibold text-sm sm:text-base mb-2">Security</h4>
+                      <h4 className="font-semibold text-sm sm:text-base mb-2">
+                        Security
+                      </h4>
                       <p className="text-xs sm:text-sm text-muted-foreground">
                         Identify potential security risks and vulnerabilities
                       </p>
@@ -167,7 +177,9 @@ export default function Home() {
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2">
                     <div className="h-2 w-2 bg-destructive rounded-full" />
-                    <p className="text-sm text-destructive font-medium">{analysisError}</p>
+                    <p className="text-sm text-destructive font-medium">
+                      {analysisError}
+                    </p>
                   </div>
                 </CardContent>
               </Card>
@@ -182,7 +194,10 @@ export default function Home() {
         >
           <div className="container mx-auto px-4 py-6">
             <div className="text-center text-sm text-muted-foreground">
-              <p>© 2024 RepoScope. Built with Next.js, Tailwind CSS, and shadcn/ui.</p>
+              <p>
+                © 2024 RepoScope. Built with Next.js, Tailwind CSS, and
+                shadcn/ui.
+              </p>
             </div>
           </div>
         </footer>

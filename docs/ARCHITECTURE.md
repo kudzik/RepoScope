@@ -27,12 +27,23 @@ frontend/
 │   └── page.tsx           # Strona główna
 ├── src/
 │   ├── components/
-│   │   └── ui/            # Komponenty shadcn/ui
+│   │   ├── analysis-form.tsx      # Formularz analizy repozytorium
+│   │   ├── analysis-list.tsx      # Lista analiz
+│   │   ├── analysis-results.tsx   # Wyniki analizy
+│   │   ├── error-boundary.tsx    # Obsługa błędów
+│   │   ├── loading-overlay.tsx   # Overlay ładowania
+│   │   ├── theme-toggle.tsx      # Przełącznik motywu
+│   │   ├── toast-provider.tsx    # Provider powiadomień
+│   │   └── ui/                   # Komponenty shadcn/ui
 │   │       ├── button.tsx
 │   │       ├── card.tsx
-│   │       └── input.tsx
-│   └── lib/
-│       └── utils.ts       # Funkcje utility
+│   │       ├── input.tsx
+│   │       ├── progress.tsx
+│   │       ├── badge.tsx
+│   │       └── alert.tsx
+│   ├── lib/
+│   │   ├── utils.ts       # Funkcje utility (safeNumber, formatAISummary)
+│   │   └── api-types.ts   # Typy TypeScript dla API
 ├── components.json        # Konfiguracja shadcn/ui
 ├── tailwind.config.js     # Konfiguracja Tailwind CSS
 ├── next.config.js         # Konfiguracja Next.js (turbopack)
@@ -47,6 +58,9 @@ frontend/
 - ✅ **TypeScript** - pełne wsparcie typów
 - ✅ **Component library** - shadcn/ui komponenty
 - ✅ **Performance** - Turbopack + Next.js 15 optimizations
+- ✅ **Error Handling** - Bezpieczne formatowanie liczb z `safeNumber()`
+- ✅ **UI Components** - Kompletny zestaw komponentów analizy
+- ✅ **Safe Number Formatting** - Walidacja typów przed `toFixed()`
 
 ### Backend (FastAPI + LangChain)
 

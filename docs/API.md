@@ -668,6 +668,27 @@ console.log(`Score: ${results.overallScore}`);
 
 ---
 
-**Ostatnia aktualizacja**: 2024-01-15
+**Ostatnia aktualizacja**: 2024-12-19
 **Wersja API**: v1.0.0
 **Odpowiedzialny**: API Team
+
+## 🔧 Aktualizacje i poprawki
+
+### v1.0.1 (2024-12-19)
+
+**Poprawki:**
+
+- Naprawiono błąd `TypeError: result.documentation.details.comment_coverage.toFixed is not a function`
+- Zaimplementowano bezpieczne formatowanie liczb z funkcją `safeNumber()`
+- Dodano walidację typów przed wywołaniem `toFixed()` na wartościach
+- Poprawiono obsługę błędów w komponencie AnalysisResults
+
+**Bezpieczne formatowanie liczb:**
+
+```typescript
+// Przed (błędne):
+{result.documentation.details.comment_coverage.toFixed(1)}%
+
+// Po (poprawne):
+{safeNumber(result.documentation.details.comment_coverage).toFixed(1)}%
+```

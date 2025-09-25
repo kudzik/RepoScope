@@ -141,6 +141,11 @@ a projekt używa [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - **Problemy z testami**
 - Naprawiono test CORS middleware (FastAPI zwraca "Middleware" zamiast "CORSMiddleware")
 - Zoptymalizowano konfigurację pytest
+- **Błąd TypeError w AnalysisResults**
+- Naprawiono błąd `result.documentation.details.comment_coverage.toFixed is not a function`
+- Zaimplementowano bezpieczne formatowanie liczb z funkcją `safeNumber()`
+- Dodano walidację typów przed wywołaniem `toFixed()` na wartościach
+- Poprawiono obsługę błędów w komponencie AnalysisResults
 
 ### Security
 

@@ -63,3 +63,8 @@ if __name__ == "__main__":
         reload=True,
         log_level="info",
     )
+# Test hot-reload - Thu Sep 25 11:33:45 CEST 2025
+
+@app.get('/test-hot-reload')
+async def test_hot_reload() -> JSONResponse:
+    return JSONResponse(content={"message": "Hot-reload działa!", "timestamp": "2025-09-25"})

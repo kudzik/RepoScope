@@ -10,7 +10,12 @@
     "lint:fix": "eslint --fix .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
+    "docker:build": "docker-compose build",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:clean": "docker-compose down -v --rmi all"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",

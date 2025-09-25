@@ -1624,45 +1624,61 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
       {/* Test Coverage & License Info */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* Test Coverage Details */}
-        <Card>
+        <Card className="border-l-4 border-l-green-500">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
-              <TestTube className="h-5 w-5" />
+              <TestTube className="h-5 w-5 text-green-500" />
               Test Coverage Details
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <div className="flex justify-between">
-                <span>Coverage Percentage:</span>
-                <span className="font-mono">
+              <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950/20 rounded-lg border">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-green-500" />
+                  <span>Coverage Percentage:</span>
+                </div>
+                <span className="font-mono font-semibold text-green-700 dark:text-green-300">
                   {result.test_coverage.coverage_percentage}%
                 </span>
               </div>
-              <Progress
-                value={result.test_coverage.coverage_percentage}
-                className="h-2"
-              />
+              <div className="relative h-2 w-full overflow-hidden rounded-full bg-secondary">
+                <div
+                  className="h-full w-full flex-1 transition-all"
+                  style={{
+                    transform: `translateX(-${100 - (result.test_coverage.coverage_percentage || 0)}%)`,
+                    backgroundColor: (() => {
+                      const score = result.test_coverage.coverage_percentage;
+                      if (score >= 80) return '#10b981'; // green-500
+                      if (score >= 60) return '#eab308'; // yellow-500
+                      if (score >= 40) return '#f97316'; // orange-500
+                      return '#ef4444'; // red-500
+                    })(),
+                  }}
+                />
+              </div>
             </div>
 
             {Array.isArray(result.test_coverage.test_frameworks) &&
               result.test_coverage.test_frameworks.length > 0 && (
                 <div>
                   <h4 className="font-medium text-sm mb-2">Test Frameworks</h4>
-                  <div className="flex flex-wrap gap-1">
-                    {result.test_coverage.test_frameworks.map(
-                      (framework: string, index: number) => (
-                        <Badge
-                          key={index}
-                          variant="outline"
-                          className="text-xs"
-                        >
-                          {typeof framework === 'string'
-                            ? framework
-                            : String(framework)}
-                        </Badge>
-                      )
-                    )}
+                  <div className="p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border">
+                    <div className="flex flex-wrap gap-1">
+                      {result.test_coverage.test_frameworks.map(
+                        (framework: string, index: number) => (
+                          <Badge
+                            key={index}
+                            variant="outline"
+                            className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-700"
+                          >
+                            {typeof framework === 'string'
+                              ? framework
+                              : String(framework)}
+                          </Badge>
+                        )
+                      )}
+                    </div>
                   </div>
                 </div>
               )}
@@ -1670,81 +1686,159 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
             {Array.isArray(result.test_coverage.issues) &&
               result.test_coverage.issues.length > 0 && (
                 <div>
-                  <h4 className="font-medium text-sm mb-2">Test Issues</h4>
-                  <ul className="space-y-1 text-sm max-h-24 overflow-y-auto">
+                  <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-yellow-500" />
+                    Test Issues
+                  </h4>
+                  <div className="space-y-2 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                     {result.test_coverage.issues.map(
                       (issue: string, index: number) => (
-                        <li key={index} className="text-muted-foreground">
-                          • {typeof issue === 'string' ? issue : String(issue)}
-                        </li>
+                        <div
+                          key={index}
+                          className="text-sm p-2 bg-yellow-50 dark:bg-yellow-950/20 rounded-lg border"
+                        >
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-yellow-500" />
+                            <span className="text-yellow-700 dark:text-yellow-300">
+                              {typeof issue === 'string'
+                                ? issue
+                                : String(issue)}
+                            </span>
+                          </div>
+                        </div>
                       )
                     )}
-                  </ul>
+                  </div>
                 </div>
               )}
 
             {Array.isArray(result.test_coverage.recommendations) &&
               result.test_coverage.recommendations.length > 0 && (
                 <div>
-                  <h4 className="font-medium text-sm mb-2">
+                  <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-blue-500" />
                     Test Recommendations
                   </h4>
-                  <ul className="space-y-1 text-sm max-h-24 overflow-y-auto">
+                  <div className="space-y-2 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                     {result.test_coverage.recommendations.map(
                       (rec: string, index: number) => (
-                        <li key={index} className="text-muted-foreground">
-                          • {typeof rec === 'string' ? rec : String(rec)}
-                        </li>
+                        <div
+                          key={index}
+                          className="text-sm p-2 bg-blue-50 dark:bg-blue-950/20 rounded-lg border"
+                        >
+                          <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-blue-500" />
+                            <span className="text-blue-700 dark:text-blue-300">
+                              {typeof rec === 'string' ? rec : String(rec)}
+                            </span>
+                          </div>
+                        </div>
                       )
                     )}
-                  </ul>
+                  </div>
                 </div>
               )}
           </CardContent>
         </Card>
 
         {/* License Information */}
-        <Card>
+        <Card className="border-l-4 border-l-purple-500">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
-              <FileCheck className="h-5 w-5" />
+              <FileCheck className="h-5 w-5 text-purple-500" />
               License Information
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <div className="flex justify-between">
-                <span>License Type:</span>
-                <span className="font-mono">
-                  {result.license_info.license_type}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>Open Source:</span>
-                <span
-                  className={
-                    result.license_info.is_open_source
-                      ? 'text-green-600'
-                      : 'text-red-600'
-                  }
-                >
-                  {result.license_info.is_open_source ? '✓ Yes' : '✗ No'}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span>Compatibility:</span>
-                <span className="font-mono">
-                  {result.license_info.compatibility}
-                </span>
-              </div>
-              {result.license_info.license_file && (
-                <div className="flex justify-between">
-                  <span>License File:</span>
-                  <span className="font-mono text-sm">
-                    {result.license_info.license_file}
-                  </span>
+            {/* License Details */}
+            <div>
+              <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-purple-500" />
+                License Details
+              </h4>
+              <div className="space-y-2 max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
+                <div className="text-sm p-2 bg-purple-50 dark:bg-purple-950/20 rounded-lg border">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-purple-500" />
+                      <span>License Type:</span>
+                    </div>
+                    <span className="font-mono font-semibold text-purple-700 dark:text-purple-300">
+                      {result.license_info.license_type}
+                    </span>
+                  </div>
                 </div>
-              )}
+                <div className="text-sm p-2 bg-green-50 dark:bg-green-950/20 rounded-lg border">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-green-500" />
+                      <span>Open Source:</span>
+                    </div>
+                    <span
+                      className={
+                        result.license_info.is_open_source
+                          ? 'text-green-600 font-semibold'
+                          : 'text-red-600 font-semibold'
+                      }
+                    >
+                      {result.license_info.is_open_source ? '✓ Yes' : '✗ No'}
+                    </span>
+                  </div>
+                </div>
+
+                {result.license_info.license_file && (
+                  <div className="text-sm p-2 bg-orange-50 dark:bg-orange-950/20 rounded-lg border">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 rounded-full bg-orange-500" />
+                        <span>License File:</span>
+                      </div>
+                      <span className="font-mono font-semibold text-orange-700 dark:text-orange-300 text-xs">
+                        {result.license_info.license_file}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Repository Information */}
+            <div>
+              <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-cyan-500" />
+                Repository Information
+              </h4>
+              <div className="space-y-2">
+                <div className="text-sm p-2 bg-indigo-50 dark:bg-indigo-950/20 rounded-lg border">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-indigo-500" />
+                      <span>Analysis Duration:</span>
+                    </div>
+                    <span className="font-mono font-semibold text-indigo-700 dark:text-indigo-300">
+                      {analysis.analysis_duration
+                        ? `${Math.round(analysis.analysis_duration)}s`
+                        : 'N/A'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="text-sm p-2 bg-pink-50 dark:bg-pink-950/20 rounded-lg border">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-pink-500" />
+                      <span>Last Updated:</span>
+                    </div>
+                    <span className="font-mono font-semibold text-pink-700 dark:text-pink-300">
+                      {analysis.repository_info.updated_at
+                        ? new Date(
+                            analysis.repository_info.updated_at
+                          ).toLocaleDateString()
+                        : 'N/A'}
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>

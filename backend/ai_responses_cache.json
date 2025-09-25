@@ -1,0 +1,21 @@
+{
+  "cache": {
+    "2014509b09e432cf575a26d5ea54b5d7": {
+      "response": "Test response",
+      "timestamp": 1758800288.732389,
+      "prompt": "Test prompt for integration",
+      "model": "gpt-3.5-turbo"
+    },
+    "e6d9dd3377747b126b6f02c2ed73e3df": {
+      "response": "Test response for ResponseCache",
+      "timestamp": 1758800385.939188,
+      "prompt": "Test prompt for ResponseCache",
+      "model": "gpt-3.5-turbo"
+    }
+  },
+  "metadata": {
+    "saved_at": "2025-09-25T13:39:45.939193",
+    "test_mode": true,
+    "total_responses": 2
+  }
+}

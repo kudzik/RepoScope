@@ -7,12 +7,12 @@ This is the main entry point for the RepoScope backend API.
 """
 
 import uvicorn
+from api.analysis import router as analysis_router
+from api.cache import router as cache_router
+from config.settings import settings
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-
-from api.analysis import router as analysis_router
-from config.settings import settings
 
 # Initialize FastAPI application
 app = FastAPI(
@@ -35,6 +35,7 @@ app.add_middleware(
 
 # Include API routers
 app.include_router(analysis_router)
+app.include_router(cache_router)
 
 
 @app.get("/")
@@ -69,6 +70,7 @@ if __name__ == "__main__":
     )
 # Test hot-reload - Thu Sep 25 11:33:45 CEST 2025
 
-@app.get('/test-hot-reload')
+
+@app.get("/test-hot-reload")
 async def test_hot_reload() -> JSONResponse:
     return JSONResponse(content={"message": "Hot-reload działa!", "timestamp": "2025-09-25"})

@@ -937,9 +937,9 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                     >
                       <span>Comment Coverage:</span>
                       <span className="font-mono">
-                        {result.documentation.details.comment_coverage.toFixed(
-                          1
-                        )}
+                        {safeNumber(
+                          result.documentation.details.comment_coverage
+                        ).toFixed(1)}
                         %
                       </span>
                     </div>

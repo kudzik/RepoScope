@@ -153,6 +153,16 @@ class ResponseCache:
         """Clear all cached responses."""
         self.cache.clear()
 
+    def get_stats(self) -> Dict[str, Any]:
+        """Get cache statistics."""
+        return {
+            "size": len(self.cache),
+            "max_size": self.max_size,
+            "ttl": self.ttl,
+            "test_mode": self.test_mode,
+            "cache_file": self.cache_file,
+        }
+
     def get_cache_stats(self) -> Dict[str, Any]:
         """Get cache statistics."""
         return {"size": len(self.cache), "max_size": self.max_size, "ttl": self.ttl}
@@ -341,6 +351,15 @@ class CostOptimizationMiddleware:
                 if cached_response:
                     print(f"🧪 Using cached AI response for prompt: {prompt[:50]}...")
                     return cached_response
+
+            # In test mode, generate mock response instead of calling real API
+            if self.test_mode:
+                print(f"🧪 Generating mock AI response for prompt: {prompt[:50]}...")
+                mock_response = f"Mock AI response for {model}: {prompt[:100]}..."
+
+                # Cache the mock response
+                self.response_cache.set(prompt, model, mock_response)
+                return mock_response
 
             # Use the AI client to generate response
             result = await ai_client.generate_summary(prompt=prompt, model=model, max_tokens=1000)

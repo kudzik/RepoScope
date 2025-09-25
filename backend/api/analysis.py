@@ -5,7 +5,6 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import JSONResponse
-
 from schemas.analysis import AnalysisListResponse, AnalysisRequest, AnalysisResult
 from services.analysis_service import AnalysisService
 
@@ -36,11 +35,25 @@ async def create_analysis(
     try:
         import asyncio
 
+        # Log API request
+        print(f"📤 API REQUEST: Starting analysis for {request.repository_url}")
+        print(f"   🔧 Include AI Summary: {request.include_ai_summary}")
+        print(f"   🔧 Analysis Depth: {request.analysis_depth}")
+
         # Start analysis with overall timeout handling
         analysis = await asyncio.wait_for(
-            service.analyze_repository(str(request.repository_url)),
+            service.analyze_repository(
+                str(request.repository_url),
+                include_ai_summary=request.include_ai_summary,
+                analysis_depth=request.analysis_depth,
+            ),
             timeout=120.0,  # 2 minutes total timeout
         )
+
+        # Log API response
+        print(f"✅ API RESPONSE: Analysis completed for {request.repository_url}")
+        print(f"   📊 Status: {analysis.status}")
+        print(f"   ⏱️  Duration: {analysis.analysis_duration:.3f}s")
 
         # Return the full analysis result instead of just create response
         return analysis

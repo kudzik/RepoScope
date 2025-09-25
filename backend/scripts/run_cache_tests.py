@@ -1,221 +1,148 @@
 #!/usr/bin/env python3
 """
-Script to run cache tests and diagnostics for RepoScope backend.
+Script to run all cache-related tests.
 
-This script provides a comprehensive testing suite for cache functionality
-and helps identify and fix cache issues.
+This script runs all the new cache system tests to verify
+the persistent cache storage functionality.
 """
 
-import argparse
 import os
 import subprocess
 import sys
 from pathlib import Path
 
-# Add backend to path
-sys.path.append(str(Path(__file__).parent.parent))
-
-from tests.test_cache_diagnostic import TestCacheDiagnostics
-from tests.test_cache_step_by_step import TestCacheStepByStep
+# Add backend directory to Python path
+backend_dir = Path(__file__).parent.parent
+sys.path.insert(0, str(backend_dir))
 
 
-def setup_test_environment():
-    """Setup test environment variables."""
-    os.environ["TEST_MODE"] = "true"
-    os.environ["AI_CACHE_FILE"] = "test_ai_responses_cache.json"
-    os.environ["COLLECT_REAL_RESPONSES"] = "false"
-    print("✅ Test environment configured")
-
-
-def run_diagnostic_tests():
-    """Run diagnostic tests."""
-    print("\n🔍 Running Diagnostic Tests")
-    print("=" * 50)
-
-    diagnostics = TestCacheDiagnostics()
-    results = diagnostics.run_all_diagnostics()
-
-    return all(results.values())
-
-
-def run_step_by_step_tests():
-    """Run step-by-step tests."""
-    print("\n🔧 Running Step-by-Step Tests")
-    print("=" * 50)
-
-    tester = TestCacheStepByStep()
-    success = tester.run_all_steps()
-
-    return success
-
-
-def run_pytest_tests(test_pattern=None, verbose=False):
-    """Run pytest tests."""
-    print("\n🧪 Running Pytest Tests")
-    print("=" * 50)
-
-    cmd = ["python", "-m", "pytest"]
-
-    if test_pattern:
-        cmd.append(test_pattern)
-    else:
-        cmd.append("tests/")
-
-    if verbose:
-        cmd.extend(["-v", "-s"])
-
-    cmd.extend(["--tb=short", "--color=yes", "--durations=10"])
-
-    print(f"Running: {' '.join(cmd)}")
+def run_test_file(test_file: str, description: str) -> bool:
+    """Run a specific test file and return success status."""
+    print(f"\n{'='*60}")
+    print(f"🧪 Running {description}")
+    print(f"📁 File: {test_file}")
+    print(f"{'='*60}")
 
     try:
-        result = subprocess.run(cmd, cwd=Path(__file__).parent.parent)
-        return result.returncode == 0
-    except Exception as e:
-        print(f"❌ Error running pytest: {e}")
-        return False
+        # Run the test file
+        result = subprocess.run(
+            [sys.executable, test_file],
+            cwd=backend_dir,
+            capture_output=True,
+            text=True,
+            timeout=300,
+        )
 
-
-def run_specific_cache_tests():
-    """Run specific cache-related tests."""
-    print("\n🎯 Running Specific Cache Tests")
-    print("=" * 50)
-
-    tests = [
-        "tests/test_cache_comprehensive.py",
-        "tests/test_cache_diagnostic.py",
-        "tests/test_cache_step_by_step.py",
-    ]
-
-    success = True
-
-    for test_file in tests:
-        if Path(test_file).exists():
-            print(f"\nRunning {test_file}...")
-            if not run_pytest_tests(test_file, verbose=True):
-                success = False
+        if result.returncode == 0:
+            print(f"✅ {description} - PASSED")
+            print(result.stdout)
+            return True
         else:
-            print(f"⚠️  Test file not found: {test_file}")
+            print(f"❌ {description} - FAILED")
+            print("STDOUT:", result.stdout)
+            print("STDERR:", result.stderr)
+            return False
 
-    return success
-
-
-def run_coverage_tests():
-    """Run tests with coverage reporting."""
-    print("\n📊 Running Tests with Coverage")
-    print("=" * 50)
-
-    cmd = [
-        "python",
-        "-m",
-        "pytest",
-        "tests/",
-        "--cov=.",
-        "--cov-report=html",
-        "--cov-report=term-missing",
-        "--cov-report=xml",
-        "-v",
-    ]
-
-    print(f"Running: {' '.join(cmd)}")
-
-    try:
-        result = subprocess.run(cmd, cwd=Path(__file__).parent.parent)
-        return result.returncode == 0
+    except subprocess.TimeoutExpired:
+        print(f"⏰ {description} - TIMEOUT (5 minutes)")
+        return False
     except Exception as e:
-        print(f"❌ Error running coverage tests: {e}")
+        print(f"💥 {description} - ERROR: {e}")
         return False
 
 
-def install_test_dependencies():
-    """Install test dependencies."""
-    print("\n📦 Installing Test Dependencies")
-    print("=" * 50)
+def run_pytest_tests() -> bool:
+    """Run tests using pytest."""
+    print(f"\n{'='*60}")
+    print("🧪 Running Pytest Tests")
+    print(f"{'='*60}")
 
-    requirements_file = Path(__file__).parent.parent / "requirements-test.txt"
+    try:
+        # Run pytest on cache test files
+        test_files = [
+            "tests/test_analysis_cache_storage.py",
+            "tests/test_cache_api_endpoints.py",
+            "tests/test_analysis_service_cache_integration.py",
+            "tests/test_cache_comprehensive_integration.py",
+        ]
 
-    if requirements_file.exists():
-        cmd = ["pip", "install", "-r", str(requirements_file)]
-        print(f"Running: {' '.join(cmd)}")
+        cmd = [sys.executable, "-m", "pytest", "-v", "--tb=short"] + test_files
+        result = subprocess.run(cmd, cwd=backend_dir, capture_output=True, text=True, timeout=600)
 
-        try:
-            result = subprocess.run(cmd, cwd=Path(__file__).parent.parent)
-            return result.returncode == 0
-        except Exception as e:
-            print(f"❌ Error installing dependencies: {e}")
+        if result.returncode == 0:
+            print("✅ Pytest tests - PASSED")
+            print(result.stdout)
+            return True
+        else:
+            print("❌ Pytest tests - FAILED")
+            print("STDOUT:", result.stdout)
+            print("STDERR:", result.stderr)
             return False
-    else:
-        print("⚠️  requirements-test.txt not found")
+
+    except subprocess.TimeoutExpired:
+        print("⏰ Pytest tests - TIMEOUT (10 minutes)")
+        return False
+    except Exception as e:
+        print(f"💥 Pytest tests - ERROR: {e}")
         return False
 
 
 def main():
-    """Main function."""
-    parser = argparse.ArgumentParser(description="Run cache tests for RepoScope backend")
-    parser.add_argument(
-        "--mode",
-        choices=["diagnostic", "step-by-step", "pytest", "specific", "coverage", "all"],
-        default="all",
-        help="Test mode to run",
-    )
-    parser.add_argument("--pattern", help="Test pattern for pytest (e.g., 'test_cache_*.py')")
-    parser.add_argument("--verbose", action="store_true", help="Verbose output")
-    parser.add_argument(
-        "--install-deps", action="store_true", help="Install test dependencies first"
-    )
+    """Run all cache tests."""
+    print("🚀 Starting Cache System Tests")
+    print("=" * 60)
+    print("Testing the new persistent cache storage system")
+    print("with 24-hour TTL for repository analysis results.")
+    print("=" * 60)
 
-    args = parser.parse_args()
+    # Test files to run
+    test_files = [
+        ("tests/test_analysis_cache_storage.py", "Analysis Cache Storage Tests"),
+        ("tests/test_cache_api_endpoints.py", "Cache API Endpoints Tests"),
+        (
+            "tests/test_analysis_service_cache_integration.py",
+            "AnalysisService Cache Integration Tests",
+        ),
+        ("tests/test_cache_comprehensive_integration.py", "Comprehensive Cache Integration Tests"),
+    ]
 
-    # Setup test environment
-    setup_test_environment()
+    # Run individual test files
+    results = []
+    for test_file, description in test_files:
+        success = run_test_file(test_file, description)
+        results.append((description, success))
 
-    # Install dependencies if requested
-    if args.install_deps:
-        if not install_test_dependencies():
-            print("❌ Failed to install dependencies")
-            sys.exit(1)
-
-    success = True
-
-    # Run tests based on mode
-    if args.mode == "diagnostic":
-        success = run_diagnostic_tests()
-    elif args.mode == "step-by-step":
-        success = run_step_by_step_tests()
-    elif args.mode == "pytest":
-        success = run_pytest_tests(args.pattern, args.verbose)
-    elif args.mode == "specific":
-        success = run_specific_cache_tests()
-    elif args.mode == "coverage":
-        success = run_coverage_tests()
-    elif args.mode == "all":
-        print("🚀 Running All Cache Tests")
-        print("=" * 60)
-
-        # Run all test types
-        tests = [
-            ("Diagnostic Tests", run_diagnostic_tests),
-            ("Step-by-Step Tests", run_step_by_step_tests),
-            ("Pytest Tests", lambda: run_pytest_tests(args.pattern, args.verbose)),
-        ]
-
-        for test_name, test_func in tests:
-            print(f"\n{'='*20} {test_name} {'='*20}")
-            if not test_func():
-                success = False
-                print(f"❌ {test_name} failed")
-            else:
-                print(f"✅ {test_name} passed")
+    # Run pytest tests
+    pytest_success = run_pytest_tests()
+    results.append(("Pytest Tests", pytest_success))
 
     # Summary
-    print("\n" + "=" * 60)
-    if success:
-        print("🎉 All tests passed!")
-        sys.exit(0)
+    print(f"\n{'='*60}")
+    print("📊 TEST SUMMARY")
+    print(f"{'='*60}")
+
+    passed = 0
+    failed = 0
+
+    for description, success in results:
+        status = "✅ PASSED" if success else "❌ FAILED"
+        print(f"{status} - {description}")
+        if success:
+            passed += 1
+        else:
+            failed += 1
+
+    print(f"\n📈 Results: {passed} passed, {failed} failed")
+
+    if failed == 0:
+        print("\n🎉 ALL CACHE TESTS PASSED!")
+        print("The persistent cache storage system is working correctly.")
+        return 0
     else:
-        print("❌ Some tests failed!")
-        sys.exit(1)
+        print(f"\n⚠️  {failed} test(s) failed.")
+        print("Please check the output above for details.")
+        return 1
 
 
 if __name__ == "__main__":
-    main()
+    exit(main())

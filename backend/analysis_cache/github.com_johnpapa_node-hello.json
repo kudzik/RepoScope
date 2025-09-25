@@ -1,0 +1,245 @@
+{
+  "repository_url": "https://github.com/johnpapa/node-hello",
+  "cached_at": "2025-09-25T14:14:34.195047",
+  "analysis_data": {
+    "id": "78d7bb28-d588-4b50-8792-dfe2648b010b",
+    "repository_url": "https://github.com/johnpapa/node-hello",
+    "repository_info": {
+      "name": "node-hello",
+      "owner": "johnpapa",
+      "full_name": "johnpapa/node-hello",
+      "description": "Hello World for Node.js",
+      "language": "JavaScript",
+      "stars": 64,
+      "forks": 2075,
+      "size": 5,
+      "created_at": "2018-08-06T22:22:03+00:00",
+      "updated_at": "2025-07-22T15:51:40+00:00"
+    },
+    "status": "completed",
+    "created_at": "2025-09-25T12:14:29.717479+00:00",
+    "completed_at": "2025-09-25T12:14:34.192807+00:00",
+    "code_structure": {
+      "total_files": 4,
+      "total_lines": 46,
+      "languages": {
+        "unknown": {
+          "files": 4,
+          "lines": 46
+        }
+      },
+      "complexity_score": "0.13059",
+      "largest_files": [
+        {
+          "path": "/tmp/reposcope_qao4e_hj/node-hello/package.json",
+          "lines": 20,
+          "language": "unknown"
+        },
+        {
+          "path": "/tmp/reposcope_qao4e_hj/node-hello/index.js",
+          "lines": 12,
+          "language": "unknown"
+        },
+        {
+          "path": "/tmp/reposcope_qao4e_hj/node-hello/README.md",
+          "lines": 9,
+          "language": "unknown"
+        },
+        {
+          "path": "/tmp/reposcope_qao4e_hj/node-hello/package-lock.json",
+          "lines": 5,
+          "language": "unknown"
+        }
+      ],
+      "quality_metrics": {
+        "maintainability_index": "97.34219999999999",
+        "technical_debt_ratio": "0.017659",
+        "code_duplication": "0.004",
+        "test_coverage": "0.04"
+      },
+      "architecture_score": 8,
+      "code_patterns": {
+        "design_patterns": [],
+        "anti_patterns": [],
+        "code_smells": []
+      },
+      "hotspots": [],
+      "score": 75,
+      "issues": [
+        "Poor architecture - consider restructuring"
+      ],
+      "recommendations": [
+        "Improve code architecture and organization",
+        "Consider breaking down large modules into smaller ones",
+        "Consider implementing design patterns for better code structure"
+      ]
+    },
+    "documentation_quality": {
+      "has_readme": true,
+      "has_contributing": false,
+      "has_license": false,
+      "has_api_docs": false,
+      "has_changelog": false,
+      "readme_quality": 2,
+      "comment_coverage": "0.0",
+      "doc_files": [],
+      "issues": [
+        "Missing contributing guidelines",
+        "Missing license file",
+        "Missing API documentation",
+        "Low code comment coverage"
+      ],
+      "recommendations": [
+        "Add CONTRIBUTING.md file",
+        "Add LICENSE file",
+        "Document API endpoints",
+        "Add more inline documentation"
+      ],
+      "documentation_score": "0.22",
+      "score": 22
+    },
+    "test_coverage": {
+      "has_tests": false,
+      "test_frameworks": [],
+      "coverage_percentage": "0.0",
+      "test_files": [],
+      "test_directories": [],
+      "issues": [
+        "No test files found",
+        "No test framework detected"
+      ],
+      "recommendations": [
+        "Add unit tests for critical functionality",
+        "Set up a proper testing framework"
+      ]
+    },
+    "security_issues": [],
+    "license_info": {
+      "license_type": "Unknown",
+      "is_open_source": false,
+      "license_file": null,
+      "compatibility": "Unknown"
+    },
+    "ai_summary": "📋 **Project Overview**\n- **Purpose and functionality:** The repository is a small library written in JavaScript.\n- **Main features and capabilities:** The library likely provides specific functions or utilities for use in other projects.\n\n🛠️ **Technology Stack**\n- **Primary technologies used:** JavaScript\n- **Framework and library choices:** No specific frameworks or libraries mentioned in the repository information.\n- **Development tools:** Tools for linting, testing, or building the library may be used.\n\n📊 **Code Quality Assessment**\n- **Overall code quality score:** The complexity score of 0.13059 indicates relatively simple code.\n- **Strengths and weaknesses:** \n  - **Strengths:** \n    - Small codebase can be easier to maintain.\n    - Low complexity score suggests code may be straightforward.\n  - **Weaknesses:** \n    - Lack of information on languages used and complexity of functionality.\n- **Architecture evaluation:** Without more details, it's challenging to assess the architecture of the library.\n\n💡 **Key Recommendations**\n- **Priority improvements:**\n  - Add documentation to explain the purpose of the library and how to use it.\n  - Consider adding unit tests to ensure code reliability.\n- **Best practices to implement:**\n  - Follow a consistent coding style to improve readability.\n  - Use version control effectively to track changes and collaborate with others.\n- **Future considerations:**\n  - Enhance the library with more features to increase its usefulness.\n  - Consider adding examples or demos to showcase the library's capabilities.\n\nThis analysis provides a high-level overview of the repository, highlighting areas for improvement and suggesting best practices for enhancing the library's quality and usability.",
+    "result": {
+      "summary": "Analysis completed",
+      "code_quality": {
+        "score": 75,
+        "issues": [
+          "Poor architecture - consider restructuring"
+        ],
+        "recommendations": [
+          "Improve code architecture and organization",
+          "Consider breaking down large modules into smaller ones",
+          "Consider implementing design patterns for better code structure"
+        ],
+        "metrics": {
+          "maintainability_index": "97.34219999999999",
+          "technical_debt_ratio": "1.7659",
+          "code_duplication": "0.4",
+          "architecture_score": 8
+        },
+        "patterns": {
+          "design_patterns": [],
+          "anti_patterns": [],
+          "code_smells": []
+        },
+        "hotspots": []
+      },
+      "documentation": {
+        "score": 22,
+        "issues": [
+          "Missing contributing guidelines",
+          "Missing license file",
+          "Missing API documentation",
+          "Low code comment coverage"
+        ],
+        "recommendations": [
+          "Add CONTRIBUTING.md file",
+          "Add LICENSE file",
+          "Document API endpoints",
+          "Add more inline documentation"
+        ],
+        "details": {
+          "has_readme": true,
+          "has_contributing": false,
+          "has_license": false,
+          "has_api_docs": false,
+          "has_changelog": false,
+          "readme_quality": 2,
+          "comment_coverage": "0.0",
+          "doc_files": []
+        }
+      },
+      "security": {
+        "score": 100,
+        "vulnerabilities": [],
+        "recommendations": [
+          "No security issues found - good job!"
+        ],
+        "summary": {
+          "total_issues": 0,
+          "high_severity": 0,
+          "medium_severity": 0,
+          "low_severity": 0
+        }
+      },
+      "test_coverage": {
+        "has_tests": false,
+        "coverage_percentage": "0.0",
+        "test_frameworks": [],
+        "test_files": [],
+        "test_directories": [],
+        "issues": [
+          "No test files found",
+          "No test framework detected"
+        ],
+        "recommendations": [
+          "Add unit tests for critical functionality",
+          "Set up a proper testing framework"
+        ]
+      },
+      "license_info": {
+        "license_type": "Unknown",
+        "is_open_source": false,
+        "license_file": null,
+        "compatibility": "Unknown"
+      },
+      "metrics": {
+        "lines_of_code": 46,
+        "files_count": 4,
+        "complexity": "0.13059",
+        "languages": {
+          "unknown": {
+            "files": 4,
+            "lines": 46
+          }
+        },
+        "largest_files": [
+          {
+            "path": "/tmp/reposcope_qao4e_hj/node-hello/package.json",
+            "lines": 20,
+            "language": "unknown"
+          },
+          {
+            "path": "/tmp/reposcope_qao4e_hj/node-hello/index.js",
+            "lines": 12,
+            "language": "unknown"
+          },
+          {
+            "path": "/tmp/reposcope_qao4e_hj/node-hello/README.md",
+            "lines": 9,
+            "language": "unknown"
+          },
+          {
+            "path": "/tmp/reposcope_qao4e_hj/node-hello/package-lock.json",
+            "lines": 5,
+            "language": "unknown"
+          }
+        ]
+      }
+    },
+    "analysis_duration": "4.475328",
+    "error_message": null
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "repository_url": "https://github.com/test-owner/test-repo",
+  "cached_at": "2025-09-25T14:01:13.715204",
+  "analysis_data": {
+    "id": "0d548ac3-d2a2-4b80-b096-da5ce87f08af",
+    "repository_url": "https://github.com/test-owner/test-repo",
+    "repository_info": {
+      "name": "test-repo",
+      "owner": "test-owner",
+      "full_name": "test-owner/test-repo",
+      "description": "Test repository",
+      "language": "Python",
+      "stars": 100,
+      "forks": 10,
+      "size": 1000,
+      "created_at": "2023-01-01T00:00:00+00:00",
+      "updated_at": "2023-12-01T00:00:00+00:00"
+    },
+    "status": "completed",
+    "created_at": "2025-09-25T12:01:12.713811+00:00",
+    "completed_at": "2025-09-25T12:01:12.714386+00:00",
+    "code_structure": {
+      "total_files": 0,
+      "total_lines": 0,
+      "languages": {},
+      "complexity_score": "0.0",
+      "largest_files": [],
+      "quality_metrics": {
+        "maintainability_index": "0.0",
+        "technical_debt_ratio": "1.0",
+        "code_duplication": "0.0",
+        "test_coverage": "0.0"
+      },
+      "architecture_score": "0.0",
+      "code_patterns": {
+        "design_patterns": [],
+        "anti_patterns": [],
+        "code_smells": []
+      },
+      "hotspots": [],
+      "score": 0,
+      "issues": [
+        "Low maintainability index - code is difficult to maintain",
+        "High technical debt ratio - significant refactoring needed",
+        "Poor architecture - consider restructuring"
+      ],
+      "recommendations": [
+        "Improve code maintainability by reducing complexity",
+        "Add more inline documentation and comments",
+        "Address technical debt through systematic refactoring",
+        "Prioritize refactoring of most complex modules",
+        "Improve code architecture and organization"
+      ]
+    },
+    "documentation_quality": {
+      "has_readme": true,
+      "has_contributing": false,
+      "has_license": false,
+      "has_api_docs": false,
+      "has_changelog": false,
+      "readme_quality": 0,
+      "comment_coverage": "0.0",
+      "doc_files": [],
+      "issues": [
+        "Missing contributing guidelines",
+        "Missing license file",
+        "Missing API documentation",
+        "Low code comment coverage"
+      ],
+      "recommendations": [
+        "Add CONTRIBUTING.md file",
+        "Add LICENSE file",
+        "Document API endpoints",
+        "Add more inline documentation"
+      ],
+      "documentation_score": "0.2",
+      "score": 20
+    },
+    "test_coverage": {
+      "has_tests": false,
+      "test_frameworks": [],
+      "coverage_percentage": "0.0",
+      "test_files": [],
+      "test_directories": [],
+      "issues": [
+        "No test files found",
+        "No test framework detected"
+      ],
+      "recommendations": [
+        "Add unit tests for critical functionality",
+        "Set up a proper testing framework"
+      ]
+    },
+    "security_issues": [],
+    "license_info": {
+      "license_type": "Unknown",
+      "is_open_source": false,
+      "license_file": null,
+      "compatibility": "Unknown"
+    },
+    "ai_summary": "📋 **Project Overview**\n- **Purpose and functionality**: The repository is a Python library designed to provide a specific set of functionalities or tools to its users.\n- **Main features and capabilities**: The library likely offers a range of functions, classes, or utilities to assist developers in their projects.\n\n🛠️ **Technology Stack**\n- **Primary technologies used**: Python is the primary language used in the repository.\n- **Framework and library choices**: No specific frameworks or external libraries are mentioned.\n- **Development tools**: The repository may utilize standard Python development tools like virtual environments, testing frameworks, or version control systems.\n\n📊 **Code Quality Assessment**\n- **Overall code quality score**: The code quality score is not available due to the absence of code files.\n- **Strengths and weaknesses**: \n  - **Strengths**: Not applicable without code analysis.\n  - **Weaknesses**: Lack of code files makes it difficult to assess the implementation quality.\n- **Architecture evaluation**: Unable to evaluate architecture without code files.\n\n💡 **Key Recommendations**\n- **Priority improvements**:\n  - Add code files to the repository to enable code quality assessment and architecture evaluation.\n  - Implement documentation to explain the purpose, features, and usage of the library.\n- **Best practices to implement**:\n  - Follow PEP 8 guidelines for Python code styling.\n  - Include unit tests to ensure the reliability of the library.\n- **Future considerations**:\n  - Consider adding examples or sample applications showcasing the library's usage.\n  - Encourage community contributions to enhance the library's functionality and maintainability.\n\nBy addressing the recommendations and incorporating best practices, the repository can improve its usability, maintainability, and overall quality.",
+    "result": {
+      "summary": "Analysis completed",
+      "code_quality": {
+        "score": 0,
+        "issues": [
+          "Low maintainability index - code is difficult to maintain",
+          "High technical debt ratio - significant refactoring needed",
+          "Poor architecture - consider restructuring"
+        ],
+        "recommendations": [
+          "Improve code maintainability by reducing complexity",
+          "Add more inline documentation and comments",
+          "Address technical debt through systematic refactoring",
+          "Prioritize refactoring of most complex modules",
+          "Improve code architecture and organization"
+        ],
+        "metrics": {
+          "maintainability_index": "0.0",
+          "technical_debt_ratio": "100.0",
+          "code_duplication": "0.0",
+          "architecture_score": "0.0"
+        },
+        "patterns": {
+          "design_patterns": [],
+          "anti_patterns": [],
+          "code_smells": []
+        },
+        "hotspots": []
+      },
+      "documentation": {
+        "score": 20,
+        "issues": [
+          "Missing contributing guidelines",
+          "Missing license file",
+          "Missing API documentation",
+          "Low code comment coverage"
+        ],
+        "recommendations": [
+          "Add CONTRIBUTING.md file",
+          "Add LICENSE file",
+          "Document API endpoints",
+          "Add more inline documentation"
+        ],
+        "details": {
+          "has_readme": true,
+          "has_contributing": false,
+          "has_license": false,
+          "has_api_docs": false,
+          "has_changelog": false,
+          "readme_quality": 0,
+          "comment_coverage": "0.0",
+          "doc_files": []
+        }
+      },
+      "security": {
+        "score": 100,
+        "vulnerabilities": [],
+        "recommendations": [
+          "No security issues found - good job!"
+        ],
+        "summary": {
+          "total_issues": 0,
+          "high_severity": 0,
+          "medium_severity": 0,
+          "low_severity": 0
+        }
+      },
+      "test_coverage": {
+        "has_tests": false,
+        "coverage_percentage": "0.0",
+        "test_frameworks": [],
+        "test_files": [],
+        "test_directories": [],
+        "issues": [
+          "No test files found",
+          "No test framework detected"
+        ],
+        "recommendations": [
+          "Add unit tests for critical functionality",
+          "Set up a proper testing framework"
+        ]
+      },
+      "license_info": {
+        "license_type": "Unknown",
+        "is_open_source": false,
+        "license_file": null,
+        "compatibility": "Unknown"
+      },
+      "metrics": {
+        "lines_of_code": 0,
+        "files_count": 0,
+        "complexity": "0.0",
+        "languages": {},
+        "largest_files": []
+      }
+    },
+    "analysis_duration": "0.000575",
+    "error_message": null
+  }
+}

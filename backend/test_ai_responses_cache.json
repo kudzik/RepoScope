@@ -1,21 +1,39 @@
 {
   "cache": {
-    "b2f6ac602a10ba143fcc86997229c424": {
-      "response": "response1",
-      "prompt": "prompt1",
+    "b82367d874c9a96a9d7edf65342944a1": {
+      "response": "response_0",
+      "prompt": "prompt_0",
       "model": "gpt-3.5-turbo",
-      "timestamp": 1758798766.31541
+      "timestamp": 1758800289.783154
     },
-    "d3a7b8716f4bf634efcfc5745ea07a13": {
-      "response": "response2",
-      "prompt": "prompt2",
-      "model": "gpt-4",
-      "timestamp": 1758798766.315412
+    "0cbffa18c2400d6487281c0fce2f726e": {
+      "response": "response_1",
+      "prompt": "prompt_1",
+      "model": "gpt-3.5-turbo",
+      "timestamp": 1758800289.783157
+    },
+    "00fdb482aa5feef741b2467887e1b14e": {
+      "response": "response_2",
+      "prompt": "prompt_2",
+      "model": "gpt-3.5-turbo",
+      "timestamp": 1758800289.783158
+    },
+    "b9b321e9dbc111eb614c0bff44ab6aa9": {
+      "response": "Test response for persistence",
+      "prompt": "Test prompt for persistence",
+      "model": "gpt-3.5-turbo",
+      "timestamp": 1758800289.783159
+    },
+    "d69a69d6e3e176f215a292795fb2a5fd": {
+      "response": "Cached AI summary for test-repo",
+      "timestamp": 1758800385.951815,
+      "prompt": "Analyze this library repository written in Python.\n\nRepository type: library\nPrimary language: Python\nFile count: 10\nLines of code: 1000\nLanguages used: ['Python']\nComplexity score: 5.0\n\nProvide a well-formatted analysis with emojis and clear structure:\n\n📋 **Project Overview**\n- Purpose and functionality\n- Main features and capabilities\n\n🛠️ **Technology Stack**\n- Primary technologies used\n- Framework and library choices\n- Development tools\n\n📊 **Code Quality Assessment**\n- Overall code quality score\n- Strengths and weaknesses\n- Architecture evaluation\n\n💡 **Key Recommendations**\n- Priority improvements\n- Best practices to implement\n- Future considerations\n\nFormat the response with:\n- Clear section headers with emojis\n- Bullet points for easy reading\n- Bold text for emphasis\n- Concise but informative content\n\nKeep response under 500 words and make it visually appealing and easy to scan.",
+      "model": "gpt-3.5-turbo"
     }
   },
   "metadata": {
-    "saved_at": "2025-09-25T13:12:46.315413",
+    "saved_at": "2025-09-25T13:39:45.951822",
     "test_mode": true,
-    "total_responses": 2
+    "total_responses": 5
   }
 }

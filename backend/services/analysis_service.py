@@ -5,19 +5,19 @@ import shutil
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
-from fastapi import HTTPException
-from pydantic import HttpUrl
-
 from config.llm_optimization import TaskComplexity
 from config.test_mode import test_config
+from fastapi import HTTPException
 from middleware.cost_optimization import (
     cost_optimization_middleware,
     test_cost_optimization_middleware,
 )
+from pydantic import HttpUrl
 from schemas.analysis import AnalysisResult, AnalysisStatus, RepositoryInfo
 from services.code_analyzer import CodeAnalyzer
 from services.github_service import GitHubService
 from services.llm_service import LLMService
+from storage.analysis_cache import analysis_cache_storage
 
 
 class AnalysisService:
@@ -60,11 +60,23 @@ class AnalysisService:
             updated_at=github_repo.updated_at,
         )
 
-    async def analyze_repository(self, url: str) -> AnalysisResult:
+    async def analyze_repository(
+        self, url: str, include_ai_summary: bool = True, analysis_depth: str = "standard"
+    ) -> AnalysisResult:
         """Analyze a repository and return results."""
         start_time = datetime.now(timezone.utc)
 
         try:
+            # Check persistent cache first (24-hour TTL)
+            print(f"🔍 Checking cache for {url}...")
+            cached_analysis = analysis_cache_storage.get(url)
+            if cached_analysis:
+                print(f"✅ CACHE HIT: Returning cached analysis for {url}")
+                return cached_analysis
+
+            print(f"❌ CACHE MISS: No cached analysis found for {url}")
+            print(f"🚀 Starting fresh analysis for {url}...")
+
             # Get repository information
             repo_info = await self.get_repository_info(url)
 
@@ -392,7 +404,7 @@ class AnalysisService:
                 }
 
             # Generate AI summary with cost optimization and timeout
-            if analysis.code_structure.get("total_files", 0) > 0:
+            if include_ai_summary:
                 try:
                     import asyncio
 
@@ -449,8 +461,13 @@ class AnalysisService:
                 except Exception as e:
                     print(f"Warning: Error cleaning up temp directory: {e}")
 
-            # Store in memory
+            # Store in memory (for backward compatibility)
             AnalysisService._analyses[str(analysis.id)] = analysis
+
+            # Store in persistent cache (24-hour TTL)
+            print(f"💾 Storing analysis in cache for {url}...")
+            analysis_cache_storage.set(url, analysis)
+            print(f"✅ Analysis successfully cached for 24 hours: {url}")
 
             return analysis
 

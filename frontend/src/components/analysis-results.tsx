@@ -859,7 +859,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <div className="space-y-4">
                 <h4 className="font-medium text-sm">Basic Metrics</h4>
                 <div className="space-y-3 text-sm">
-                  <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border">
+                  <div
+                    className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border"
+                    title="Total number of lines of code in the repository, including comments and blank lines"
+                  >
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-blue-500" />
                       <span>Lines of Code:</span>
@@ -871,7 +874,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       ).toLocaleString()}
                     </span>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950/20 rounded-lg border">
+                  <div
+                    className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950/20 rounded-lg border"
+                    title="Total number of source code files in the repository"
+                  >
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-green-500" />
                       <span>Files:</span>
@@ -880,7 +886,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       {safeNumber(analysis.code_structure?.total_files, 0)}
                     </span>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-orange-50 dark:bg-orange-950/20 rounded-lg border">
+                  <div
+                    className="flex justify-between items-center p-3 bg-orange-50 dark:bg-orange-950/20 rounded-lg border"
+                    title="Cyclomatic complexity score indicating code complexity and maintainability"
+                  >
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-orange-500" />
                       <span>Complexity:</span>
@@ -892,7 +901,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       ).toFixed(2)}
                     </span>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-purple-50 dark:bg-purple-950/20 rounded-lg border">
+                  <div
+                    className="flex justify-between items-center p-3 bg-purple-50 dark:bg-purple-950/20 rounded-lg border"
+                    title="Average number of lines per file, calculated as total lines divided by number of files"
+                  >
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-purple-500" />
                       <span>Avg File Size:</span>
@@ -920,7 +932,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <div className="space-y-4">
                 <h4 className="font-medium text-sm">Quality Metrics</h4>
                 <div className="space-y-3 text-sm">
-                  <div className="flex justify-between items-center p-3 bg-emerald-50 dark:bg-emerald-950/20 rounded-lg border">
+                  <div
+                    className="flex justify-between items-center p-3 bg-emerald-50 dark:bg-emerald-950/20 rounded-lg border"
+                    title="Code maintainability index (0-100) based on complexity, documentation, and structure"
+                  >
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-emerald-500" />
                       <span>Maintainability:</span>
@@ -952,7 +967,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       />
                     </div>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-red-50 dark:bg-red-950/20 rounded-lg border">
+                  <div
+                    className="flex justify-between items-center p-3 bg-red-50 dark:bg-red-950/20 rounded-lg border"
+                    title="Technical debt ratio indicating code quality issues that need to be addressed"
+                  >
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-red-500" />
                       <span>Tech Debt:</span>
@@ -984,7 +1002,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       />
                     </div>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-yellow-50 dark:bg-yellow-950/20 rounded-lg border">
+                  <div
+                    className="flex justify-between items-center p-3 bg-yellow-50 dark:bg-yellow-950/20 rounded-lg border"
+                    title="Percentage of duplicated code that could be refactored for better maintainability"
+                  >
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-yellow-500" />
                       <span>Duplication:</span>
@@ -1016,7 +1037,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       />
                     </div>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-indigo-50 dark:bg-indigo-950/20 rounded-lg border">
+                  <div
+                    className="flex justify-between items-center p-3 bg-indigo-50 dark:bg-indigo-950/20 rounded-lg border"
+                    title="Architecture quality score (0-100) based on design patterns, modularity, and code organization"
+                  >
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-indigo-500" />
                       <span>Architecture:</span>
@@ -1045,7 +1069,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
               <div className="space-y-4">
                 <h4 className="font-medium text-sm">Additional Metrics</h4>
                 <div className="space-y-3 text-sm">
-                  <div className="flex justify-between items-center p-3 bg-cyan-50 dark:bg-cyan-950/20 rounded-lg border">
+                  <div
+                    className="flex justify-between items-center p-3 bg-cyan-50 dark:bg-cyan-950/20 rounded-lg border"
+                    title="Overall code quality score (0-100) combining all quality metrics and analysis results"
+                  >
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-cyan-500" />
                       <span>Overall Score:</span>
@@ -1060,7 +1087,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       />
                     </div>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-teal-50 dark:bg-teal-950/20 rounded-lg border">
+                  <div
+                    className="flex justify-between items-center p-3 bg-teal-50 dark:bg-teal-950/20 rounded-lg border"
+                    title="Percentage of code covered by automated tests, indicating code reliability and quality"
+                  >
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-teal-500" />
                       <span>Test Coverage:</span>
@@ -1092,7 +1122,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       />
                     </div>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-rose-50 dark:bg-rose-950/20 rounded-lg border">
+                  <div
+                    className="flex justify-between items-center p-3 bg-rose-50 dark:bg-rose-950/20 rounded-lg border"
+                    title="Number of code quality issues, bugs, and potential problems identified during analysis"
+                  >
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-rose-500" />
                       <span>Issues Found:</span>
@@ -1101,7 +1134,10 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       {safeArray(analysis.code_structure?.issues).length}
                     </span>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-lime-50 dark:bg-lime-950/20 rounded-lg border">
+                  <div
+                    className="flex justify-between items-center p-3 bg-lime-50 dark:bg-lime-950/20 rounded-lg border"
+                    title="Number of improvement suggestions and best practices recommendations for the codebase"
+                  >
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-lime-500" />
                       <span>Recommendations:</span>

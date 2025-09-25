@@ -1,100 +1,85 @@
-# RepoScope Docker Compose - Development Environment
-version: "3.8"
+version: '3.8'
 
 services:
-  # Backend API - FastAPI + Python 3.13
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: reposcope-backend
     ports:
-      - "8000:8000"
+      - '8000:8000'
     environment:
-      - PYTHONPATH=/app
-      - ENVIRONMENT=development
+      - ENVIRONMENT=production
+      - LOG_LEVEL=info
+      - MAX_REPOSITORY_SIZE_MB=50
+      - ANALYSIS_TIMEOUT_SECONDS=120
     volumes:
       - ./backend:/app
-      - /app/venv # Exclude venv from volume mount
-    networks:
-      - reposcope-network
+      - reposcope_cache:/app/cache
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ['CMD', 'curl', '-f', 'http://localhost:8000/health']
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
 
-  # Frontend - Next.js 15 + Node.js
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: reposcope-frontend
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
-      - NODE_ENV=development
       - NEXT_PUBLIC_API_URL=http://localhost:8000
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules # Exclude node_modules from volume mount
-      - /app/.next # Exclude .next from volume mount
-    networks:
-      - reposcope-network
+      - NODE_ENV=production
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000']
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
 
-  # Database - PostgreSQL (for future use)
-  database:
-    image: postgres:15-alpine
-    container_name: reposcope-database
-    environment:
-      - POSTGRES_DB=reposcope
-      - POSTGRES_USER=reposcope
-      - POSTGRES_PASSWORD=reposcope_password
+  nginx:
+    image: nginx:alpine
     ports:
-      - "5432:5432"
+      - '80:80'
+      - '443:443'
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - reposcope-network
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - frontend
+      - backend
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U reposcope"]
+      test: ['CMD', 'curl', '-f', 'http://localhost']
       interval: 30s
       timeout: 10s
       retries: 3
 
-  # Redis - Caching (for future use)
   redis:
-    image: redis:7-alpine
-    container_name: reposcope-redis
+    image: redis:alpine
     ports:
-      - "6379:6379"
+      - '6379:6379'
     volumes:
       - redis_data:/data
-    networks:
-      - reposcope-network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ['CMD', 'redis-cli', 'ping']
       interval: 30s
       timeout: 10s
       retries: 3
 
-networks:
-  reposcope-network:
-    driver: bridge
-
 volumes:
-  postgres_data:
+  reposcope_cache:
+    driver: local
   redis_data:
+    driver: local
+
+networks:
+  default:
+    name: reposcope_network

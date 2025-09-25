@@ -1,188 +1,330 @@
-# 🚀 RepoScope
+# RepoScope - Repository Analysis Tool
 
-> Innowacyjna aplikacja SaaS do analizy repozytoriów GitHub z wykorzystaniem AI
+RepoScope is an AI-powered repository analysis tool that provides comprehensive insights into code quality, documentation, and architecture of GitHub repositories.
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.1.0-green.svg)](CHANGELOG.md)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/your-username/RepoScope/actions)
+## 🚀 Features
 
-## 📋 Przegląd
+### Code Analysis
 
-RepoScope to zaawansowane narzędzie do automatycznej analizy repozytoriów GitHub, które wykorzystuje sztuczną inteligencję (LLM) do generowania szczegółowych raportów dotyczących struktury kodu, dokumentacji, testów, licencji i potencjalnych ryzyk.
+- **Language Detection**: Automatic detection of programming languages with color-coded visualization
+- **Code Metrics**: Lines of code, file count, complexity analysis, and average file size
+- **Quality Metrics**: Maintainability index, technical debt ratio, code duplication, and architecture score
+- **File Analysis**: Largest files identification with language detection
 
-## ✨ Kluczowe funkcjonalności
+### AI-Powered Insights
 
-- 🧩 **Analiza struktury kodu** - Tree-sitter parsing i analiza technologii
-- 📚 **Ocena dokumentacji** - Sprawdzanie README, komentarzy i jakości
-- 🧪 **Wykrywanie testów** - Identyfikacja testów jednostkowych i integracyjnych
-- ⚖️ **Sprawdzanie licencji** - Analiza licencji i potencjalnych konfliktów
-- 🤖 **AI-powered raporty** - Inteligentne podsumowania z emoji i formatowaniem
-- 🎨 **Nowoczesny UI** - Responsywny design z trybem ciemnym
-- 💡 **Inteligentne tooltips** - Opisowe podpowiedzi dla wszystkich metryk
-- 🎯 **System kolorów** - Spójne kolory dla poziomów bezpieczeństwa i jakości
+- **Code Quality Assessment**: Comprehensive analysis of code structure and patterns
+- **Security Analysis**: Identification of potential security risks and vulnerabilities
+- **Documentation Evaluation**: Assessment of README, API docs, and code comments
+- **Recommendations**: AI-generated suggestions for code improvements
 
-## 🚀 Szybki start
+### Visual Dashboard
 
-### Wymagania
+- **Interactive Charts**: Color-coded language distribution with percentage bars
+- **Progress Indicators**: Visual representation of quality metrics
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- **Dark/Light Theme**: Automatic theme switching based on system preferences
 
-- **Node.js** 18+ (dla frontend)
-- **Python** 3.11+ (dla backend)
-- **Git** (dla klonowania repozytorium)
+## 🛠️ Technology Stack
 
-### Instalacja i uruchomienie
+### Frontend
 
-#### 1. Klonowanie repozytorium
+- **Next.js 15.5.4** - React framework with App Router
+- **TypeScript** - Type-safe JavaScript
+- **Tailwind CSS** - Utility-first CSS framework
+- **shadcn/ui** - Modern UI component library
+- **Lucide React** - Beautiful icons
 
-```bash
-git clone https://github.com/your-username/RepoScope.git
-cd RepoScope
-```
+### Backend
 
-#### 2. Backend (FastAPI)
+- **FastAPI** - Modern Python web framework
+- **Pydantic** - Data validation and serialization
+- **Tree-sitter** - Language parsing (optional, with fallback)
+- **aiohttp** - Asynchronous HTTP client
+- **psutil** - System resource monitoring
+
+### Analysis Engine
+
+- **Heuristic Analysis** - Pattern-based code analysis
+- **Language Detection** - File extension and content-based detection
+- **Complexity Calculation** - Cyclomatic complexity scoring
+- **Quality Metrics** - Comprehensive code quality assessment
+
+## 📦 Installation
+
+### Prerequisites
+
+- Node.js 18+ and npm
+- Python 3.8+
+- Git
+
+### Backend Setup
 
 ```bash
 cd backend
-
-# Instalacja zależności
-python -m pip install -e ".[dev]"
-
-# Konfiguracja kluczy API (wymagane)
-python setup_api_keys.py
-
-# Test konfiguracji
-python test_api_connection.py
-
-# Uruchomienie serwera deweloperskiego
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -r requirements.txt
 python main.py
 ```
 
-Backend będzie dostępny pod adresem: `http://localhost:8000`
-
-- API Documentation: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
-
-#### 3. Frontend (Next.js)
+### Frontend Setup
 
 ```bash
 cd frontend
-
-# Instalacja zależności
 npm install
-
-# Uruchomienie serwera deweloperskiego
 npm run dev
 ```
 
-Frontend będzie dostępny pod adresem: `http://localhost:3000`
-
-#### 4. Uruchomienie testów
+### Docker Setup (Optional)
 
 ```bash
-# Backend testy
-cd backend
-python -m pytest tests/ -v --cov=main
+docker-compose up -d
+```
 
-# Frontend testy (planowane)
+## 🚀 Quick Start
+
+1. **Start the Backend**
+
+   ```bash
+   cd backend
+   python main.py
+   ```
+
+   Backend will be available at `http://localhost:8000`
+
+2. **Start the Frontend**
+
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+
+   Frontend will be available at `http://localhost:3000`
+
+3. **Analyze a Repository**
+   - Open `http://localhost:3000` in your browser
+   - Enter a GitHub repository URL (e.g., `https://github.com/microsoft/vscode`)
+   - Click "Analyze Repository"
+   - View comprehensive analysis results
+
+## 📊 API Documentation
+
+### Endpoints
+
+#### `GET /`
+
+- **Description**: API health check
+- **Response**: `{"message": "RepoScope API is running!", "version": "1.0.0"}`
+
+#### `POST /analysis/`
+
+- **Description**: Analyze a GitHub repository
+- **Request Body**:
+  ```json
+  {
+    "repository_url": "https://github.com/username/repository",
+    "include_ai_summary": true,
+    "analysis_depth": "standard"
+  }
+  ```
+- **Response**: Comprehensive analysis results
+
+#### `GET /health`
+
+- **Description**: Detailed health check with system information
+- **Response**: System status, process info, and resource usage
+
+### Analysis Parameters
+
+#### `analysis_depth`
+
+- **`quick`**: Fast analysis for large repositories (recommended for >10MB)
+- **`standard`**: Comprehensive analysis with all metrics
+- **`deep`**: Detailed analysis with advanced insights
+
+#### `include_ai_summary`
+
+- **`true`**: Include AI-generated summary and recommendations
+- **`false`**: Basic metrics only (faster processing)
+
+## 🔧 Configuration
+
+### Environment Variables
+
+#### Frontend (`.env.local`)
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_APP_NAME=RepoScope
+NEXT_PUBLIC_APP_VERSION=1.0.0
+```
+
+#### Backend
+
+```env
+# Optional: Custom configuration
+MAX_REPOSITORY_SIZE_MB=50
+ANALYSIS_TIMEOUT_SECONDS=120
+CACHE_TTL_HOURS=24
+```
+
+## 📈 Metrics Explained
+
+### Basic Metrics
+
+- **Lines of Code**: Total lines including comments and blank lines
+- **Files**: Number of source code files
+- **Complexity**: Cyclomatic complexity score (lower is better)
+- **Avg File Size**: Average lines per file
+
+### Quality Metrics
+
+- **Maintainability** (0-100): Code maintainability index
+- **Tech Debt** (0-100%): Technical debt ratio
+- **Duplication** (0-100%): Code duplication percentage
+- **Architecture** (0-100): Architecture quality score
+
+### Additional Metrics
+
+- **Overall Score** (0-100): Combined quality score
+- **Test Coverage** (0-100%): Code coverage by tests
+- **Issues Found**: Number of identified problems
+- **Recommendations**: Number of improvement suggestions
+
+## 🎨 UI Components
+
+### Code Metrics Panel
+
+- **Languages**: Color-coded distribution with percentage bars
+- **Largest Files**: Top 5 largest files with language indicators
+- **Basic Metrics**: Core repository statistics
+- **Quality Metrics**: Code quality assessment with progress bars
+- **Additional Metrics**: Extended analysis results
+
+### Interactive Features
+
+- **Tooltips**: Hover explanations for all metrics
+- **Progress Bars**: Visual representation of percentages
+- **Color Coding**: Consistent color scheme across components
+- **Responsive Layout**: Adaptive design for all screen sizes
+
+## 🔍 Language Support
+
+### Supported Languages
+
+- **Primary**: Python, JavaScript, TypeScript, Java, C++, Rust, Go
+- **Secondary**: PHP, Ruby, C#, Swift, Kotlin, Scala
+- **Scripts**: Shell, Bash, PowerShell
+- **Config**: Dockerfile, CMake, Makefile, HTML, CSS, SQL
+- **Special**: R, MATLAB, Perl, Lua, Vim, Emacs Lisp
+
+### Language Detection
+
+- **File Extensions**: Primary detection method
+- **Special Files**: CMakeLists.txt, Dockerfile, Makefile
+- **Content Analysis**: Heuristic-based detection for edge cases
+- **Fallback**: Enhanced basic analysis when Tree-sitter unavailable
+
+## 🚨 Error Handling
+
+### API Monitoring
+
+- **Request Logging**: All API requests logged with duration
+- **Timeout Handling**: 120-second timeout for analysis requests
+- **Error Recovery**: Graceful fallback for parsing failures
+- **Resource Monitoring**: CPU and memory usage tracking
+
+### Repository Size Control
+
+- **Size Limits**: Automatic rejection of oversized repositories
+- **GitHub API**: Repository size checking before analysis
+- **Popularity Limits**: Protection against very popular repositories
+- **Cache Management**: Intelligent caching for repeated requests
+
+## 🧪 Testing
+
+### Backend Tests
+
+```bash
+cd backend
+python -m pytest tests/
+```
+
+### Frontend Tests
+
+```bash
 cd frontend
 npm test
 ```
 
-## 📖 Dokumentacja
+### Test Coverage
 
-- [🔑 API Keys Setup Guide](docs/API_KEYS_SETUP.md) ✅
-- [Product Requirements Document](docs/PRD.md)
-- [Architektura systemu](docs/ARCHITECTURE.md)
-- [Środowisko deweloperskie](docs/DEVELOPMENT.md) ✅
-- [Strategia testowania](docs/TESTING_STRATEGY.md) ✅
-- [Deployment](docs/DEPLOYMENT.md)
-- [Roadmap](docs/ROADMAP.md)
-- [Bezpieczeństwo](docs/SECURITY.md)
-- [Changelog](docs/CHANGELOG.md)
+- **Unit Tests**: Individual component testing
+- **Integration Tests**: End-to-end workflow testing
+- **Language Detection**: Comprehensive language detection tests
+- **API Tests**: Backend endpoint testing
 
-## ✅ Status konfiguracji
+## 📝 Development
 
-### Zakończone kroki
+### Project Structure
 
-#### Frontend
+```
+RepoScope/
+├── backend/
+│   ├── api/                 # FastAPI endpoints
+│   ├── services/           # Business logic
+│   ├── schemas/            # Pydantic models
+│   ├── middleware/         # API monitoring
+│   ├── tests/              # Backend tests
+│   └── main.py             # Application entry point
+├── frontend/
+│   ├── src/
+│   │   ├── components/     # React components
+│   │   ├── lib/           # Utilities
+│   │   └── app/           # Next.js app router
+│   └── package.json       # Dependencies
+└── README.md              # This file
+```
 
-- ✅ **ESLint** - konfiguracja Next.js 15 z ESLint CLI
-- ✅ **Prettier** - formatowanie kodu zgodne z regułami
-- ✅ **EditorConfig** - spójne ustawienia edytora
-- ✅ **Next.js 15** - migracja na turbopack (bez ostrzeżeń)
-- ✅ **Tailwind CSS** - konfiguracja z CSS variables
-- ✅ **shadcn/ui** - komponenty UI z dark/light mode
-- ✅ **Accessibility** - WCAG 2.1 AA compliance
-- ✅ **VS Code** - automatyczne formatowanie i lintowanie
-- ✅ **Error Handling** - naprawiono błąd `toFixed()` w AnalysisResults
-- ✅ **Safe Number Formatting** - implementacja bezpiecznego formatowania liczb
+### Code Style
 
-#### Backend Struktura
+- **Python**: Black formatter, Flake8 linter
+- **TypeScript**: ESLint, Prettier
+- **React**: Functional components with hooks
+- **API**: RESTful design with proper HTTP status codes
 
-- ✅ **Struktura projektu** - katalogi i pliki konfiguracyjne
-- ✅ **FastAPI aplikacja** - podstawowa struktura z CORS
-- ✅ **Środowisko Python** - venv + pyproject.toml
-- ✅ **Zależności** - FastAPI, Uvicorn, LangChain, Tree-sitter
-- ✅ **Lintery** - flake8, black, isort, mypy (wszystkie przetestowane)
-- ✅ **Testy jednostkowe** - pytest z 94% pokryciem kodu (22 testy)
-- ✅ **Konfiguracja edytora** - pyright, VS Code settings
-- ✅ **Dokumentacja** - zaktualizowana dokumentacja deweloperska
-- ✅ **Pre-commit hooks** - automatyzacja sprawdzania jakości kodu
-- ✅ **Automatyzacja jakości** - skrypty naprawcze i narzędzia
-- ✅ **API endpoints** - analiza repozytoriów z GitHub API
-- ✅ **Pydantic schemas** - walidacja danych i typy
-- ✅ **Analysis service** - integracja z GitHub API
+## 🤝 Contributing
 
-## 🛠️ Stos technologiczny
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-### Frontend Stos
+### Development Guidelines
 
-- **Framework**: Next.js 15 (App Router + Turbopack)
-- **Styling**: Tailwind CSS 3.4 + shadcn/ui
-- **Language**: TypeScript
-- **Linting**: ESLint (flat config) + Prettier
-- **Accessibility**: WCAG 2.1 AA compliance
-- **Components**: shadcn/ui (Button, Card, Input, etc.)
+- Follow existing code style and patterns
+- Add tests for new features
+- Update documentation as needed
+- Ensure all tests pass before submitting
 
-### Backend
+## 📄 License
 
-- **Framework**: FastAPI 0.117 + LangChain 0.1.20
-- **Language**: Python 3.13
-- **Linting**: flake8@7.3.0 + black@25.9.0 + mypy@1.18.2 + isort@6.0.1
-- **Testing**: pytest@8.4.2
-- **AI Integration**: OpenRouter/OpenAI API (planowane)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### Infrastructure (planowane)
+## 🙏 Acknowledgments
 
-- **Database**: Supabase
-- **Authentication**: SuperTokens
-- **Hosting**: Vercel (frontend) + Render (backend)
-- **Monitoring**: Highlight.io + Sentry
+- **Tree-sitter** for language parsing capabilities
+- **FastAPI** for the excellent Python web framework
+- **Next.js** for the powerful React framework
+- **Tailwind CSS** for the utility-first CSS approach
+- **shadcn/ui** for the beautiful component library
 
-### CI/CD & Development
+## 📞 Support
 
-- **GitHub Actions**: Automatyczne linting, testy, security scanning
-- **Pre-commit hooks**: Sprawdzanie jakości kodu przed commitami
-- **Code Quality**: ESLint, Prettier, flake8, black, mypy, isort
-- **Automatyzacja**: Skrypty naprawcze dla Windows i Linux/Mac
-- **Narzędzia**: fix-code-quality.py, quick-fix scripts, auto-fix.py
-- **Spójność**: Identyczne parametry w lokalnym i CI/CD środowisku
+For support, email support@reposcope.dev or create an issue on GitHub.
 
-### 🤖 Optymalizacja kosztów AI/LLM
+---
 
-- **Zasada**: Użyj najtańszego dostępnego modelu do zadania
-- **Modele open-source**: Llama, Mistral gdy to możliwe
-- **GPT-3.5-turbo**: Zamiast GPT-4 dla prostych zadań
-- **Caching**: Odpowiedzi LLM dla powtarzalnych zapytań
-- **Monitoring**: Koszty w czasie rzeczywistym
-
-## 🤝 Współpraca
-
-<!-- TODO: Dodać informacje o współpracy -->
-
-## 📄 Licencja
-
-<!-- TODO: Dodać informacje o licencji -->
-
-## 📞 Kontakt
-
-<!-- TODO: Dodać informacje kontaktowe -->
+**RepoScope** - Analyze repositories with AI-powered insights 🚀

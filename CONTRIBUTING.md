@@ -366,10 +366,14 @@ Any other context or screenshots.
 
 By contributing to RepoScope, you agree that your contributions will be licensed under the MIT License.
 
+## 👨‍💻 Author
+
+**Artur Kud** - kudzik@outlook.com
+
 ## 🙏 Thank You
 
 Thank you for contributing to RepoScope! Your contributions help make the project better for everyone.
 
 ---
 
-For questions or clarifications, please open an issue or start a discussion.
+For questions or clarifications, please contact Artur Kud at kudzik@outlook.com or open an issue on GitHub.

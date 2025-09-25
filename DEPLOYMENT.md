@@ -535,6 +535,10 @@ cp -r /etc/reposcope/ /backup/config/
 3. **Backup Frequency**: Daily automated backups
 4. **Testing**: Monthly disaster recovery drills
 
+## 👨‍💻 Author
+
+**Artur Kud** - kudzik@outlook.com
+
 ---
 
-For more information, see the main [README.md](README.md) file.
+For more information, see the main [README.md](README.md) file or contact Artur Kud at kudzik@outlook.com.

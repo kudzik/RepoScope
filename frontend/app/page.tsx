@@ -211,8 +211,8 @@ export default function Home() {
           <div className="container mx-auto px-4 py-6">
             <div className="text-center text-sm text-muted-foreground">
               <p>
-                © 2024 RepoScope. Built with Next.js, Tailwind CSS, and
-                shadcn/ui.
+                © 2025 RepoScope by Artur Kud (kudzik@outlook.com). Built with
+                Next.js, Tailwind CSS, and shadcn/ui.
               </p>
             </div>
           </div>

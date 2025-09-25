@@ -1833,7 +1833,7 @@ export function AnalysisResults({ analysis }: AnalysisResultsProps) {
                       {analysis.repository_info.updated_at
                         ? new Date(
                             analysis.repository_info.updated_at
-                          ).toLocaleDateString()
+                          ).toLocaleString()
                         : 'N/A'}
                     </span>
                   </div>

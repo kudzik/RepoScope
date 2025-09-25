@@ -417,6 +417,10 @@ python debug_api.py
 - **Debug API**: `python debug_api.py`
 - **Health Check**: Detailed system information
 
+## 👨‍💻 Author
+
+**Artur Kud** - kudzik@outlook.com
+
 ---
 
-For more information, see the main [README.md](README.md) file.
+For more information, see the main [README.md](README.md) file or contact Artur Kud at kudzik@outlook.com.

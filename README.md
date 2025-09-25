@@ -321,9 +321,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Tailwind CSS** for the utility-first CSS approach
 - **shadcn/ui** for the beautiful component library
 
+## 👨‍💻 Author
+
+**Artur Kud** - kudzik@outlook.com
+
 ## 📞 Support
 
-For support, email support@reposcope.dev or create an issue on GitHub.
+For support, email kudzik@outlook.com or create an issue on GitHub.
 
 ---
 
